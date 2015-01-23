@@ -222,6 +222,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Playlist.FormattingEnabled = true;
+            this.Playlist.HorizontalScrollbar = true;
             this.Playlist.IntegralHeight = false;
             this.Playlist.Location = new System.Drawing.Point(3, 38);
             this.Playlist.Name = "Playlist";

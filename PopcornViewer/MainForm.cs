@@ -31,26 +31,6 @@ namespace PopcornViewer
         }
 
         /// <summary>
-        /// Code for handling Youtube requests from a specific URL
-        /// </summary>
-        /// <param name="url"></param>
-        private Video RequestFromYoutube(string url)
-        {
-            if (IsYoutubeURL(url))
-            {
-                string uri = url.Remove(0, url.IndexOf('=') + 1);
-
-                YouTubeRequestSettings settings = new YouTubeRequestSettings("Popcorn Viewer", "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA");
-                YouTubeRequest req = new YouTubeRequest(settings);
-
-                Uri videoEntryUrl = new Uri("http://gdata.youtube.com/feeds/api/videos/" + uri);
-
-                return req.Retrieve<Video>(videoEntryUrl);
-            }
-            else return null;
-        }
-
-        /// <summary>
         /// Handles logic for drag and drop in the Playlist
         /// </summary>
         /// <param name="sender"></param>
@@ -63,6 +43,8 @@ namespace PopcornViewer
                 PlayListURLs.Add(ConvertURLToEmbeded(url));
                 Video video = RequestFromYoutube(url);
                 Playlist.Items.Add(video.Title);
+                PlaylistLabel.Text = PlaylistLabel.Text.Substring(0, PlaylistLabel.Text.Length - 1);
+                PlaylistLabel.Text = PlaylistLabel.Text + PlayListURLs.Count;
             }
         }
 
@@ -99,7 +81,7 @@ namespace PopcornViewer
         }
         
         /// <summary>
-        /// Ensures that the given URL is actuall for a Youtube video
+        /// Ensures that the given URL is actuall for a Youtube video.
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
@@ -116,6 +98,22 @@ namespace PopcornViewer
                 }
             }
             catch { return false; }
+        }
+
+        /// <summary>
+        /// Code for handling Youtube requests from a specific URL. Requires a Youtube link be verrified first.
+        /// </summary>
+        /// <param name="url"></param>
+        private Video RequestFromYoutube(string url)
+        {
+            string uri = url.Remove(0, url.IndexOf('=') + 1);
+
+            YouTubeRequestSettings settings = new YouTubeRequestSettings("Popcorn Viewer", "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA");
+            YouTubeRequest req = new YouTubeRequest(settings);
+
+            Uri videoEntryUrl = new Uri("http://gdata.youtube.com/feeds/api/videos/" + uri);
+
+            return req.Retrieve<Video>(videoEntryUrl);
         }
     }
 }

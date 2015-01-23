@@ -28,20 +28,280 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.ChatMembers = new System.Windows.Forms.ListBox();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.Playlist = new System.Windows.Forms.ListBox();
+            this.GroupFiles = new System.Windows.Forms.TreeView();
+            this.Youtube = new AxShockwaveFlashObjects.AxShockwaveFlash();
+            this.PlaylistLabel = new System.Windows.Forms.TextBox();
+            this.LocalFilesLabel = new System.Windows.Forms.TextBox();
+            this.ChatLabel = new System.Windows.Forms.TextBox();
+            this.ChatBox = new System.Windows.Forms.TextBox();
+            this.ChatHistory = new System.Windows.Forms.RichTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Youtube)).BeginInit();
             this.SuspendLayout();
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer3);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Size = new System.Drawing.Size(838, 489);
+            this.splitContainer1.SplitterDistance = 664;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.Youtube);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
+            this.splitContainer3.Size = new System.Drawing.Size(664, 489);
+            this.splitContainer3.SplitterDistance = 340;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.ChatLabel);
+            this.splitContainer4.Panel1.Controls.Add(this.ChatMembers);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.ChatHistory);
+            this.splitContainer4.Panel2.Controls.Add(this.ChatBox);
+            this.splitContainer4.Size = new System.Drawing.Size(664, 145);
+            this.splitContainer4.SplitterDistance = 164;
+            this.splitContainer4.TabIndex = 0;
+            // 
+            // ChatMembers
+            // 
+            this.ChatMembers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatMembers.FormattingEnabled = true;
+            this.ChatMembers.IntegralHeight = false;
+            this.ChatMembers.Location = new System.Drawing.Point(12, 29);
+            this.ChatMembers.Name = "ChatMembers";
+            this.ChatMembers.Size = new System.Drawing.Size(149, 104);
+            this.ChatMembers.TabIndex = 0;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.PlaylistLabel);
+            this.splitContainer2.Panel1.Controls.Add(this.Playlist);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.LocalFilesLabel);
+            this.splitContainer2.Panel2.Controls.Add(this.GroupFiles);
+            this.splitContainer2.Size = new System.Drawing.Size(170, 489);
+            this.splitContainer2.SplitterDistance = 343;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // Playlist
+            // 
+            this.Playlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Playlist.FormattingEnabled = true;
+            this.Playlist.IntegralHeight = false;
+            this.Playlist.Location = new System.Drawing.Point(3, 38);
+            this.Playlist.Name = "Playlist";
+            this.Playlist.Size = new System.Drawing.Size(155, 302);
+            this.Playlist.TabIndex = 0;
+            // 
+            // GroupFiles
+            // 
+            this.GroupFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupFiles.Location = new System.Drawing.Point(3, 29);
+            this.GroupFiles.Name = "GroupFiles";
+            this.GroupFiles.Size = new System.Drawing.Size(155, 101);
+            this.GroupFiles.TabIndex = 0;
+            // 
+            // Youtube
+            // 
+            this.Youtube.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Youtube.Enabled = true;
+            this.Youtube.Location = new System.Drawing.Point(12, 12);
+            this.Youtube.Name = "Youtube";
+            this.Youtube.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Youtube.OcxState")));
+            this.Youtube.Size = new System.Drawing.Size(649, 328);
+            this.Youtube.TabIndex = 0;
+            // 
+            // PlaylistLabel
+            // 
+            this.PlaylistLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PlaylistLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.PlaylistLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PlaylistLabel.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.PlaylistLabel.Location = new System.Drawing.Point(3, 12);
+            this.PlaylistLabel.Name = "PlaylistLabel";
+            this.PlaylistLabel.ReadOnly = true;
+            this.PlaylistLabel.Size = new System.Drawing.Size(155, 20);
+            this.PlaylistLabel.TabIndex = 0;
+            this.PlaylistLabel.Text = "Playlist Count: 0";
+            this.PlaylistLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PlaylistLabel.WordWrap = false;
+            // 
+            // LocalFilesLabel
+            // 
+            this.LocalFilesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LocalFilesLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.LocalFilesLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LocalFilesLabel.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.LocalFilesLabel.Location = new System.Drawing.Point(3, 3);
+            this.LocalFilesLabel.Name = "LocalFilesLabel";
+            this.LocalFilesLabel.ReadOnly = true;
+            this.LocalFilesLabel.Size = new System.Drawing.Size(155, 20);
+            this.LocalFilesLabel.TabIndex = 1;
+            this.LocalFilesLabel.Text = "Local Files: 0";
+            this.LocalFilesLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.LocalFilesLabel.WordWrap = false;
+            // 
+            // ChatLabel
+            // 
+            this.ChatLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ChatLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ChatLabel.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ChatLabel.Location = new System.Drawing.Point(12, 3);
+            this.ChatLabel.Name = "ChatLabel";
+            this.ChatLabel.ReadOnly = true;
+            this.ChatLabel.Size = new System.Drawing.Size(149, 20);
+            this.ChatLabel.TabIndex = 2;
+            this.ChatLabel.Text = "Chatting: 0";
+            this.ChatLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ChatLabel.WordWrap = false;
+            // 
+            // ChatBox
+            // 
+            this.ChatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ChatBox.Location = new System.Drawing.Point(4, 113);
+            this.ChatBox.Name = "ChatBox";
+            this.ChatBox.Size = new System.Drawing.Size(489, 20);
+            this.ChatBox.TabIndex = 0;
+            // 
+            // ChatHistory
+            // 
+            this.ChatHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatHistory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ChatHistory.Cursor = System.Windows.Forms.Cursors.Default;
+            this.ChatHistory.Location = new System.Drawing.Point(4, 6);
+            this.ChatHistory.Name = "ChatHistory";
+            this.ChatHistory.Size = new System.Drawing.Size(489, 101);
+            this.ChatHistory.TabIndex = 2;
+            this.ChatHistory.Text = "";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(838, 489);
+            this.Controls.Add(this.splitContainer1);
             this.Name = "MainForm";
             this.Text = "Popcorn Viewer";
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel1.PerformLayout();
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            this.splitContainer4.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Youtube)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TreeView GroupFiles;
+        private System.Windows.Forms.ListBox Playlist;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private AxShockwaveFlashObjects.AxShockwaveFlash Youtube;
+        private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.ListBox ChatMembers;
+        private System.Windows.Forms.TextBox PlaylistLabel;
+        private System.Windows.Forms.TextBox LocalFilesLabel;
+        private System.Windows.Forms.TextBox ChatLabel;
+        private System.Windows.Forms.TextBox ChatBox;
+        private System.Windows.Forms.RichTextBox ChatHistory;
+
     }
 }
 

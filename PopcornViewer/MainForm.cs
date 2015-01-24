@@ -16,6 +16,8 @@ namespace PopcornViewer
 {
     public partial class MainForm : Form
     {
+        #region Local Variables
+        
         // Form Variables
         List<string> PlaylistURLs = new List<string>();
         int CurrentlyPlaying;
@@ -25,6 +27,10 @@ namespace PopcornViewer
         int SavedX = 0;
         int SavedY = 0;
         const int TOLERANCE = 2;
+
+        #endregion
+
+        #region Utility Functions
 
         /// <summary>
         /// URL Conversion Tools
@@ -108,6 +114,10 @@ namespace PopcornViewer
 
             return req.Retrieve<Video>(videoEntryUrl);
         }
+
+        #endregion
+
+        #region Flash-C# Communication
 
         /// <summary>
         /// Handles the Flash -> C# communication
@@ -283,9 +293,9 @@ namespace PopcornViewer
             return strings;
         }
 
-        //
-        // FORM EVENT FUNCTIONS
-        //
+        #endregion
+
+        #region Form Functions
 
         /// <summary>
         /// Main function
@@ -464,5 +474,7 @@ namespace PopcornViewer
                 }
             }
         }
+
+        #endregion
     }
 }

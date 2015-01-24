@@ -20,12 +20,17 @@ namespace PopcornViewer
         List<string> PlaylistURLs = new List<string>();
         int CurrentlyPlaying;
 
+        // Playlist Drag/Drop Variables
+        bool PlaylistDragging = false;
+        int SavedX = 0;
+        int SavedY = 0;
+        const int TOLERANCE = 2;
+
         /// <summary>
         /// URL Conversion Tools
         /// </summary>
         /// <param name="URL"></param>
         /// <returns></returns>
-        // Browser to Embedded
         private string ConvertURLToEmbeded(string url)
         {
             url = url.Replace("/watch?", "/");
@@ -34,12 +39,29 @@ namespace PopcornViewer
             return url;
         }
 
-        // Embedded to Browser
         private string ConvertURLToBrowser(string url)
         {
             url = url.Replace("?version=3&enablejsapi=1", "");
             url = url.Replace("/v/", "/watch?v=");
             return url;
+        }
+
+        /// <summary>
+        /// Adds videos to Playlist given a browser URL
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private bool AddToPlaylist(string url)
+        {
+            if (IsYoutubeURL(url))
+            {
+                PlaylistURLs.Add(ConvertURLToEmbeded(url));
+                Video video = RequestFromYoutube(url);
+                Playlist.Items.Add(video.Title);
+                UpdatePlaylistCount();
+                return true;
+            }
+            else return false;
         }
 
         /// <summary>
@@ -274,32 +296,10 @@ namespace PopcornViewer
         }
 
         /// <summary>
-        /// Handles logic for drag and drop in the Playlist
+        /// Functions controling Playlist mouse and keyboard operations
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Playlist_DragDrop(object sender, DragEventArgs e)
-        {
-            string url = (string) e.Data.GetData(DataFormats.Text, false);
-            if (IsYoutubeURL(url))
-            {
-                PlaylistURLs.Add(ConvertURLToEmbeded(url));
-                Video video = RequestFromYoutube(url);
-                Playlist.Items.Add(video.Title);
-                UpdatePlaylistCount();
-            }
-        }
-
-        private void Playlist_DragEnter(object sender, DragEventArgs e)
-        {
-            // Only allow text objects to drag/drop
-            if (e.Data.GetDataPresent(DataFormats.Text))
-            {
-                e.Effect = DragDropEffects.All;
-            }
-            else e.Effect = DragDropEffects.None;
-        }
-
         private void Playlist_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete)
@@ -317,6 +317,150 @@ namespace PopcornViewer
                 {
                     YoutubeVideo.Movie = PlaylistURLs[Playlist.SelectedIndex];
                     CurrentlyPlaying = Playlist.SelectedIndex;
+                }
+            }
+        }
+
+        private void Playlist_DoubleClick(object sender, EventArgs e)
+        {
+            if (Playlist.SelectedIndex >= 0)
+            {
+                YoutubeVideo.Movie = PlaylistURLs[Playlist.SelectedIndex];
+                CurrentlyPlaying = Playlist.SelectedIndex;
+            }
+        }
+
+        /// <summary>
+        /// Enables and disables appropriate options on opening
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PlaylistContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            // Don't let user select a video specific option without a video selected
+            if (Playlist.SelectedIndex >= 0)
+            {
+                copyPlaylistMenuItem.Enabled = true;
+                deletePlaylistMenuItem.Enabled = true;
+                playPlaylistMenuItem.Enabled = true;
+            }
+            else
+            {
+                copyPlaylistMenuItem.Enabled = false;
+                deletePlaylistMenuItem.Enabled = false;
+                playPlaylistMenuItem.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// These functions define behaviors for Playlist context menu items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void copyPlaylistMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(ConvertURLToBrowser(PlaylistURLs[Playlist.SelectedIndex]));
+        }
+
+        private void deletePlaylistMenuItem_Click(object sender, EventArgs e)
+        {
+            PlaylistURLs.RemoveAt(Playlist.SelectedIndex);
+            Playlist.Items.RemoveAt(Playlist.SelectedIndex);
+            UpdatePlaylistCount();
+        }
+
+        private void addVideoPlaylistMenuItem_Click(object sender, EventArgs e)
+        {
+            if (AddToPlaylist(Clipboard.GetText())) ;
+            else MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void playPlaylistMenuItem_Click(object sender, EventArgs e)
+        {
+            YoutubeVideo.Movie = PlaylistURLs[Playlist.SelectedIndex];
+            CurrentlyPlaying = Playlist.SelectedIndex;
+        }
+
+        /// <summary>
+        /// Handles logic for drag and drop in the Playlist
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Playlist_DragDrop(object sender, DragEventArgs e)
+        {
+            string url = (string)e.Data.GetData(DataFormats.Text, false);
+            // Drag and drop to add Youtube Videos
+            if (IsYoutubeURL(url))
+            {
+                // Not calling the usual add to playlist function to avoid
+                // slow, redundant IsYoutubeURL calls.
+                PlaylistURLs.Add(ConvertURLToEmbeded(url));
+                Video video = RequestFromYoutube(url);
+                Playlist.Items.Add(video.Title);
+                UpdatePlaylistCount();
+            }
+            // Drag and drop to rearrange Playlist
+            else if (PlaylistDragging)
+            {
+                Point point = Playlist.PointToClient(new Point(e.X, e.Y));
+                int index = Playlist.IndexFromPoint(point);
+                if (index < 0)
+                {
+                    index = Playlist.Items.Count - 1;
+                }
+                object data = e.Data.GetData(typeof(string));
+                string ind = PlaylistURLs[Playlist.Items.IndexOf(data)];
+                Playlist.Items.Remove(data);
+                Playlist.Items.Insert(index, data);
+                PlaylistURLs.Remove(ind);
+                PlaylistURLs.Insert(index, ind);
+            }
+        }
+
+        private void Playlist_DragEnter(object sender, DragEventArgs e)
+        {
+            // Only allow text objects to drag/drop
+            if (e.Data.GetDataPresent(DataFormats.Text))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else e.Effect = DragDropEffects.None;
+        }
+
+        private void Playlist_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+            if (Playlist.SelectedIndex >= 0)
+            {
+                if (!PlaylistDragging)
+                {
+                    PlaylistDragging = true;
+                    SavedX = e.Location.X;
+                    SavedY = e.Location.Y;
+                }
+            }
+        }
+
+        private void Playlist_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void Playlist_MouseUp(object sender, MouseEventArgs e)
+        {
+            PlaylistDragging = false;
+        }
+
+        private void Playlist_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (PlaylistDragging && Playlist.SelectedIndex >= 0)
+            {
+                if (SavedX > e.Location.X + TOLERANCE ||
+                    SavedX < e.Location.X - TOLERANCE ||
+                    SavedY < e.Location.Y - TOLERANCE ||
+                    SavedY > e.Location.Y + TOLERANCE)
+                {
+                    Playlist.DoDragDrop(Playlist.SelectedItem, DragDropEffects.Move);
                 }
             }
         }

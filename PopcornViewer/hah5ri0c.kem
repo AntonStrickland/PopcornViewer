@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -41,11 +40,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PlaylistLabel = new System.Windows.Forms.TextBox();
             this.Playlist = new System.Windows.Forms.ListBox();
-            this.PlaylistContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.playPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deletePlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addVideoPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LocalFilesLabel = new System.Windows.Forms.TextBox();
             this.GroupFiles = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -65,7 +59,6 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.PlaylistContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -228,9 +221,7 @@
             this.Playlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Playlist.ContextMenuStrip = this.PlaylistContextMenu;
             this.Playlist.FormattingEnabled = true;
-            this.Playlist.HorizontalScrollbar = true;
             this.Playlist.IntegralHeight = false;
             this.Playlist.Location = new System.Drawing.Point(3, 38);
             this.Playlist.Name = "Playlist";
@@ -238,51 +229,7 @@
             this.Playlist.TabIndex = 0;
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
             this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
-            this.Playlist.DragOver += new System.Windows.Forms.DragEventHandler(this.Playlist_DragOver);
-            this.Playlist.DoubleClick += new System.EventHandler(this.Playlist_DoubleClick);
             this.Playlist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Playlist_KeyDown);
-            this.Playlist.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseDown);
-            this.Playlist.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseMove);
-            this.Playlist.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseUp);
-            // 
-            // PlaylistContextMenu
-            // 
-            this.PlaylistContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playPlaylistMenuItem,
-            this.copyPlaylistMenuItem,
-            this.deletePlaylistMenuItem,
-            this.addVideoPlaylistMenuItem});
-            this.PlaylistContextMenu.Name = "PlaylistContextMenu";
-            this.PlaylistContextMenu.Size = new System.Drawing.Size(214, 92);
-            this.PlaylistContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.PlaylistContextMenu_Opening);
-            // 
-            // playPlaylistMenuItem
-            // 
-            this.playPlaylistMenuItem.Name = "playPlaylistMenuItem";
-            this.playPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.playPlaylistMenuItem.Text = "Play";
-            this.playPlaylistMenuItem.Click += new System.EventHandler(this.playPlaylistMenuItem_Click);
-            // 
-            // copyPlaylistMenuItem
-            // 
-            this.copyPlaylistMenuItem.Name = "copyPlaylistMenuItem";
-            this.copyPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.copyPlaylistMenuItem.Text = "Copy";
-            this.copyPlaylistMenuItem.Click += new System.EventHandler(this.copyPlaylistMenuItem_Click);
-            // 
-            // deletePlaylistMenuItem
-            // 
-            this.deletePlaylistMenuItem.Name = "deletePlaylistMenuItem";
-            this.deletePlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.deletePlaylistMenuItem.Text = "Delete";
-            this.deletePlaylistMenuItem.Click += new System.EventHandler(this.deletePlaylistMenuItem_Click);
-            // 
-            // addVideoPlaylistMenuItem
-            // 
-            this.addVideoPlaylistMenuItem.Name = "addVideoPlaylistMenuItem";
-            this.addVideoPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.addVideoPlaylistMenuItem.Text = "Add Video from Clipboard";
-            this.addVideoPlaylistMenuItem.Click += new System.EventHandler(this.addVideoPlaylistMenuItem_Click);
             // 
             // LocalFilesLabel
             // 
@@ -339,7 +286,6 @@
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.PlaylistContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -359,11 +305,6 @@
         private System.Windows.Forms.TextBox ChatLabel;
         private System.Windows.Forms.TextBox ChatBox;
         private System.Windows.Forms.RichTextBox ChatHistory;
-        private System.Windows.Forms.ContextMenuStrip PlaylistContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem copyPlaylistMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deletePlaylistMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addVideoPlaylistMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem playPlaylistMenuItem;
 
     }
 }

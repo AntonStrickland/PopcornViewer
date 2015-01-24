@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.Youtube = new AxShockwaveFlashObjects.AxShockwaveFlash();
+            this.YoutubeVideo = new AxShockwaveFlashObjects.AxShockwaveFlash();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.ChatLabel = new System.Windows.Forms.TextBox();
             this.ChatMembers = new System.Windows.Forms.ListBox();
@@ -50,7 +50,7 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Youtube)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
@@ -87,7 +87,7 @@
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.Youtube);
+            this.splitContainer3.Panel1.Controls.Add(this.YoutubeVideo);
             // 
             // splitContainer3.Panel2
             // 
@@ -96,17 +96,17 @@
             this.splitContainer3.SplitterDistance = 340;
             this.splitContainer3.TabIndex = 0;
             // 
-            // Youtube
+            // YoutubeVideo
             // 
-            this.Youtube.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.YoutubeVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Youtube.Enabled = true;
-            this.Youtube.Location = new System.Drawing.Point(12, 12);
-            this.Youtube.Name = "Youtube";
-            this.Youtube.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Youtube.OcxState")));
-            this.Youtube.Size = new System.Drawing.Size(652, 328);
-            this.Youtube.TabIndex = 0;
+            this.YoutubeVideo.Enabled = true;
+            this.YoutubeVideo.Location = new System.Drawing.Point(12, 12);
+            this.YoutubeVideo.Name = "YoutubeVideo";
+            this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
+            this.YoutubeVideo.Size = new System.Drawing.Size(652, 328);
+            this.YoutubeVideo.TabIndex = 0;
             // 
             // splitContainer4
             // 
@@ -222,7 +222,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Playlist.FormattingEnabled = true;
-            this.Playlist.HorizontalScrollbar = true;
             this.Playlist.IntegralHeight = false;
             this.Playlist.Location = new System.Drawing.Point(3, 38);
             this.Playlist.Name = "Playlist";
@@ -230,6 +229,7 @@
             this.Playlist.TabIndex = 0;
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
             this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
+            this.Playlist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Playlist_KeyDown);
             // 
             // LocalFilesLabel
             // 
@@ -273,7 +273,7 @@
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Youtube)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).EndInit();
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel1.PerformLayout();
             this.splitContainer4.Panel2.ResumeLayout(false);
@@ -297,7 +297,7 @@
         private System.Windows.Forms.TreeView GroupFiles;
         private System.Windows.Forms.ListBox Playlist;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private AxShockwaveFlashObjects.AxShockwaveFlash Youtube;
+        private AxShockwaveFlashObjects.AxShockwaveFlash YoutubeVideo;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.ListBox ChatMembers;
         private System.Windows.Forms.TextBox PlaylistLabel;

@@ -92,8 +92,10 @@ namespace PopcornViewer
                 request.Method = "HEAD";
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    return ((response.ResponseUri.ToString().Contains("youtube.com") &&
-                            response.ResponseUri.ToString().Contains("watch?v=")));
+                    return (response.ResponseUri.ToString().Contains("youtube.com") &&
+                            response.ResponseUri.ToString().Contains("watch?v=") &&
+                            // Makes sure playlists are not able to be added since they are not videos
+                            !response.ResponseUri.ToString().Contains("&list"));
                 }
             }
             catch { return false; }
@@ -473,6 +475,31 @@ namespace PopcornViewer
                     Playlist.DoDragDrop(Playlist.SelectedItem, DragDropEffects.Move);
                 }
             }
+        }
+
+        /// <summary>
+        /// Controls the edit Toolstrip Menu items' logic
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(ConvertURLToBrowser(PlaylistURLs[Playlist.SelectedIndex]));
+        }
+
+        private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            if (Playlist.SelectedIndex >= 0)
+            {
+                copyToolStripMenuItem.Enabled = true;
+            }
+            else copyToolStripMenuItem.Enabled = false;
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (AddToPlaylist(Clipboard.GetText())) ;
+            else MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         #endregion

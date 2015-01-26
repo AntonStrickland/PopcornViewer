@@ -338,8 +338,10 @@ namespace PopcornViewer
             if (Playlist.SelectedIndex >= 0)
             {
                 YoutubeVideo.Movie = PlaylistURLs[Playlist.SelectedIndex];
-                CurrentlyPlaying = Playlist.SelectedIndex;
+                CurrentlyPlaying = Playlist.SelectedIndex;  
             }
+
+            
         }
 
         /// <summary>

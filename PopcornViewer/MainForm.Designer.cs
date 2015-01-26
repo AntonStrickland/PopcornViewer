@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.YoutubeVideo = new AxShockwaveFlashObjects.AxShockwaveFlash();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.ChatLabel = new System.Windows.Forms.TextBox();
             this.ChatMembers = new System.Windows.Forms.ListBox();
@@ -69,7 +68,7 @@
             this.playlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repeatOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repeatAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shuffleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +82,7 @@
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.YoutubeVideo = new AxShockwaveFlashObjects.AxShockwaveFlash();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -91,7 +91,6 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
@@ -105,6 +104,7 @@
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -139,20 +139,8 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
             this.splitContainer3.Size = new System.Drawing.Size(664, 465);
-            this.splitContainer3.SplitterDistance = 323;
+            this.splitContainer3.SplitterDistance = 329;
             this.splitContainer3.TabIndex = 0;
-            // 
-            // YoutubeVideo
-            // 
-            this.YoutubeVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.YoutubeVideo.Enabled = true;
-            this.YoutubeVideo.Location = new System.Drawing.Point(12, 3);
-            this.YoutubeVideo.Name = "YoutubeVideo";
-            this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
-            this.YoutubeVideo.Size = new System.Drawing.Size(649, 317);
-            this.YoutubeVideo.TabIndex = 0;
             // 
             // splitContainer4
             // 
@@ -169,7 +157,7 @@
             // 
             this.splitContainer4.Panel2.Controls.Add(this.ChatHistory);
             this.splitContainer4.Panel2.Controls.Add(this.ChatBox);
-            this.splitContainer4.Size = new System.Drawing.Size(664, 138);
+            this.splitContainer4.Size = new System.Drawing.Size(664, 132);
             this.splitContainer4.SplitterDistance = 164;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -199,7 +187,7 @@
             this.ChatMembers.IntegralHeight = false;
             this.ChatMembers.Location = new System.Drawing.Point(12, 29);
             this.ChatMembers.Name = "ChatMembers";
-            this.ChatMembers.Size = new System.Drawing.Size(149, 97);
+            this.ChatMembers.Size = new System.Drawing.Size(149, 91);
             this.ChatMembers.TabIndex = 0;
             // 
             // ChatHistory
@@ -211,7 +199,7 @@
             this.ChatHistory.Cursor = System.Windows.Forms.Cursors.Default;
             this.ChatHistory.Location = new System.Drawing.Point(4, 6);
             this.ChatHistory.Name = "ChatHistory";
-            this.ChatHistory.Size = new System.Drawing.Size(489, 94);
+            this.ChatHistory.Size = new System.Drawing.Size(489, 88);
             this.ChatHistory.TabIndex = 2;
             this.ChatHistory.Text = "";
             // 
@@ -220,7 +208,7 @@
             this.ChatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.ChatBox.Location = new System.Drawing.Point(4, 106);
+            this.ChatBox.Location = new System.Drawing.Point(4, 100);
             this.ChatBox.Name = "ChatBox";
             this.ChatBox.Size = new System.Drawing.Size(489, 20);
             this.ChatBox.TabIndex = 0;
@@ -516,7 +504,7 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.customizeToolStripMenuItem,
+            this.repeatOneToolStripMenuItem,
             this.repeatAllToolStripMenuItem,
             this.shuffleToolStripMenuItem,
             this.playNextToolStripMenuItem,
@@ -525,11 +513,11 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.toolsToolStripMenuItem.Text = "Playback";
             // 
-            // customizeToolStripMenuItem
+            // repeatOneToolStripMenuItem
             // 
-            this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.customizeToolStripMenuItem.Text = "Repeat One";
+            this.repeatOneToolStripMenuItem.Name = "repeatOneToolStripMenuItem";
+            this.repeatOneToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.repeatOneToolStripMenuItem.Text = "Repeat One";
             // 
             // repeatAllToolStripMenuItem
             // 
@@ -545,6 +533,8 @@
             // 
             // playNextToolStripMenuItem
             // 
+            this.playNextToolStripMenuItem.Checked = true;
+            this.playNextToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.playNextToolStripMenuItem.Name = "playNextToolStripMenuItem";
             this.playNextToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.playNextToolStripMenuItem.Text = "Play Next";
@@ -633,6 +623,19 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             // 
+            // YoutubeVideo
+            // 
+            this.YoutubeVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.YoutubeVideo.Enabled = true;
+            this.YoutubeVideo.Location = new System.Drawing.Point(12, 3);
+            this.YoutubeVideo.Name = "YoutubeVideo";
+            this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
+            this.YoutubeVideo.Size = new System.Drawing.Size(649, 320);
+            this.YoutubeVideo.TabIndex = 0;
+            this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -650,7 +653,6 @@
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).EndInit();
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel1.PerformLayout();
             this.splitContainer4.Panel2.ResumeLayout(false);
@@ -671,6 +673,7 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -707,7 +710,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem customizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem repeatOneToolStripMenuItem;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStripMenuItem repeatAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shuffleToolStripMenuItem;

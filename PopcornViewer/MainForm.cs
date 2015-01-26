@@ -20,6 +20,7 @@ namespace PopcornViewer
         
         // Form Variables
         List<string> PlaylistURLs = new List<string>();
+        // Index in PlaylistURLs of currently playing video
         int CurrentlyPlaying = -1;
 
         // Playlist Drag/Drop Variables
@@ -159,6 +160,53 @@ namespace PopcornViewer
 
                         // Ended
                         case 0:
+                            // Repeat All
+                            if (repeatAllToolStripMenuItem.Checked)
+                            {
+                                if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
+                                {
+                                    YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[CurrentlyPlaying + 1] + ")");
+                                    CurrentlyPlaying++;
+                                }
+                                else if (repeatAllToolStripMenuItem.Checked)
+                                {
+                                    YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[0] + ")");
+                                    CurrentlyPlaying = 0;
+                                }
+                                YoutubeVideo_CallFlash("playVideo()");
+                                Playlist.SelectedIndex = CurrentlyPlaying;
+                            }
+
+                            // Play Next
+                            else if (playNextToolStripMenuItem.Checked)
+                            {
+                                if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
+                                {
+                                    YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[CurrentlyPlaying + 1] + ")");
+                                    CurrentlyPlaying++;
+                                    YoutubeVideo_CallFlash("playVideo()");
+                                    Playlist.SelectedIndex = CurrentlyPlaying;
+                                }
+                            }
+
+                            // Repeat One
+                            else if (repeatOneToolStripMenuItem.Checked)
+                            {
+                                YoutubeVideo_CallFlash("playVideo()");
+                                Playlist.SelectedIndex = CurrentlyPlaying;
+                            }
+
+                            // Shuffle
+                            else if (shuffleToolStripMenuItem.Checked)
+                            {
+                                Random random = new Random();
+                                int nextVideo = random.Next(0, PlaylistURLs.Count);
+
+                                YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[nextVideo] + ")");
+                                CurrentlyPlaying = nextVideo;
+                                YoutubeVideo_CallFlash("playVideo()");
+                                Playlist.SelectedIndex = CurrentlyPlaying;
+                            }
                             break;
 
                         // Playing

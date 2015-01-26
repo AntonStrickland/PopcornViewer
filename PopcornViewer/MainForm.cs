@@ -20,7 +20,7 @@ namespace PopcornViewer
         
         // Form Variables
         List<string> PlaylistURLs = new List<string>();
-        int CurrentlyPlaying;
+        int CurrentlyPlaying = -1;
 
         // Playlist Drag/Drop Variables
         bool PlaylistDragging = false;
@@ -514,11 +514,9 @@ namespace PopcornViewer
 
             // Determine the color of the brush to draw each item based  
             // on the index of the item to draw. 
-            switch (e.Index)
+            if (e.Index == CurrentlyPlaying)
             {
-                case 0:
                     myBrush = Brushes.Red;
-                    break;
             }
 
             // Draw the current item text based on the current Font  

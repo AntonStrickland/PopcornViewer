@@ -305,6 +305,8 @@ namespace PopcornViewer
         public MainForm()
         {
             InitializeComponent();
+            Playlist.DrawMode = DrawMode.OwnerDrawFixed;
+            Playlist.DrawItem += new DrawItemEventHandler(Playlist_DrawItem);
         }
 
         /// <summary>
@@ -500,6 +502,31 @@ namespace PopcornViewer
         {
             if (AddToPlaylist(Clipboard.GetText())) ;
             else MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        //Changes the Playlist item 0 to be red showing that it is the one currently playing
+        private void Playlist_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        {
+            // Draw the background of the ListBox control for each item.
+            e.DrawBackground();
+            // Define the default color of the brush as black.
+            Brush myBrush = Brushes.Black;
+
+            // Determine the color of the brush to draw each item based  
+            // on the index of the item to draw. 
+            switch (e.Index)
+            {
+                case 0:
+                    myBrush = Brushes.Red;
+                    break;
+            }
+
+            // Draw the current item text based on the current Font  
+            // and the custom brush settings.
+            e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
+                e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+            // If the ListBox has focus, draw a focus rectangle around the selected item.
+            e.DrawFocusRectangle();
         }
 
         #endregion

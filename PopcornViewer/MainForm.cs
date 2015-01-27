@@ -398,7 +398,6 @@ namespace PopcornViewer
                     Playlist.SelectedIndex = 1;
                     Playlist.SelectedIndex = CurrentlyPlaying;
                     Playlist.Items.Remove("FixRed");
-                    PlayVideo(Playlist.SelectedIndex);
                 }
                 else
                 {
@@ -445,7 +444,21 @@ namespace PopcornViewer
 
         private void deletePlaylistMenuItem_Click(object sender, EventArgs e)
         {
+            if (Playlist.SelectedIndex < CurrentlyPlaying)
+            {
+                CurrentlyPlaying--;
+                Playlist.Items.Add("FixRed");
+                Playlist.SelectedIndex = 1;
+                Playlist.SelectedIndex = CurrentlyPlaying;
+                Playlist.Items.Remove("FixRed");
+            }
+            if (Playlist.SelectedIndex == CurrentlyPlaying)
+            {
+                CurrentlyPlaying = -1;
+
+            }
             PlaylistURLs.RemoveAt(Playlist.SelectedIndex);
+            LastSelectedItem = -1;
             Playlist.Items.RemoveAt(Playlist.SelectedIndex);
             UpdatePlaylistCount();
         }
@@ -458,8 +471,28 @@ namespace PopcornViewer
 
         private void playPlaylistMenuItem_Click(object sender, EventArgs e)
         {
-            YoutubeVideo.Movie = PlaylistURLs[Playlist.SelectedIndex];
             CurrentlyPlaying = Playlist.SelectedIndex;
+            if (Playlist.SelectedIndex >= 0)
+            {
+
+                if (LastSelectedItem == -1)
+                {
+                    PlayVideo(Playlist.SelectedIndex);
+                    LastSelectedItem = CurrentlyPlaying;
+                    Playlist.Items.Add("FixRed");
+                    Playlist.SelectedIndex = 1;
+                    Playlist.SelectedIndex = CurrentlyPlaying;
+                    Playlist.Items.Remove("FixRed");
+                }
+                else
+                {
+                    PlayVideo(Playlist.SelectedIndex);
+                    Playlist.SelectedIndex = LastSelectedItem;
+                    Playlist.SelectedIndex = CurrentlyPlaying;
+                    LastSelectedItem = CurrentlyPlaying;
+                }
+
+            }
         }
 
         /// <summary>

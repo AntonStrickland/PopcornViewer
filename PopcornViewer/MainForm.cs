@@ -570,7 +570,7 @@ namespace PopcornViewer
 
                 // Draw the current item text based on the current Font  
                 // and the custom brush settings.
-            if(e.Index != -1)
+            if(e.Index > -1)
             { 
                 e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
                     e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);

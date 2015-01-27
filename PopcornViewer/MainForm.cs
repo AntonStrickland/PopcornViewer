@@ -132,6 +132,21 @@ namespace PopcornViewer
             }
             YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
             YoutubeVideo_CallFlash("playVideo()");
+
+            if (LastSelectedItem == -1)
+            {
+                LastSelectedItem = CurrentlyPlaying;
+                Playlist.Items.Add("FixRed");
+                Playlist.SelectedIndex = 1;
+                Playlist.SelectedIndex = CurrentlyPlaying;
+                Playlist.Items.Remove("FixRed");
+            }
+            else
+            {
+                Playlist.SelectedIndex = LastSelectedItem;
+                Playlist.SelectedIndex = CurrentlyPlaying;
+                LastSelectedItem = CurrentlyPlaying;
+            }
         }
 
         /// <summary>
@@ -433,24 +448,9 @@ namespace PopcornViewer
             
             if (Playlist.SelectedIndex >= 0)
             {
-                
-                if (LastSelectedItem == -1)
-                {
+
                     PlayVideo(Playlist.SelectedIndex);
-                    LastSelectedItem = CurrentlyPlaying;
-                    Playlist.Items.Add("FixRed");
-                    Playlist.SelectedIndex = 1;
-                    Playlist.SelectedIndex = CurrentlyPlaying;
-                    Playlist.Items.Remove("FixRed");
-                }
-                else
-                {
-                    PlayVideo(Playlist.SelectedIndex);
-                    Playlist.SelectedIndex = LastSelectedItem;
-                    Playlist.SelectedIndex = CurrentlyPlaying;
-                    LastSelectedItem = CurrentlyPlaying;
-                }
-                
+
             }
         }
 
@@ -496,7 +496,7 @@ namespace PopcornViewer
                 Playlist.SelectedIndex = CurrentlyPlaying;
                 Playlist.Items.Remove("FixRed");
             }
-            if (Playlist.SelectedIndex == CurrentlyPlaying)
+            else if (Playlist.SelectedIndex == CurrentlyPlaying)
             {
                 CurrentlyPlaying = -1;
 
@@ -518,24 +518,7 @@ namespace PopcornViewer
             CurrentlyPlaying = Playlist.SelectedIndex;
             if (Playlist.SelectedIndex >= 0)
             {
-
-                if (LastSelectedItem == -1)
-                {
                     PlayVideo(Playlist.SelectedIndex);
-                    LastSelectedItem = CurrentlyPlaying;
-                    Playlist.Items.Add("FixRed");
-                    Playlist.SelectedIndex = 1;
-                    Playlist.SelectedIndex = CurrentlyPlaying;
-                    Playlist.Items.Remove("FixRed");
-                }
-                else
-                {
-                    PlayVideo(Playlist.SelectedIndex);
-                    Playlist.SelectedIndex = LastSelectedItem;
-                    Playlist.SelectedIndex = CurrentlyPlaying;
-                    LastSelectedItem = CurrentlyPlaying;
-                }
-
             }
         }
 

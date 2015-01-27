@@ -40,7 +40,6 @@
             this.ChatBox = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PlaylistLabel = new System.Windows.Forms.TextBox();
-            this.Playlist = new System.Windows.Forms.ListBox();
             this.PlaylistContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +82,7 @@
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.Playlist = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -261,29 +261,6 @@
             this.PlaylistLabel.Text = "Playlist Count: 0";
             this.PlaylistLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.PlaylistLabel.WordWrap = false;
-            // 
-            // Playlist
-            // 
-            this.Playlist.AllowDrop = true;
-            this.Playlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Playlist.ContextMenuStrip = this.PlaylistContextMenu;
-            this.Playlist.FormattingEnabled = true;
-            this.Playlist.HorizontalScrollbar = true;
-            this.Playlist.IntegralHeight = false;
-            this.Playlist.Location = new System.Drawing.Point(3, 29);
-            this.Playlist.Name = "Playlist";
-            this.Playlist.Size = new System.Drawing.Size(155, 294);
-            this.Playlist.TabIndex = 0;
-            this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
-            this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
-            this.Playlist.DragOver += new System.Windows.Forms.DragEventHandler(this.Playlist_DragOver);
-            this.Playlist.DoubleClick += new System.EventHandler(this.Playlist_DoubleClick);
-            this.Playlist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Playlist_KeyDown);
-            this.Playlist.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseDown);
-            this.Playlist.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseMove);
-            this.Playlist.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseUp);
             // 
             // PlaylistContextMenu
             // 
@@ -636,6 +613,29 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             // 
+            // Playlist
+            // 
+            this.Playlist.AllowDrop = true;
+            this.Playlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Playlist.ContextMenuStrip = this.PlaylistContextMenu;
+            this.Playlist.FormattingEnabled = true;
+            this.Playlist.HorizontalScrollbar = true;
+            this.Playlist.IntegralHeight = false;
+            this.Playlist.Location = new System.Drawing.Point(3, 29);
+            this.Playlist.Name = "Playlist";
+            this.Playlist.Size = new System.Drawing.Size(155, 294);
+            this.Playlist.TabIndex = 0;
+            this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
+            this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
+            this.Playlist.DragOver += new System.Windows.Forms.DragEventHandler(this.Playlist_DragOver);
+            this.Playlist.DoubleClick += new System.EventHandler(this.Playlist_DoubleClick);
+            this.Playlist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Playlist_KeyDown);
+            this.Playlist.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseDown);
+            this.Playlist.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseMove);
+            this.Playlist.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseUp);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -683,7 +683,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TreeView GroupFiles;
-        private System.Windows.Forms.ListBox Playlist;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private AxShockwaveFlashObjects.AxShockwaveFlash YoutubeVideo;
         private System.Windows.Forms.SplitContainer splitContainer4;
@@ -733,6 +732,7 @@
         private System.Windows.Forms.ToolStripMenuItem manageGroupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chatOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.ListBox Playlist;
 
     }
 }

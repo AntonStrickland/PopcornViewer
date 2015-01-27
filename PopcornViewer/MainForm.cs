@@ -27,6 +27,7 @@ namespace PopcornViewer
         bool PlaylistDragging = false;
         int SavedX = 0;
         int SavedY = 0;
+        int LastSelectedItem = -1;
         const int TOLERANCE = 2;
 
         #endregion
@@ -385,9 +386,28 @@ namespace PopcornViewer
 
         private void Playlist_DoubleClick(object sender, EventArgs e)
         {
+            
             if (Playlist.SelectedIndex >= 0)
             {
-                PlayVideo(Playlist.SelectedIndex);
+                
+                if (LastSelectedItem == -1)
+                {
+                    PlayVideo(Playlist.SelectedIndex);
+                    LastSelectedItem = CurrentlyPlaying;
+                    Playlist.Items.Add("FixRed");
+                    Playlist.SelectedIndex = 1;
+                    Playlist.SelectedIndex = CurrentlyPlaying;
+                    Playlist.Items.Remove("FixRed");
+                    PlayVideo(Playlist.SelectedIndex);
+                }
+                else
+                {
+                    PlayVideo(Playlist.SelectedIndex);
+                    Playlist.SelectedIndex = LastSelectedItem;
+                    Playlist.SelectedIndex = CurrentlyPlaying;
+                    LastSelectedItem = CurrentlyPlaying;
+                }
+                
             }
         }
 

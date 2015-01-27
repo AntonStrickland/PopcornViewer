@@ -555,24 +555,29 @@ namespace PopcornViewer
         //Changes the Playlist item 0 to be red showing that it is the one currently playing
         private void Playlist_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
         {
-            // Draw the background of the ListBox control for each item.
-            e.DrawBackground();
-            // Define the default color of the brush as black.
-            Brush myBrush = Brushes.Black;
 
-            // Determine the color of the brush to draw each item based  
-            // on the index of the item to draw. 
-            if (e.Index == CurrentlyPlaying)
-            {
+                // Draw the background of the ListBox control for each item.
+                e.DrawBackground();
+                // Define the default color of the brush as black.
+                Brush myBrush = Brushes.Black;
+
+                // Determine the color of the brush to draw each item based  
+                // on the index of the item to draw. 
+                if (e.Index == CurrentlyPlaying)
+                {
                     myBrush = Brushes.Red;
-            }
+                }
 
-            // Draw the current item text based on the current Font  
-            // and the custom brush settings.
-            e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
-                e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
-            // If the ListBox has focus, draw a focus rectangle around the selected item.
-            e.DrawFocusRectangle();
+                // Draw the current item text based on the current Font  
+                // and the custom brush settings.
+            if(e.Index != -1)
+            { 
+                e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
+                    e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+            }
+                // If the ListBox has focus, draw a focus rectangle around the selected item.
+                e.DrawFocusRectangle();
+            
         }
 
         #endregion

@@ -118,6 +118,21 @@ namespace PopcornViewer
             return req.Retrieve<Video>(videoEntryUrl);
         }
 
+        /// <summary>
+        /// Performs bundled functions to play a video at URL index
+        /// </summary>
+        /// <param name="Index"></param>
+        private void PlayVideo(int Index)
+        {
+            CurrentlyPlaying = Index;
+            if (YoutubeVideo.Movie == null)
+            {
+                YoutubeVideo.Movie = PlaylistURLs[Index];
+            }
+            YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
+            YoutubeVideo_CallFlash("playVideo()");
+        }
+
         #endregion
 
         #region Flash-C# Communication
@@ -165,16 +180,9 @@ namespace PopcornViewer
                             {
                                 if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
                                 {
-                                    YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[CurrentlyPlaying + 1] + ")");
-                                    CurrentlyPlaying++;
+                                    PlayVideo(CurrentlyPlaying + 1);
                                 }
-                                else if (repeatAllToolStripMenuItem.Checked)
-                                {
-                                    YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[0] + ")");
-                                    CurrentlyPlaying = 0;
-                                }
-                                YoutubeVideo_CallFlash("playVideo()");
-                                Playlist.SelectedIndex = CurrentlyPlaying;
+                                else PlayVideo(0);
                             }
 
                             // Play Next
@@ -182,18 +190,14 @@ namespace PopcornViewer
                             {
                                 if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
                                 {
-                                    YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[CurrentlyPlaying + 1] + ")");
-                                    CurrentlyPlaying++;
-                                    YoutubeVideo_CallFlash("playVideo()");
-                                    Playlist.SelectedIndex = CurrentlyPlaying;
+                                    PlayVideo(CurrentlyPlaying + 1);
                                 }
                             }
 
                             // Repeat One
                             else if (repeatOneToolStripMenuItem.Checked)
                             {
-                                YoutubeVideo_CallFlash("playVideo()");
-                                Playlist.SelectedIndex = CurrentlyPlaying;
+                                PlayVideo(CurrentlyPlaying);
                             }
 
                             // Shuffle
@@ -202,10 +206,7 @@ namespace PopcornViewer
                                 Random random = new Random();
                                 int nextVideo = random.Next(0, PlaylistURLs.Count);
 
-                                YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[nextVideo] + ")");
-                                CurrentlyPlaying = nextVideo;
-                                YoutubeVideo_CallFlash("playVideo()");
-                                Playlist.SelectedIndex = CurrentlyPlaying;
+                                PlayVideo(nextVideo);
                             }
                             break;
 
@@ -377,8 +378,7 @@ namespace PopcornViewer
             {
                 if (Playlist.SelectedIndex >= 0)
                 {
-                    YoutubeVideo.Movie = PlaylistURLs[Playlist.SelectedIndex];
-                    CurrentlyPlaying = Playlist.SelectedIndex;
+                    PlayVideo(Playlist.SelectedIndex);
                 }
             }
         }
@@ -387,8 +387,7 @@ namespace PopcornViewer
         {
             if (Playlist.SelectedIndex >= 0)
             {
-                YoutubeVideo.Movie = PlaylistURLs[Playlist.SelectedIndex];
-                CurrentlyPlaying = Playlist.SelectedIndex;
+                PlayVideo(Playlist.SelectedIndex);
             }
         }
 

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.YoutubeVideo = new AxShockwaveFlashObjects.AxShockwaveFlash();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.ChatLabel = new System.Windows.Forms.TextBox();
             this.ChatMembers = new System.Windows.Forms.ListBox();
@@ -82,7 +83,6 @@
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.YoutubeVideo = new AxShockwaveFlashObjects.AxShockwaveFlash();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -91,6 +91,7 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
@@ -104,7 +105,6 @@
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -141,6 +141,19 @@
             this.splitContainer3.Size = new System.Drawing.Size(664, 465);
             this.splitContainer3.SplitterDistance = 329;
             this.splitContainer3.TabIndex = 0;
+            // 
+            // YoutubeVideo
+            // 
+            this.YoutubeVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.YoutubeVideo.Enabled = true;
+            this.YoutubeVideo.Location = new System.Drawing.Point(12, 3);
+            this.YoutubeVideo.Name = "YoutubeVideo";
+            this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
+            this.YoutubeVideo.Size = new System.Drawing.Size(652, 328);
+            this.YoutubeVideo.TabIndex = 0;
+            this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
             // 
             // splitContainer4
             // 
@@ -623,19 +636,6 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             // 
-            // YoutubeVideo
-            // 
-            this.YoutubeVideo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.YoutubeVideo.Enabled = true;
-            this.YoutubeVideo.Location = new System.Drawing.Point(12, 3);
-            this.YoutubeVideo.Name = "YoutubeVideo";
-            this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
-            this.YoutubeVideo.Size = new System.Drawing.Size(649, 320);
-            this.YoutubeVideo.TabIndex = 0;
-            this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -653,6 +653,7 @@
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).EndInit();
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel1.PerformLayout();
             this.splitContainer4.Panel2.ResumeLayout(false);
@@ -673,7 +674,6 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.YoutubeVideo)).EndInit();
             this.ResumeLayout(false);
 
         }

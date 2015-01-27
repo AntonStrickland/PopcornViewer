@@ -134,6 +134,50 @@ namespace PopcornViewer
             YoutubeVideo_CallFlash("playVideo()");
         }
 
+        /// <summary>
+        /// Changes the Playlist item 0 to be red showing that it is the one currently playing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Playlist_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        {
+
+            // Draw the background of the ListBox control for each item.
+            e.DrawBackground();
+            // Define the default color of the brush as black.
+            Brush myBrush = Brushes.Black;
+
+            // Determine the color of the brush to draw each item based  
+            // on the index of the item to draw. 
+            if (e.Index == CurrentlyPlaying)
+            {
+                myBrush = Brushes.Red;
+            }
+
+            // Draw the current item text based on the current Font  
+            // and the custom brush settings.
+            if (e.Index > -1)
+            {
+                e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
+                    e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+            }
+            // If the ListBox has focus, draw a focus rectangle around the selected item.
+            e.DrawFocusRectangle();
+
+        }
+
+        /// <summary>
+        /// Used to turn off all other checks in the playback toolstrip.
+        /// </summary>
+        private void UncheckPlaybackOptions()
+        {
+            repeatAllToolStripMenuItem.Checked = false;
+            repeatOneToolStripMenuItem.Checked = false;
+            shuffleToolStripMenuItem.Checked = false;
+            playNextToolStripMenuItem.Checked = false;
+            pauseToolStripMenuItem.Checked = false;
+        }
+
         #endregion
 
         #region Flash-C# Communication
@@ -604,32 +648,39 @@ namespace PopcornViewer
             else MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        //Changes the Playlist item 0 to be red showing that it is the one currently playing
-        private void Playlist_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        /// <summary>
+        /// Deals with the playback toolstrip.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void repeatOneToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            UncheckPlaybackOptions();
+            repeatOneToolStripMenuItem.Checked = true;
+        }
 
-                // Draw the background of the ListBox control for each item.
-                e.DrawBackground();
-                // Define the default color of the brush as black.
-                Brush myBrush = Brushes.Black;
+        private void repeatAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckPlaybackOptions();
+            repeatAllToolStripMenuItem.Checked = true;
+        }
 
-                // Determine the color of the brush to draw each item based  
-                // on the index of the item to draw. 
-                if (e.Index == CurrentlyPlaying)
-                {
-                    myBrush = Brushes.Red;
-                }
+        private void shuffleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckPlaybackOptions();
+            shuffleToolStripMenuItem.Checked = true;
+        }
 
-                // Draw the current item text based on the current Font  
-                // and the custom brush settings.
-            if(e.Index > -1)
-            { 
-                e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
-                    e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
-            }
-                // If the ListBox has focus, draw a focus rectangle around the selected item.
-                e.DrawFocusRectangle();
-            
+        private void playNextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckPlaybackOptions();
+            playNextToolStripMenuItem.Checked = true;
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckPlaybackOptions();
+            pauseToolStripMenuItem.Checked = true;
         }
 
         #endregion

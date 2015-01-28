@@ -83,6 +83,7 @@
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.NicknameLabel = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -120,8 +121,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(838, 465);
-            this.splitContainer1.SplitterDistance = 664;
+            this.splitContainer1.Size = new System.Drawing.Size(829, 445);
+            this.splitContainer1.SplitterDistance = 656;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer3
@@ -138,8 +139,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(664, 465);
-            this.splitContainer3.SplitterDistance = 329;
+            this.splitContainer3.Size = new System.Drawing.Size(656, 445);
+            this.splitContainer3.SplitterDistance = 314;
             this.splitContainer3.TabIndex = 0;
             // 
             // YoutubeVideo
@@ -151,7 +152,7 @@
             this.YoutubeVideo.Location = new System.Drawing.Point(12, 3);
             this.YoutubeVideo.Name = "YoutubeVideo";
             this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
-            this.YoutubeVideo.Size = new System.Drawing.Size(652, 328);
+            this.YoutubeVideo.Size = new System.Drawing.Size(644, 313);
             this.YoutubeVideo.TabIndex = 0;
             this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
             // 
@@ -168,10 +169,11 @@
             // 
             // splitContainer4.Panel2
             // 
+            this.splitContainer4.Panel2.Controls.Add(this.NicknameLabel);
             this.splitContainer4.Panel2.Controls.Add(this.ChatHistory);
             this.splitContainer4.Panel2.Controls.Add(this.ChatBox);
-            this.splitContainer4.Size = new System.Drawing.Size(664, 132);
-            this.splitContainer4.SplitterDistance = 164;
+            this.splitContainer4.Size = new System.Drawing.Size(656, 127);
+            this.splitContainer4.SplitterDistance = 162;
             this.splitContainer4.TabIndex = 0;
             // 
             // ChatLabel
@@ -185,7 +187,7 @@
             this.ChatLabel.Location = new System.Drawing.Point(12, 3);
             this.ChatLabel.Name = "ChatLabel";
             this.ChatLabel.ReadOnly = true;
-            this.ChatLabel.Size = new System.Drawing.Size(149, 20);
+            this.ChatLabel.Size = new System.Drawing.Size(147, 20);
             this.ChatLabel.TabIndex = 2;
             this.ChatLabel.Text = "Chatting: 0";
             this.ChatLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -200,7 +202,7 @@
             this.ChatMembers.IntegralHeight = false;
             this.ChatMembers.Location = new System.Drawing.Point(12, 29);
             this.ChatMembers.Name = "ChatMembers";
-            this.ChatMembers.Size = new System.Drawing.Size(149, 91);
+            this.ChatMembers.Size = new System.Drawing.Size(147, 86);
             this.ChatMembers.TabIndex = 0;
             // 
             // ChatHistory
@@ -208,11 +210,13 @@
             this.ChatHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatHistory.BackColor = System.Drawing.SystemColors.Window;
             this.ChatHistory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ChatHistory.Cursor = System.Windows.Forms.Cursors.Default;
             this.ChatHistory.Location = new System.Drawing.Point(4, 6);
             this.ChatHistory.Name = "ChatHistory";
-            this.ChatHistory.Size = new System.Drawing.Size(489, 88);
+            this.ChatHistory.ReadOnly = true;
+            this.ChatHistory.Size = new System.Drawing.Size(483, 83);
             this.ChatHistory.TabIndex = 2;
             this.ChatHistory.Text = "";
             // 
@@ -221,9 +225,9 @@
             this.ChatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.ChatBox.Location = new System.Drawing.Point(4, 100);
+            this.ChatBox.Location = new System.Drawing.Point(68, 95);
             this.ChatBox.Name = "ChatBox";
-            this.ChatBox.Size = new System.Drawing.Size(489, 20);
+            this.ChatBox.Size = new System.Drawing.Size(419, 20);
             this.ChatBox.TabIndex = 0;
             // 
             // splitContainer2
@@ -242,8 +246,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.LocalFilesLabel);
             this.splitContainer2.Panel2.Controls.Add(this.GroupFiles);
-            this.splitContainer2.Size = new System.Drawing.Size(170, 465);
-            this.splitContainer2.SplitterDistance = 326;
+            this.splitContainer2.Size = new System.Drawing.Size(169, 445);
+            this.splitContainer2.SplitterDistance = 311;
             this.splitContainer2.TabIndex = 0;
             // 
             // PlaylistLabel
@@ -256,7 +260,7 @@
             this.PlaylistLabel.Location = new System.Drawing.Point(3, 3);
             this.PlaylistLabel.Name = "PlaylistLabel";
             this.PlaylistLabel.ReadOnly = true;
-            this.PlaylistLabel.Size = new System.Drawing.Size(155, 20);
+            this.PlaylistLabel.Size = new System.Drawing.Size(154, 20);
             this.PlaylistLabel.TabIndex = 0;
             this.PlaylistLabel.Text = "Playlist Count: 0";
             this.PlaylistLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -274,7 +278,7 @@
             this.Playlist.IntegralHeight = false;
             this.Playlist.Location = new System.Drawing.Point(3, 29);
             this.Playlist.Name = "Playlist";
-            this.Playlist.Size = new System.Drawing.Size(155, 294);
+            this.Playlist.Size = new System.Drawing.Size(154, 279);
             this.Playlist.TabIndex = 0;
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
             this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
@@ -334,7 +338,7 @@
             this.LocalFilesLabel.Location = new System.Drawing.Point(3, 3);
             this.LocalFilesLabel.Name = "LocalFilesLabel";
             this.LocalFilesLabel.ReadOnly = true;
-            this.LocalFilesLabel.Size = new System.Drawing.Size(155, 20);
+            this.LocalFilesLabel.Size = new System.Drawing.Size(154, 20);
             this.LocalFilesLabel.TabIndex = 1;
             this.LocalFilesLabel.Text = "Local Files: 0";
             this.LocalFilesLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -347,7 +351,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupFiles.Location = new System.Drawing.Point(3, 29);
             this.GroupFiles.Name = "GroupFiles";
-            this.GroupFiles.Size = new System.Drawing.Size(155, 94);
+            this.GroupFiles.Size = new System.Drawing.Size(154, 89);
             this.GroupFiles.TabIndex = 0;
             // 
             // menuStrip1
@@ -363,7 +367,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(838, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(829, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -627,13 +631,13 @@
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(838, 465);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(829, 445);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.RightToolStripPanelVisible = false;
-            this.toolStripContainer1.Size = new System.Drawing.Size(838, 489);
+            this.toolStripContainer1.Size = new System.Drawing.Size(829, 469);
             this.toolStripContainer1.TabIndex = 1;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -641,13 +645,30 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             // 
+            // NicknameLabel
+            // 
+            this.NicknameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.NicknameLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.NicknameLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.NicknameLabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.NicknameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NicknameLabel.Location = new System.Drawing.Point(4, 98);
+            this.NicknameLabel.MaxLength = 12;
+            this.NicknameLabel.Name = "NicknameLabel";
+            this.NicknameLabel.ReadOnly = true;
+            this.NicknameLabel.Size = new System.Drawing.Size(58, 13);
+            this.NicknameLabel.TabIndex = 3;
+            this.NicknameLabel.Text = "Nickname:";
+            this.NicknameLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 489);
+            this.ClientSize = new System.Drawing.Size(829, 469);
             this.Controls.Add(this.toolStripContainer1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "MainForm";
             this.Text = "Popcorn Viewer";
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -738,6 +759,7 @@
         private System.Windows.Forms.ToolStripMenuItem chatOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ListBox Playlist;
+        private System.Windows.Forms.TextBox NicknameLabel;
 
     }
 }

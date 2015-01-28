@@ -19,7 +19,9 @@ namespace PopcornViewer
         #region Local Variables
         
         // Form Variables
+        const string DEV_STRING = "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA";
         List<string> PlaylistURLs = new List<string>();
+
         // Index in PlaylistURLs of currently playing video
         int CurrentlyPlaying = -1;
 
@@ -27,7 +29,6 @@ namespace PopcornViewer
         bool PlaylistDragging = false;
         int SavedX = 0;
         int SavedY = 0;
-        int LastSelectedItem = -1;
         const int TOLERANCE = 2;
 
         #endregion
@@ -111,7 +112,7 @@ namespace PopcornViewer
         {
             string uri = url.Remove(0, url.IndexOf('=') + 1);
 
-            YouTubeRequestSettings settings = new YouTubeRequestSettings("Popcorn Viewer", "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA");
+            YouTubeRequestSettings settings = new YouTubeRequestSettings("Popcorn Viewer", DEV_STRING);
             YouTubeRequest req = new YouTubeRequest(settings);
 
             Uri videoEntryUrl = new Uri("http://gdata.youtube.com/feeds/api/videos/" + uri);
@@ -133,52 +134,32 @@ namespace PopcornViewer
             YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
             YoutubeVideo_CallFlash("playVideo()");
 
-            if (LastSelectedItem == -1)
-            {
-                LastSelectedItem = CurrentlyPlaying;
-                Playlist.Items.Add("FixRed");
-                Playlist.SelectedIndex = 1;
-                Playlist.SelectedIndex = CurrentlyPlaying;
-                Playlist.Items.Remove("FixRed");
-            }
-            else
-            {
-                Playlist.SelectedIndex = LastSelectedItem;
-                Playlist.SelectedIndex = CurrentlyPlaying;
-                LastSelectedItem = CurrentlyPlaying;
-            }
+            Playlist.Refresh();
         }
 
-        /// <summary>
-        /// Changes the Playlist item 0 to be red showing that it is the one currently playing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Playlist_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        private void DeleteVideo(int Index)
         {
+            PlaylistURLs.RemoveAt(Index);
+            Playlist.Items.RemoveAt(Index);
+            UpdatePlaylistCount();
 
-            // Draw the background of the ListBox control for each item.
-            e.DrawBackground();
-            // Define the default color of the brush as black.
-            Brush myBrush = Brushes.Black;
-
-            // Determine the color of the brush to draw each item based  
-            // on the index of the item to draw. 
-            if (e.Index == CurrentlyPlaying)
+            if (Index == CurrentlyPlaying)
             {
-                myBrush = Brushes.Red;
+                if (PlaylistURLs.Count <= Index && PlaylistURLs.Count != 0)
+                {
+                    PlayVideo(PlaylistURLs.Count - 1);
+                }
+                else if (PlaylistURLs.Count == 0)
+                {
+                    YoutubeVideo.Movie = null;
+                }
+                else PlayVideo(CurrentlyPlaying);
             }
-
-            // Draw the current item text based on the current Font  
-            // and the custom brush settings.
-            if (e.Index > -1)
+            else if (Index < CurrentlyPlaying)
             {
-                e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
-                    e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+                CurrentlyPlaying--;
+                Playlist.Refresh();
             }
-            // If the ListBox has focus, draw a focus rectangle around the selected item.
-            e.DrawFocusRectangle();
-
         }
 
         /// <summary>
@@ -429,9 +410,7 @@ namespace PopcornViewer
             {
                 if (Playlist.SelectedIndex >= 0)
                 {
-                    PlaylistURLs.RemoveAt(Playlist.SelectedIndex);
-                    Playlist.Items.RemoveAt(Playlist.SelectedIndex);
-                    UpdatePlaylistCount();
+                    DeleteVideo(Playlist.SelectedIndex);
                 }
             }
             else if (e.KeyData.Equals(Keys.Enter))
@@ -488,23 +467,7 @@ namespace PopcornViewer
 
         private void deletePlaylistMenuItem_Click(object sender, EventArgs e)
         {
-            if (Playlist.SelectedIndex < CurrentlyPlaying)
-            {
-                CurrentlyPlaying--;
-                Playlist.Items.Add("FixRed");
-                Playlist.SelectedIndex = 1;
-                Playlist.SelectedIndex = CurrentlyPlaying;
-                Playlist.Items.Remove("FixRed");
-            }
-            else if (Playlist.SelectedIndex == CurrentlyPlaying)
-            {
-                CurrentlyPlaying = -1;
-
-            }
-            PlaylistURLs.RemoveAt(Playlist.SelectedIndex);
-            LastSelectedItem = -1;
-            Playlist.Items.RemoveAt(Playlist.SelectedIndex);
-            UpdatePlaylistCount();
+            DeleteVideo(Playlist.SelectedIndex);
         }
 
         private void addVideoPlaylistMenuItem_Click(object sender, EventArgs e)
@@ -551,10 +514,22 @@ namespace PopcornViewer
                 }
                 object data = e.Data.GetData(typeof(string));
                 string ind = PlaylistURLs[Playlist.Items.IndexOf(data)];
-                Playlist.Items.Remove(data);
+                int beforeIndex = Playlist.Items.IndexOf(data);
+                Playlist.Items.RemoveAt(beforeIndex);
                 Playlist.Items.Insert(index, data);
                 PlaylistURLs.Remove(ind);
                 PlaylistURLs.Insert(index, ind);
+
+                if (beforeIndex < CurrentlyPlaying && index > CurrentlyPlaying)
+                {
+                    CurrentlyPlaying--;
+                }
+                else if (beforeIndex == CurrentlyPlaying)
+                {
+                    CurrentlyPlaying = index;
+                }
+
+                Playlist.Refresh();
             }
         }
 
@@ -664,6 +639,25 @@ namespace PopcornViewer
         {
             UncheckPlaybackOptions();
             pauseToolStripMenuItem.Checked = true;
+        }
+
+        /// <summary>
+        /// Changes the Playlist item 0 to be red showing that it is the one currently playing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Playlist_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            if (e.Index >= 0)
+            {
+                if (e.Index == CurrentlyPlaying)
+                {
+                    e.Graphics.DrawString(Playlist.Items[e.Index].ToString(), new Font("Microsoft Sans Serif", 8, FontStyle.Bold), Brushes.Black, e.Bounds);
+                }
+                else e.Graphics.DrawString(Playlist.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds);
+            }
+            e.DrawFocusRectangle();
         }
 
         #endregion

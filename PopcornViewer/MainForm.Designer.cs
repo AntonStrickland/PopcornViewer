@@ -36,7 +36,7 @@
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.ChatLabel = new System.Windows.Forms.TextBox();
             this.ChatMembers = new System.Windows.Forms.ListBox();
-            this.ChatBoxList = new System.Windows.Forms.ListBox();
+            this.ChatHistory = new System.Windows.Forms.RichTextBox();
             this.ChatBox = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PlaylistLabel = new System.Windows.Forms.TextBox();
@@ -82,10 +82,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.messageTextbox = new System.Windows.Forms.TextBox();
-            this.SendButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -123,7 +120,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(838, 534);
+            this.splitContainer1.Size = new System.Drawing.Size(838, 465);
             this.splitContainer1.SplitterDistance = 664;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -141,8 +138,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(664, 534);
-            this.splitContainer3.SplitterDistance = 322;
+            this.splitContainer3.Size = new System.Drawing.Size(664, 465);
+            this.splitContainer3.SplitterDistance = 329;
             this.splitContainer3.TabIndex = 0;
             // 
             // YoutubeVideo
@@ -154,7 +151,7 @@
             this.YoutubeVideo.Location = new System.Drawing.Point(12, 3);
             this.YoutubeVideo.Name = "YoutubeVideo";
             this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
-            this.YoutubeVideo.Size = new System.Drawing.Size(652, 320);
+            this.YoutubeVideo.Size = new System.Drawing.Size(652, 328);
             this.YoutubeVideo.TabIndex = 0;
             this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
             // 
@@ -171,11 +168,9 @@
             // 
             // splitContainer4.Panel2
             // 
-            this.splitContainer4.Panel2.Controls.Add(this.SendButton);
-            this.splitContainer4.Panel2.Controls.Add(this.messageTextbox);
-            this.splitContainer4.Panel2.Controls.Add(this.ChatBoxList);
+            this.splitContainer4.Panel2.Controls.Add(this.ChatHistory);
             this.splitContainer4.Panel2.Controls.Add(this.ChatBox);
-            this.splitContainer4.Size = new System.Drawing.Size(664, 208);
+            this.splitContainer4.Size = new System.Drawing.Size(664, 132);
             this.splitContainer4.SplitterDistance = 164;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -205,23 +200,28 @@
             this.ChatMembers.IntegralHeight = false;
             this.ChatMembers.Location = new System.Drawing.Point(12, 29);
             this.ChatMembers.Name = "ChatMembers";
-            this.ChatMembers.Size = new System.Drawing.Size(149, 221);
+            this.ChatMembers.Size = new System.Drawing.Size(149, 91);
             this.ChatMembers.TabIndex = 0;
             // 
-            // ChatBoxList
+            // ChatHistory
             // 
-            this.ChatBoxList.FormattingEnabled = true;
-            this.ChatBoxList.Location = new System.Drawing.Point(4, 6);
-            this.ChatBoxList.Name = "ChatBoxList";
-            this.ChatBoxList.Size = new System.Drawing.Size(489, 173);
-            this.ChatBoxList.TabIndex = 3;
+            this.ChatHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatHistory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ChatHistory.Cursor = System.Windows.Forms.Cursors.Default;
+            this.ChatHistory.Location = new System.Drawing.Point(4, 6);
+            this.ChatHistory.Name = "ChatHistory";
+            this.ChatHistory.Size = new System.Drawing.Size(489, 88);
+            this.ChatHistory.TabIndex = 2;
+            this.ChatHistory.Text = "";
             // 
             // ChatBox
             // 
             this.ChatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.ChatBox.Location = new System.Drawing.Point(4, 230);
+            this.ChatBox.Location = new System.Drawing.Point(4, 100);
             this.ChatBox.Name = "ChatBox";
             this.ChatBox.Size = new System.Drawing.Size(489, 20);
             this.ChatBox.TabIndex = 0;
@@ -242,8 +242,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.LocalFilesLabel);
             this.splitContainer2.Panel2.Controls.Add(this.GroupFiles);
-            this.splitContainer2.Size = new System.Drawing.Size(170, 534);
-            this.splitContainer2.SplitterDistance = 319;
+            this.splitContainer2.Size = new System.Drawing.Size(170, 465);
+            this.splitContainer2.SplitterDistance = 326;
             this.splitContainer2.TabIndex = 0;
             // 
             // PlaylistLabel
@@ -274,7 +274,7 @@
             this.Playlist.IntegralHeight = false;
             this.Playlist.Location = new System.Drawing.Point(3, 29);
             this.Playlist.Name = "Playlist";
-            this.Playlist.Size = new System.Drawing.Size(155, 194);
+            this.Playlist.Size = new System.Drawing.Size(155, 294);
             this.Playlist.TabIndex = 0;
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
             this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
@@ -347,7 +347,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupFiles.Location = new System.Drawing.Point(3, 29);
             this.GroupFiles.Name = "GroupFiles";
-            this.GroupFiles.Size = new System.Drawing.Size(155, 224);
+            this.GroupFiles.Size = new System.Drawing.Size(155, 94);
             this.GroupFiles.TabIndex = 0;
             // 
             // menuStrip1
@@ -360,8 +360,7 @@
             this.viewToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.helpToolStripMenuItem,
-            this.connectToolStripMenuItem});
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(838, 24);
@@ -620,13 +619,6 @@
             this.aboutPopcornViewerToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.aboutPopcornViewerToolStripMenuItem.Text = "About Popcorn Viewer";
             // 
-            // connectToolStripMenuItem
-            // 
-            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
-            this.connectToolStripMenuItem.Text = "Chat Connect";
-            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
-            // 
             // toolStripContainer1
             // 
             this.toolStripContainer1.BottomToolStripPanelVisible = false;
@@ -635,13 +627,13 @@
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(838, 534);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(838, 465);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.RightToolStripPanelVisible = false;
-            this.toolStripContainer1.Size = new System.Drawing.Size(838, 558);
+            this.toolStripContainer1.Size = new System.Drawing.Size(838, 489);
             this.toolStripContainer1.TabIndex = 1;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -649,28 +641,11 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
             // 
-            // messageTextbox
-            // 
-            this.messageTextbox.Location = new System.Drawing.Point(4, 185);
-            this.messageTextbox.Name = "messageTextbox";
-            this.messageTextbox.Size = new System.Drawing.Size(392, 20);
-            this.messageTextbox.TabIndex = 4;
-            // 
-            // SendButton
-            // 
-            this.SendButton.Location = new System.Drawing.Point(402, 182);
-            this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(75, 23);
-            this.SendButton.TabIndex = 5;
-            this.SendButton.Text = "Send";
-            this.SendButton.UseVisualStyleBackColor = true;
-            this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 558);
+            this.ClientSize = new System.Drawing.Size(838, 489);
             this.Controls.Add(this.toolStripContainer1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -721,6 +696,7 @@
         private System.Windows.Forms.TextBox LocalFilesLabel;
         private System.Windows.Forms.TextBox ChatLabel;
         private System.Windows.Forms.TextBox ChatBox;
+        private System.Windows.Forms.RichTextBox ChatHistory;
         private System.Windows.Forms.ContextMenuStrip PlaylistContextMenu;
         private System.Windows.Forms.ToolStripMenuItem copyPlaylistMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deletePlaylistMenuItem;
@@ -762,10 +738,6 @@
         private System.Windows.Forms.ToolStripMenuItem chatOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ListBox Playlist;
-        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
-        private System.Windows.Forms.ListBox ChatBoxList;
-        private System.Windows.Forms.Button SendButton;
-        private System.Windows.Forms.TextBox messageTextbox;
 
     }
 }

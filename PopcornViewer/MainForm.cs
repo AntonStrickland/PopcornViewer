@@ -8,17 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
-using System.Net.Sockets;
 using System.Xml;
 using System.Text.RegularExpressions;
 using Google.YouTube;
 
 namespace PopcornViewer
 {
-
     public partial class MainForm : Form
     {
-
         #region Local Variables
         
         // Form Variables
@@ -34,9 +31,6 @@ namespace PopcornViewer
         int SavedY = 0;
         const int TOLERANCE = 2;
 
-
-
-        
         #endregion
 
         #region Utility Functions
@@ -403,12 +397,6 @@ namespace PopcornViewer
             InitializeComponent();
             Playlist.DrawMode = DrawMode.OwnerDrawFixed;
             Playlist.DrawItem += new DrawItemEventHandler(Playlist_DrawItem);
-            //Set up sockets
-            GlobalVars.socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            GlobalVars.socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
-            //get user ip
-            GlobalVars.localIP = GetLocalIP();
         }
 
         /// <summary>
@@ -672,72 +660,6 @@ namespace PopcornViewer
             e.DrawFocusRectangle();
         }
 
-        
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            //Set up sockets
-            GlobalVars.socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            GlobalVars.socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
-            //get user ip
-            GlobalVars.localIP = GetLocalIP();
-        }
-
-        private string GetLocalIP()
-        {
-            IPHostEntry Host;
-            Host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach(IPAddress IP in Host.AddressList)
-            {
-                if (IP.AddressFamily == AddressFamily.InterNetwork)
-                    return IP.ToString();
-            }
-            return "127.0.0.1";
-        }
         #endregion
-
-        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ChatCredentials frm = new ChatCredentials();
-            frm.Show();
-        }
-       
-        public  void MessageCallBack(IAsyncResult aResult)
-        {
-            try
-            {
-                byte[] recievedData = new byte[1500];
-                recievedData = (byte[])aResult.AsyncState;
-
-                //converting byte[] to string
-                ASCIIEncoding aEncoding = new ASCIIEncoding();
-                string recievedMessage = aEncoding.GetString(recievedData);
-
-
-                //Adding message in to list box
-                ChatBoxList.Items.Add(GetLocalIP() + ": " + recievedMessage);
-
-                GlobalVars.ChatBuffer = new byte[1500];
-                GlobalVars.socket.BeginReceiveFrom(GlobalVars.ChatBuffer, 0, GlobalVars.ChatBuffer.Length, SocketFlags.None, ref GlobalVars.endpointRemote, new AsyncCallback(MessageCallBack), GlobalVars.ChatBuffer);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void SendButton_Click(object sender, EventArgs e)
-        {
-            //Convert message to byte[]
-            ASCIIEncoding aEncoding = new ASCIIEncoding();
-            byte[] sendingMessage = new byte[1500];
-            sendingMessage = aEncoding.GetBytes(messageTextbox.Text);
-
-            //Sending the encoded message
-            GlobalVars.socket.Send(sendingMessage);
-            ChatBoxList.Items.Add("Me: " + messageTextbox.Text);
-            messageTextbox.Text = "";
-        }
     }
 }

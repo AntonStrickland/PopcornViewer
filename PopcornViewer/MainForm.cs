@@ -162,11 +162,14 @@ namespace PopcornViewer
             // Define the default color of the brush as black.
             Brush myBrush = Brushes.Black;
 
+            var myFont = FontStyle.Regular;
+
             // Determine the color of the brush to draw each item based  
             // on the index of the item to draw. 
             if (e.Index == CurrentlyPlaying)
             {
-                myBrush = Brushes.Red;
+                myBrush = Brushes.Black;
+                myFont = FontStyle.Bold;
             }
 
             // Draw the current item text based on the current Font  
@@ -174,7 +177,7 @@ namespace PopcornViewer
             if (e.Index > -1)
             {
                 e.Graphics.DrawString(Playlist.Items[e.Index].ToString(),
-                    e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+                    new Font("Microsoft Sans Serif", 8, myFont), myBrush, e.Bounds, StringFormat.GenericDefault);
             }
             // If the ListBox has focus, draw a focus rectangle around the selected item.
             e.DrawFocusRectangle();

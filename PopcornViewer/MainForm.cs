@@ -395,6 +395,10 @@ namespace PopcornViewer
         public MainForm()
         {
             InitializeComponent();
+
+            ConnectionWindow ConWin = new ConnectionWindow();
+            ConWin.ShowDialog();
+
             Playlist.DrawMode = DrawMode.OwnerDrawFixed;
             Playlist.DrawItem += new DrawItemEventHandler(Playlist_DrawItem);
         }
@@ -661,5 +665,11 @@ namespace PopcornViewer
         }
 
         #endregion
+
+        private void hostingOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConnectionWindow ConWin = new ConnectionWindow();
+            ConWin.ShowDialog();
+        }
     }
 }

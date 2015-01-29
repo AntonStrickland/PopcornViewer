@@ -36,6 +36,7 @@
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.ChatLabel = new System.Windows.Forms.TextBox();
             this.ChatMembers = new System.Windows.Forms.ListBox();
+            this.NicknameLabel = new System.Windows.Forms.TextBox();
             this.ChatHistory = new System.Windows.Forms.RichTextBox();
             this.ChatBox = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -83,7 +84,6 @@
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.NicknameLabel = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -152,7 +152,7 @@
             this.YoutubeVideo.Location = new System.Drawing.Point(12, 4);
             this.YoutubeVideo.Name = "YoutubeVideo";
             this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
-            this.YoutubeVideo.Size = new System.Drawing.Size(653, 325);
+            this.YoutubeVideo.Size = new System.Drawing.Size(652, 328);
             this.YoutubeVideo.TabIndex = 0;
             this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
             // 
@@ -204,6 +204,22 @@
             this.ChatMembers.Name = "ChatMembers";
             this.ChatMembers.Size = new System.Drawing.Size(149, 111);
             this.ChatMembers.TabIndex = 0;
+            // 
+            // NicknameLabel
+            // 
+            this.NicknameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.NicknameLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.NicknameLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.NicknameLabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.NicknameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NicknameLabel.Location = new System.Drawing.Point(4, 123);
+            this.NicknameLabel.MaxLength = 12;
+            this.NicknameLabel.Name = "NicknameLabel";
+            this.NicknameLabel.ReadOnly = true;
+            this.NicknameLabel.Size = new System.Drawing.Size(58, 13);
+            this.NicknameLabel.TabIndex = 3;
+            this.NicknameLabel.Text = "Nickname:";
+            this.NicknameLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ChatHistory
             // 
@@ -581,25 +597,26 @@
             // hostingOptionsToolStripMenuItem
             // 
             this.hostingOptionsToolStripMenuItem.Name = "hostingOptionsToolStripMenuItem";
-            this.hostingOptionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.hostingOptionsToolStripMenuItem.Text = "Host Properties";
+            this.hostingOptionsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.hostingOptionsToolStripMenuItem.Text = "Network List";
+            this.hostingOptionsToolStripMenuItem.Click += new System.EventHandler(this.hostingOptionsToolStripMenuItem_Click);
             // 
             // manageGroupToolStripMenuItem
             // 
             this.manageGroupToolStripMenuItem.Name = "manageGroupToolStripMenuItem";
-            this.manageGroupToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.manageGroupToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.manageGroupToolStripMenuItem.Text = "Manage Group";
             // 
             // chatOptionsToolStripMenuItem
             // 
             this.chatOptionsToolStripMenuItem.Name = "chatOptionsToolStripMenuItem";
-            this.chatOptionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.chatOptionsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.chatOptionsToolStripMenuItem.Text = "Chat Options";
             // 
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
             // helpToolStripMenuItem
@@ -644,22 +661,6 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
-            // 
-            // NicknameLabel
-            // 
-            this.NicknameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.NicknameLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.NicknameLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.NicknameLabel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.NicknameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NicknameLabel.Location = new System.Drawing.Point(4, 123);
-            this.NicknameLabel.MaxLength = 12;
-            this.NicknameLabel.Name = "NicknameLabel";
-            this.NicknameLabel.ReadOnly = true;
-            this.NicknameLabel.Size = new System.Drawing.Size(58, 13);
-            this.NicknameLabel.TabIndex = 3;
-            this.NicknameLabel.Text = "Nickname:";
-            this.NicknameLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // MainForm
             // 

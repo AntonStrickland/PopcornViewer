@@ -121,8 +121,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(829, 445);
-            this.splitContainer1.SplitterDistance = 656;
+            this.splitContainer1.Size = new System.Drawing.Size(834, 487);
+            this.splitContainer1.SplitterDistance = 668;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer3
@@ -139,8 +139,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(656, 445);
-            this.splitContainer3.SplitterDistance = 314;
+            this.splitContainer3.Size = new System.Drawing.Size(668, 487);
+            this.splitContainer3.SplitterDistance = 331;
             this.splitContainer3.TabIndex = 0;
             // 
             // YoutubeVideo
@@ -149,10 +149,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.YoutubeVideo.Enabled = true;
-            this.YoutubeVideo.Location = new System.Drawing.Point(12, 3);
+            this.YoutubeVideo.Location = new System.Drawing.Point(12, 4);
             this.YoutubeVideo.Name = "YoutubeVideo";
             this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
-            this.YoutubeVideo.Size = new System.Drawing.Size(644, 313);
+            this.YoutubeVideo.Size = new System.Drawing.Size(653, 325);
             this.YoutubeVideo.TabIndex = 0;
             this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
             // 
@@ -172,8 +172,8 @@
             this.splitContainer4.Panel2.Controls.Add(this.NicknameLabel);
             this.splitContainer4.Panel2.Controls.Add(this.ChatHistory);
             this.splitContainer4.Panel2.Controls.Add(this.ChatBox);
-            this.splitContainer4.Size = new System.Drawing.Size(656, 127);
-            this.splitContainer4.SplitterDistance = 162;
+            this.splitContainer4.Size = new System.Drawing.Size(668, 152);
+            this.splitContainer4.SplitterDistance = 164;
             this.splitContainer4.TabIndex = 0;
             // 
             // ChatLabel
@@ -187,7 +187,7 @@
             this.ChatLabel.Location = new System.Drawing.Point(12, 3);
             this.ChatLabel.Name = "ChatLabel";
             this.ChatLabel.ReadOnly = true;
-            this.ChatLabel.Size = new System.Drawing.Size(147, 20);
+            this.ChatLabel.Size = new System.Drawing.Size(149, 20);
             this.ChatLabel.TabIndex = 2;
             this.ChatLabel.Text = "Chatting: 0";
             this.ChatLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -202,7 +202,7 @@
             this.ChatMembers.IntegralHeight = false;
             this.ChatMembers.Location = new System.Drawing.Point(12, 29);
             this.ChatMembers.Name = "ChatMembers";
-            this.ChatMembers.Size = new System.Drawing.Size(147, 86);
+            this.ChatMembers.Size = new System.Drawing.Size(149, 111);
             this.ChatMembers.TabIndex = 0;
             // 
             // ChatHistory
@@ -216,7 +216,7 @@
             this.ChatHistory.Location = new System.Drawing.Point(4, 6);
             this.ChatHistory.Name = "ChatHistory";
             this.ChatHistory.ReadOnly = true;
-            this.ChatHistory.Size = new System.Drawing.Size(483, 83);
+            this.ChatHistory.Size = new System.Drawing.Size(493, 108);
             this.ChatHistory.TabIndex = 2;
             this.ChatHistory.Text = "";
             // 
@@ -225,9 +225,9 @@
             this.ChatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.ChatBox.Location = new System.Drawing.Point(68, 95);
+            this.ChatBox.Location = new System.Drawing.Point(68, 120);
             this.ChatBox.Name = "ChatBox";
-            this.ChatBox.Size = new System.Drawing.Size(419, 20);
+            this.ChatBox.Size = new System.Drawing.Size(429, 20);
             this.ChatBox.TabIndex = 0;
             // 
             // splitContainer2
@@ -246,8 +246,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.LocalFilesLabel);
             this.splitContainer2.Panel2.Controls.Add(this.GroupFiles);
-            this.splitContainer2.Size = new System.Drawing.Size(169, 445);
-            this.splitContainer2.SplitterDistance = 311;
+            this.splitContainer2.Size = new System.Drawing.Size(162, 487);
+            this.splitContainer2.SplitterDistance = 333;
             this.splitContainer2.TabIndex = 0;
             // 
             // PlaylistLabel
@@ -260,7 +260,7 @@
             this.PlaylistLabel.Location = new System.Drawing.Point(3, 3);
             this.PlaylistLabel.Name = "PlaylistLabel";
             this.PlaylistLabel.ReadOnly = true;
-            this.PlaylistLabel.Size = new System.Drawing.Size(154, 20);
+            this.PlaylistLabel.Size = new System.Drawing.Size(147, 20);
             this.PlaylistLabel.TabIndex = 0;
             this.PlaylistLabel.Text = "Playlist Count: 0";
             this.PlaylistLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -278,7 +278,7 @@
             this.Playlist.IntegralHeight = false;
             this.Playlist.Location = new System.Drawing.Point(3, 29);
             this.Playlist.Name = "Playlist";
-            this.Playlist.Size = new System.Drawing.Size(154, 279);
+            this.Playlist.Size = new System.Drawing.Size(147, 301);
             this.Playlist.TabIndex = 0;
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
             this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
@@ -338,7 +338,7 @@
             this.LocalFilesLabel.Location = new System.Drawing.Point(3, 3);
             this.LocalFilesLabel.Name = "LocalFilesLabel";
             this.LocalFilesLabel.ReadOnly = true;
-            this.LocalFilesLabel.Size = new System.Drawing.Size(154, 20);
+            this.LocalFilesLabel.Size = new System.Drawing.Size(147, 20);
             this.LocalFilesLabel.TabIndex = 1;
             this.LocalFilesLabel.Text = "Local Files: 0";
             this.LocalFilesLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -351,7 +351,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupFiles.Location = new System.Drawing.Point(3, 29);
             this.GroupFiles.Name = "GroupFiles";
-            this.GroupFiles.Size = new System.Drawing.Size(154, 89);
+            this.GroupFiles.Size = new System.Drawing.Size(147, 109);
             this.GroupFiles.TabIndex = 0;
             // 
             // menuStrip1
@@ -367,7 +367,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(829, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(834, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -631,13 +631,13 @@
             // 
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(829, 445);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(834, 487);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.RightToolStripPanelVisible = false;
-            this.toolStripContainer1.Size = new System.Drawing.Size(829, 469);
+            this.toolStripContainer1.Size = new System.Drawing.Size(834, 511);
             this.toolStripContainer1.TabIndex = 1;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -652,7 +652,7 @@
             this.NicknameLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.NicknameLabel.Cursor = System.Windows.Forms.Cursors.Default;
             this.NicknameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NicknameLabel.Location = new System.Drawing.Point(4, 98);
+            this.NicknameLabel.Location = new System.Drawing.Point(4, 123);
             this.NicknameLabel.MaxLength = 12;
             this.NicknameLabel.Name = "NicknameLabel";
             this.NicknameLabel.ReadOnly = true;
@@ -665,7 +665,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 469);
+            this.ClientSize = new System.Drawing.Size(834, 511);
             this.Controls.Add(this.toolStripContainer1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(600, 400);

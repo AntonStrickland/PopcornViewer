@@ -394,11 +394,9 @@ namespace PopcornViewer
         /// </summary>
         public MainForm()
         {
+            InitializeComponent();
+
             ConnectionWindow ConWin = new ConnectionWindow();
-            if (ConWin.ShowDialog() == DialogResult.Cancel)
-            {
-                System.Environment.Exit(0);
-            }
 
             Playlist.DrawMode = DrawMode.OwnerDrawFixed;
             Playlist.DrawItem += new DrawItemEventHandler(Playlist_DrawItem);

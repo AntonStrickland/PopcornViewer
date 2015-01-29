@@ -196,6 +196,7 @@
             this.HostButton.TabIndex = 4;
             this.HostButton.Text = "Host";
             this.HostButton.UseVisualStyleBackColor = true;
+            this.HostButton.Click += new System.EventHandler(this.HostButton_Click);
             // 
             // ConnectionWindow
             // 

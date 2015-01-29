@@ -87,5 +87,10 @@ namespace PopcornViewer
             }
             else MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void HostButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

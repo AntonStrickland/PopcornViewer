@@ -296,7 +296,6 @@
             this.Playlist.Name = "Playlist";
             this.Playlist.Size = new System.Drawing.Size(147, 301);
             this.Playlist.TabIndex = 0;
-            this.Playlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseClick);
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
             this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
             this.Playlist.DragOver += new System.Windows.Forms.DragEventHandler(this.Playlist_DragOver);

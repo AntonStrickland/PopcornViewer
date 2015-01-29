@@ -30,5 +30,62 @@ namespace PopcornViewer
             }
             IPAddressBox.Text = localIP;
         }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            AddNetwork AddNet = new AddNetwork(this, false);
+            AddNet.ShowDialog();
+        }
+
+        private void NetworkList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Disallow single object reference function if none are selected
+            if (NetworkList.SelectedIndices.Count == 1)
+            {
+                EditButton.Enabled = true;
+                RemoveButton.Enabled = true;
+                ConnectButton.Enabled = true;
+            }
+            else
+            {
+                EditButton.Enabled = false;
+                RemoveButton.Enabled = false;
+                ConnectButton.Enabled = false;
+            }
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            AddNetwork AddNet = new AddNetwork(this, true);
+            AddNet.ShowDialog();
+        }
+
+        private void NetworkList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Delete)
+            {
+                if (NetworkList.SelectedIndices.Count == 1)
+                {
+                    NetworkList.Items.RemoveAt(NetworkList.SelectedIndices[0]);
+                }
+            }
+        }
+
+        private void RemoveButton_Click(object sender, EventArgs e)
+        {
+            if (NetworkList.SelectedIndices.Count == 1)
+            {
+                NetworkList.Items.RemoveAt(NetworkList.SelectedIndices[0]);
+            }
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            if (NicknameBox.Text.Length > 0)
+            {
+                // Connect to server
+            }
+            else MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }

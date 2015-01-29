@@ -394,20 +394,17 @@ namespace PopcornViewer
         /// </summary>
         public MainForm()
         {
-            InitializeComponent();
-
             ConnectionWindow ConWin = new ConnectionWindow();
-            ConWin.ShowDialog();
+            if (ConWin.ShowDialog() == DialogResult.Cancel)
+            {
+                System.Environment.Exit(0);
+            }
 
             Playlist.DrawMode = DrawMode.OwnerDrawFixed;
             Playlist.DrawItem += new DrawItemEventHandler(Playlist_DrawItem);
         }
 
-        /// <summary>
-        /// Functions controling Playlist mouse and keyboard operations
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Functions controling Playlist mouse and keyboard operations
         private void Playlist_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete)
@@ -427,13 +424,10 @@ namespace PopcornViewer
         }
 
         private void Playlist_DoubleClick(object sender, EventArgs e)
-        {
-            
+        {   
             if (Playlist.SelectedIndex >= 0)
             {
-
-                    PlayVideo(Playlist.SelectedIndex);
-
+                PlayVideo(Playlist.SelectedIndex);
             }
         }
 
@@ -485,7 +479,7 @@ namespace PopcornViewer
             CurrentlyPlaying = Playlist.SelectedIndex;
             if (Playlist.SelectedIndex >= 0)
             {
-                    PlayVideo(Playlist.SelectedIndex);
+                PlayVideo(Playlist.SelectedIndex);
             }
         }
 
@@ -646,6 +640,17 @@ namespace PopcornViewer
         }
 
         /// <summary>
+        /// Deals with settings toolstrip
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hostingOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConnectionWindow ConWin = new ConnectionWindow();
+            ConWin.ShowDialog();
+        }
+
+        /// <summary>
         /// Changes the Playlist item 0 to be red showing that it is the one currently playing
         /// </summary>
         /// <param name="sender"></param>
@@ -665,11 +670,5 @@ namespace PopcornViewer
         }
 
         #endregion
-
-        private void hostingOptionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConnectionWindow ConWin = new ConnectionWindow();
-            ConWin.ShowDialog();
-        }
     }
 }

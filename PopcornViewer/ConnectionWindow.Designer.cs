@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.RemoveButton = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
             this.NetworkList = new System.Windows.Forms.ListView();
             this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Address = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -38,9 +41,6 @@
             this.IPAddressBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.AddButton = new System.Windows.Forms.Button();
-            this.RemoveButton = new System.Windows.Forms.Button();
-            this.Edit = new System.Windows.Forms.Button();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.HostButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -51,7 +51,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.Edit);
+            this.groupBox1.Controls.Add(this.EditButton);
             this.groupBox1.Controls.Add(this.RemoveButton);
             this.groupBox1.Controls.Add(this.AddButton);
             this.groupBox1.Controls.Add(this.NetworkList);
@@ -62,12 +62,45 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Saved Networks";
             // 
+            // EditButton
+            // 
+            this.EditButton.Enabled = false;
+            this.EditButton.Location = new System.Drawing.Point(103, 282);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(84, 23);
+            this.EditButton.TabIndex = 3;
+            this.EditButton.Text = "Edit";
+            this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
+            // 
+            // RemoveButton
+            // 
+            this.RemoveButton.Enabled = false;
+            this.RemoveButton.Location = new System.Drawing.Point(199, 282);
+            this.RemoveButton.Name = "RemoveButton";
+            this.RemoveButton.Size = new System.Drawing.Size(84, 23);
+            this.RemoveButton.TabIndex = 2;
+            this.RemoveButton.Text = "Remove";
+            this.RemoveButton.UseVisualStyleBackColor = true;
+            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
+            // 
+            // AddButton
+            // 
+            this.AddButton.Location = new System.Drawing.Point(6, 282);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(84, 23);
+            this.AddButton.TabIndex = 1;
+            this.AddButton.Text = "Add";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            // 
             // NetworkList
             // 
             this.NetworkList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColName,
             this.Address,
             this.Port});
+            this.NetworkList.FullRowSelect = true;
             this.NetworkList.GridLines = true;
             this.NetworkList.Location = new System.Drawing.Point(6, 16);
             this.NetworkList.MultiSelect = false;
@@ -76,6 +109,9 @@
             this.NetworkList.TabIndex = 0;
             this.NetworkList.UseCompatibleStateImageBehavior = false;
             this.NetworkList.View = System.Windows.Forms.View.Details;
+            this.NetworkList.SelectedIndexChanged += new System.EventHandler(this.NetworkList_SelectedIndexChanged);
+            this.NetworkList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NetworkList_KeyDown);
+            this.NetworkList.Leave += new System.EventHandler(this.NetworkList_SelectedIndexChanged);
             // 
             // ColName
             // 
@@ -98,6 +134,7 @@
             this.NicknameBox.Name = "NicknameBox";
             this.NicknameBox.Size = new System.Drawing.Size(133, 20);
             this.NicknameBox.TabIndex = 1;
+            this.NicknameBox.Text = "Guest";
             // 
             // groupBox2
             // 
@@ -140,41 +177,16 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Nickname";
             // 
-            // AddButton
-            // 
-            this.AddButton.Location = new System.Drawing.Point(6, 282);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(84, 23);
-            this.AddButton.TabIndex = 1;
-            this.AddButton.Text = "Add";
-            this.AddButton.UseVisualStyleBackColor = true;
-            // 
-            // RemoveButton
-            // 
-            this.RemoveButton.Location = new System.Drawing.Point(199, 282);
-            this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(84, 23);
-            this.RemoveButton.TabIndex = 2;
-            this.RemoveButton.Text = "Remove";
-            this.RemoveButton.UseVisualStyleBackColor = true;
-            // 
-            // Edit
-            // 
-            this.Edit.Location = new System.Drawing.Point(104, 282);
-            this.Edit.Name = "Edit";
-            this.Edit.Size = new System.Drawing.Size(84, 23);
-            this.Edit.TabIndex = 3;
-            this.Edit.Text = "Edit";
-            this.Edit.UseVisualStyleBackColor = true;
-            // 
             // ConnectButton
             // 
+            this.ConnectButton.Enabled = false;
             this.ConnectButton.Location = new System.Drawing.Point(211, 398);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(90, 23);
             this.ConnectButton.TabIndex = 3;
             this.ConnectButton.Text = "Connect";
             this.ConnectButton.UseVisualStyleBackColor = true;
+            this.ConnectButton.Click += new System.EventHandler(this.ConnectButton_Click);
             // 
             // HostButton
             // 
@@ -209,7 +221,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView NetworkList;
+        public System.Windows.Forms.ListView NetworkList;
         private System.Windows.Forms.ColumnHeader ColName;
         private System.Windows.Forms.ColumnHeader Address;
         private System.Windows.Forms.ColumnHeader Port;
@@ -218,7 +230,7 @@
         private System.Windows.Forms.TextBox IPAddressBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button Edit;
+        private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button ConnectButton;

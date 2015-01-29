@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddNetwork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddNetwork.Designer.cs">
+      <DependentUpon>AddNetwork.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddNetwork.resx">
+      <DependentUpon>AddNetwork.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConnectionWindow.resx">
       <DependentUpon>ConnectionWindow.cs</DependentUpon>
     </EmbeddedResource>

@@ -43,8 +43,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.HostButton = new System.Windows.Forms.Button();
+            this.PortBox = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -132,13 +135,15 @@
             // 
             this.NicknameBox.Location = new System.Drawing.Point(6, 32);
             this.NicknameBox.Name = "NicknameBox";
-            this.NicknameBox.Size = new System.Drawing.Size(133, 20);
+            this.NicknameBox.Size = new System.Drawing.Size(84, 20);
             this.NicknameBox.TabIndex = 1;
             this.NicknameBox.Text = "Guest";
             // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.PortBox);
             this.groupBox2.Controls.Add(this.IPAddressBox);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
@@ -153,7 +158,7 @@
             // IPAddressBox
             // 
             this.IPAddressBox.BackColor = System.Drawing.SystemColors.Control;
-            this.IPAddressBox.Location = new System.Drawing.Point(147, 32);
+            this.IPAddressBox.Location = new System.Drawing.Point(96, 32);
             this.IPAddressBox.Name = "IPAddressBox";
             this.IPAddressBox.ReadOnly = true;
             this.IPAddressBox.Size = new System.Drawing.Size(133, 20);
@@ -162,7 +167,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(144, 16);
+            this.label2.Location = new System.Drawing.Point(93, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 3;
@@ -198,6 +203,37 @@
             this.HostButton.UseVisualStyleBackColor = true;
             this.HostButton.Click += new System.EventHandler(this.HostButton_Click);
             // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(235, 32);
+            this.PortBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.PortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(48, 20);
+            this.PortBox.TabIndex = 7;
+            this.PortBox.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(232, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Port";
+            // 
             // ConnectionWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -215,6 +251,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -236,5 +273,7 @@
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button ConnectButton;
         private System.Windows.Forms.Button HostButton;
+        private System.Windows.Forms.NumericUpDown PortBox;
+        private System.Windows.Forms.Label label3;
     }
 }

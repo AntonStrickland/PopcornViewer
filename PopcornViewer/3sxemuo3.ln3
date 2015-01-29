@@ -280,7 +280,7 @@ namespace PopcornViewer
 
         public void GetMessage()
         {
-            while (true)
+            while (SelfSocket.Connected)
             {
                 SelfStream = SelfSocket.GetStream();
                 byte[] InStream = new byte[65536];

@@ -245,6 +245,7 @@
             this.ChatBox.Name = "ChatBox";
             this.ChatBox.Size = new System.Drawing.Size(429, 20);
             this.ChatBox.TabIndex = 0;
+            this.ChatBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChatBox_KeyDown);
             // 
             // splitContainer2
             // 
@@ -760,7 +761,7 @@
         private System.Windows.Forms.ToolStripMenuItem chatOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ListBox Playlist;
-        private System.Windows.Forms.TextBox NicknameLabel;
+        public System.Windows.Forms.TextBox NicknameLabel;
 
     }
 }

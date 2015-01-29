@@ -45,11 +45,7 @@ namespace PopcornViewer
 
         #region Utility Functions
 
-        /// <summary>
-        /// URL Conversion Tools
-        /// </summary>
-        /// <param name="URL"></param>
-        /// <returns></returns>
+        // URL Conversion Tools
         private string ConvertURLToEmbeded(string url)
         {
             url = url.Replace("/watch?", "/");
@@ -65,11 +61,8 @@ namespace PopcornViewer
             return url;
         }
 
-        /// <summary>
-        /// Adds videos to Playlist given a browser URL
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
+
+        // Adds videos to Playlist given a browser URL
         private bool AddToPlaylist(string url)
         {
             if (IsYoutubeURL(url))
@@ -83,20 +76,15 @@ namespace PopcornViewer
             else return false;
         }
 
-        /// <summary>
-        /// Changes the text on the PlaylistLabel to reflect number of videos added
-        /// </summary>
+        // Changes the text on the PlaylistLabel to reflect number of videos added
         private void UpdatePlaylistCount()
         {
             PlaylistLabel.Text = PlaylistLabel.Text.Substring(0, PlaylistLabel.Text.Length - 1);
             PlaylistLabel.Text = PlaylistLabel.Text + Playlist.Items.Count;
         }
 
-        /// <summary>
-        /// Ensures that the given URL is actually for a Youtube video.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
+        // Ensures that the given URL is actually for a Youtube video.
+
         private bool IsYoutubeURL(string url)
         {
             try
@@ -114,10 +102,8 @@ namespace PopcornViewer
             catch { return false; }
         }
 
-        /// <summary>
-        /// Code for handling Youtube requests from a specific URL. Requires a Youtube link be verrified first.
-        /// </summary>
-        /// <param name="url"></param>
+
+        // Code for handling Youtube requests from a specific URL. Requires a Youtube link be verrified first.
         private Video RequestFromYoutube(string url)
         {
             string uri = url.Remove(0, url.IndexOf('=') + 1);
@@ -130,10 +116,8 @@ namespace PopcornViewer
             return req.Retrieve<Video>(videoEntryUrl);
         }
 
-        /// <summary>
-        /// Performs bundled functions to play a video at URL index
-        /// </summary>
-        /// <param name="Index"></param>
+
+        // Performs bundled functions to play a video at URL index
         private void PlayVideo(int Index)
         {
             CurrentlyPlaying = Index;
@@ -172,9 +156,7 @@ namespace PopcornViewer
             }
         }
 
-        /// <summary>
-        /// Used to turn off all other checks in the playback toolstrip.
-        /// </summary>
+        // Used to turn off all other checks in the playback toolstrip.
         private void UncheckPlaybackOptions()
         {
             repeatAllToolStripMenuItem.Checked = false;
@@ -184,10 +166,7 @@ namespace PopcornViewer
             pauseToolStripMenuItem.Checked = false;
         }
 
-        /// <summary>
-        /// Server host functions
-        /// </summary>
-        /// <param name="Port"></param>
+        // Server host functions
         public void Listen(object sender, DoWorkEventArgs e)
         {
             Chat("Initiating chat service...", "CONSOLE");
@@ -289,10 +268,7 @@ namespace PopcornViewer
             }
         }
 
-        /// <summary>
-        /// Sends chat to chatbox. Thread safe.
-        /// </summary>
-        /// <param name="Message"></param>
+        // Sends chat to chatbox. Thread safe.
         public void Chat(string Message, string Entity)
         {
             if (InvokeRequired)
@@ -307,11 +283,7 @@ namespace PopcornViewer
 
         #region Flash-C# Communication
 
-        /// <summary>
-        /// Handles the Flash -> C# communication
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Handles the Flash -> C# communication
         private void YoutubeVideo_FlashCall(object sender, AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEvent e)
         {
             // Interpret the Command
@@ -402,11 +374,7 @@ namespace PopcornViewer
             }
         }
 
-        /// <summary>
-        /// Calls functions in the Flash Player
-        /// </summary>
-        /// <param name="function"></param>
-        /// <returns></returns>
+        // Calls functions in the Flash Player
         private string YoutubeVideo_CallFlash(string function)
         {
             string flashXMLrequest = "";
@@ -446,12 +414,7 @@ namespace PopcornViewer
             return response;
         }
 
-        /// <summary>
-        /// Creates flash args
-        /// </summary>
-        /// <param name="arguments"></param>
-        /// <param name="delim"></param>
-        /// <returns></returns>
+        // Creates flash args
         private static List<string> parseDelimitedString(string arguments, char delim = ',')
         {
             bool inQuotes = false;
@@ -518,9 +481,7 @@ namespace PopcornViewer
 
         #region Form Functions
 
-        /// <summary>
-        /// Main function
-        /// </summary>
+        // Main function
         public MainForm()
         {
             InitializeComponent();
@@ -558,11 +519,7 @@ namespace PopcornViewer
             }
         }
 
-        /// <summary>
-        /// Enables and disables appropriate options on opening
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Enables and disables appropriate options on opening
         private void PlaylistContextMenu_Opening(object sender, CancelEventArgs e)
         {
             // Don't let user select a video specific option without a video selected
@@ -580,11 +537,7 @@ namespace PopcornViewer
             }
         }
 
-        /// <summary>
-        /// These functions define behaviors for Playlist context menu items
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // These functions define behaviors for Playlist context menu items
         private void copyPlaylistMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(ConvertURLToBrowser(PlaylistURLs[Playlist.SelectedIndex]));
@@ -610,11 +563,7 @@ namespace PopcornViewer
             }
         }
 
-        /// <summary>
-        /// Handles logic for drag and drop in the Playlist
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Handles logic for drag and drop in the Playlist
         private void Playlist_DragDrop(object sender, DragEventArgs e)
         {
             string url = (string)e.Data.GetData(DataFormats.Text, false);
@@ -706,11 +655,7 @@ namespace PopcornViewer
             }
         }
 
-        /// <summary>
-        /// Controls the edit Toolstrip Menu items' logic
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Controls the edit Toolstrip Menu items' logic
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(ConvertURLToBrowser(PlaylistURLs[Playlist.SelectedIndex]));
@@ -731,11 +676,7 @@ namespace PopcornViewer
             else MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        /// <summary>
-        /// Deals with the playback toolstrip.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Deals with the playback toolstrip.
         private void repeatOneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UncheckPlaybackOptions();
@@ -766,22 +707,14 @@ namespace PopcornViewer
             pauseToolStripMenuItem.Checked = true;
         }
 
-        /// <summary>
-        /// Deals with settings toolstrip
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Deals with settings toolstrip
         private void hostingOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConnectionWindow ConWin = new ConnectionWindow(this);
             ConWin.ShowDialog();
         }
 
-        /// <summary>
-        /// Changes the Playlist item 0 to be bold showing that it is the one currently playing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Changes the Playlist item 0 to be bold showing that it is the one currently playing
         private void Playlist_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
         {
             e.DrawBackground();
@@ -796,11 +729,7 @@ namespace PopcornViewer
             e.DrawFocusRectangle();
         }
 
-        /// <summary>
-        /// Handles the logic of the chatbox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Handles the logic of the chatbox
         private void ChatBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0)

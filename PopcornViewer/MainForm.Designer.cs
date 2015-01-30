@@ -235,6 +235,7 @@
             this.ChatHistory.Size = new System.Drawing.Size(493, 108);
             this.ChatHistory.TabIndex = 2;
             this.ChatHistory.Text = "";
+            this.ChatHistory.TextChanged += new System.EventHandler(this.ChatHistory_TextChanged);
             // 
             // ChatBox
             // 
@@ -673,6 +674,7 @@
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "MainForm";
             this.Text = "Popcorn Viewer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

@@ -124,6 +124,7 @@ namespace PopcornViewer
                 // Initate server on seperate thread
                 Parent.HostPort = (int)PortBox.Value;
                 Parent.bwListener = new BackgroundWorker();
+                Parent.bwListener.WorkerSupportsCancellation = true;
                 Parent.bwListener.DoWork += new DoWorkEventHandler(Parent.Listen);
                 Parent.bwListener.RunWorkerAsync();
                 

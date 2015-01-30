@@ -40,6 +40,7 @@ namespace PopcornViewer
         public TcpClient SelfSocket;
         public NetworkStream SelfStream;
         public Thread ChatThread;
+        Thread ChatThread2;
 
         #endregion
 
@@ -184,7 +185,7 @@ namespace PopcornViewer
                 Started = false;
             }
 
-            while (Started)
+            while (Started && ClientSocket.Connected)
             {
                 ClientSocket = ServerSocket.AcceptTcpClient();
 
@@ -198,20 +199,20 @@ namespace PopcornViewer
 
                 ClientsList.Add(DataFromClient, ClientSocket);
 
-                Broadcast(DataFromClient + " has joined", DataFromClient, false);
+                Broadcast("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + DataFromClient + " has joined", "CONSOLE", false);
 
                 Chat(DataFromClient + " has joined", "CONSOLE");
 
-                Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
+                ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
                 ChatThread2.Start();
             }
 
-            //ClientSocket.Close();
-            //ServerSocket.Stop();
+            ClientSocket.Close();
+            ServerSocket.Stop();
             Chat("Terminating chat service...", "CONSOLE");
         }
 
-        public static void Broadcast(string Message, string Entity, bool Flag)
+        public static void Broadcast(string Message, string Entity, bool ClientFlag)
         {
             foreach (DictionaryEntry Item in ClientsList)
             {
@@ -219,13 +220,13 @@ namespace PopcornViewer
                 NetworkStream BroadcastStream = BroadcastSocket.GetStream();
                 Byte[] BroadcastBytes;
 
-                if (Flag)
+                if (ClientFlag)
                 {
-                    BroadcastBytes = Encoding.ASCII.GetBytes("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message + "\n");
+                    BroadcastBytes = Encoding.ASCII.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message );
                 }
                 else
                 {
-                    BroadcastBytes = Encoding.ASCII.GetBytes("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " " + Message + "\n");
+                    BroadcastBytes = Encoding.ASCII.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " " + Message );
                 }
 
                 BroadcastStream.Write(BroadcastBytes, 0, BroadcastBytes.Length);
@@ -250,21 +251,25 @@ namespace PopcornViewer
 
                     Broadcast(DataFromClient, Entity, true);
                 }
-                catch (Exception Ex)
+                catch
                 {
-                    Chat(Ex.ToString(), "CONSOLE");
+                    Chat("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " has left the room", "CONSOLE");
+                    Broadcast("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " has left the room", Entity, false);
+                    ClientsList.Remove(Entity);
+                    return;
                 }
             }
         }
 
         public void GetMessage()
         {
-            while (true)
+            while (SelfSocket != null && SelfSocket.Connected)
             {
                 SelfStream = SelfSocket.GetStream();
                 byte[] InStream = new byte[65536];
-                SelfStream.Read(InStream, 0, SelfSocket.ReceiveBufferSize);
-                Chat(Encoding.ASCII.GetString(InStream), "???");
+                try { SelfStream.Read(InStream, 0, SelfSocket.ReceiveBufferSize); }
+                catch { return; }
+                ClientChat(Encoding.ASCII.GetString(InStream));
             }
         }
 
@@ -279,8 +284,14 @@ namespace PopcornViewer
             if (ChatHistory.Text == "")
                 ChatHistory.AppendText("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
             else ChatHistory.AppendText("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
-            ChatHistory.SelectionStart = ChatHistory.Text.Length;
-            ChatHistory.ScrollToCaret();
+        }
+
+        private void ClientChat(string Msg)
+        {
+            if (this.InvokeRequired)
+                this.Invoke(new Action<string>(ClientChat), new object[] { Msg });
+            else
+                ChatHistory.AppendText(Msg);
         }
 
         #endregion
@@ -741,8 +752,23 @@ namespace PopcornViewer
                 byte[] Chat = Encoding.ASCII.GetBytes(ChatBox.Text + "$");
                 SelfStream.Write(Chat, 0, Chat.Length);
                 SelfStream.Flush();
+                ChatBox.Text = "";
             }
-            ChatBox.Text = "";
+        }
+
+        // Scroll chat when text changed
+        private void ChatHistory_TextChanged(object sender, EventArgs e)
+        {
+            ChatHistory.SelectionStart = ChatHistory.Text.Length;
+            ChatHistory.ScrollToCaret();
+        }
+
+        // Handles tasks when form closes
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (ChatThread != null) ChatThread.Abort();
+            if (ChatThread2 != null) ChatThread2.Abort();
+            if (bwListener != null) bwListener.CancelAsync();
         }
 
         #endregion

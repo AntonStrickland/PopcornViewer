@@ -92,7 +92,7 @@ namespace PopcornViewer
                 // Try to connect to the server
                 Parent.SelfSocket = new TcpClient();
                 Parent.Chat("Connecting to " + NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[0].Text + "...", "CONSOLE");
-                try { Parent.SelfSocket.Connect(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[1].Text, (int)PortBox.Value); }
+                try { Parent.SelfSocket.Connect(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[1].Text, Convert.ToInt32(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[2].Text)); }
                 catch (Exception Ex)
                 {
                     Parent.Chat(Ex.ToString(), "CONSOLE");
@@ -109,8 +109,10 @@ namespace PopcornViewer
                 Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
                 Parent.SelfStream.Flush();
 
-                Parent.ChatThread = new Thread(Parent.GetMessage);
-                Parent.ChatThread.Start();
+                Parent.clListener = new BackgroundWorker();
+                Parent.clListener.WorkerSupportsCancellation = true;
+                Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
+                Parent.clListener.RunWorkerAsync();
 
                 this.Close();
             }

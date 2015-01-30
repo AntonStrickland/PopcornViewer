@@ -39,8 +39,10 @@ namespace PopcornViewer
         public BackgroundWorker bwListener;
         public TcpClient SelfSocket;
         public NetworkStream SelfStream;
-        public Thread ChatThread;
-        Thread ChatThread2;
+        public BackgroundWorker clListener;
+        TcpListener ServerSocket;
+        TcpClient ClientSocket;
+        List<Thread> ChatClient2Threads = new List<Thread>();
 
         #endregion
 
@@ -172,8 +174,8 @@ namespace PopcornViewer
         {
             Chat("Initiating chat service...", "CONSOLE");
 
-            TcpListener ServerSocket = new TcpListener(IPAddress.Any, HostPort);
-            TcpClient ClientSocket = default(TcpClient);
+            ServerSocket = new TcpListener(IPAddress.Any, HostPort);
+            ClientSocket = default(TcpClient);
             bool Started = true;
 
             ClientsList = new Hashtable();
@@ -185,9 +187,10 @@ namespace PopcornViewer
                 Started = false;
             }
 
-            while (Started && ClientSocket.Connected)
+            while (Started)
             {
-                ClientSocket = ServerSocket.AcceptTcpClient();
+                try { ClientSocket = ServerSocket.AcceptTcpClient(); }
+                catch { return; }
 
                 byte[] BytesIn = new byte[65536];
                 string DataFromClient;
@@ -199,11 +202,12 @@ namespace PopcornViewer
 
                 ClientsList.Add(DataFromClient, ClientSocket);
 
-                Broadcast("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + DataFromClient + " has joined", "CONSOLE", false);
+                Broadcast("has joined the room", DataFromClient, false);
 
-                Chat(DataFromClient + " has joined", "CONSOLE");
+                Chat(" has joined the room", DataFromClient);
 
-                ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
+                Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
+                ChatClient2Threads.Add(ChatThread2);
                 ChatThread2.Start();
             }
 
@@ -254,14 +258,15 @@ namespace PopcornViewer
                 catch
                 {
                     Chat("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " has left the room", "CONSOLE");
-                    Broadcast("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " has left the room", Entity, false);
                     ClientsList.Remove(Entity);
+                    Broadcast("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " has left the room", Entity, false);
                     return;
                 }
+                Thread.Sleep(200);
             }
         }
 
-        public void GetMessage()
+        public void GetMessage(object sender, DoWorkEventArgs e)
         {
             while (SelfSocket != null && SelfSocket.Connected)
             {
@@ -270,7 +275,9 @@ namespace PopcornViewer
                 try { SelfStream.Read(InStream, 0, SelfSocket.ReceiveBufferSize); }
                 catch { return; }
                 ClientChat(Encoding.ASCII.GetString(InStream));
+                Thread.Sleep(200);
             }
+            Chat("Lost connection from server...", "CONSOLE");
         }
 
         // Sends chat to chatbox. Thread safe.
@@ -278,7 +285,8 @@ namespace PopcornViewer
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action<string, string>(Chat), new object[] { Message, Entity });
+                try { this.Invoke(new Action<string, string>(Chat), new object[] { Message, Entity }); }
+                catch { }
                 return;
             }
             if (ChatHistory.Text == "")
@@ -288,10 +296,13 @@ namespace PopcornViewer
 
         private void ClientChat(string Msg)
         {
-            if (this.InvokeRequired)
-                this.Invoke(new Action<string>(ClientChat), new object[] { Msg });
-            else
-                ChatHistory.AppendText(Msg);
+            if (Msg != "")
+            {
+                if (this.InvokeRequired)
+                    this.Invoke(new Action<string>(ClientChat), new object[] { Msg });
+                else
+                    ChatHistory.AppendText(Msg);
+            }
         }
 
         #endregion
@@ -766,8 +777,17 @@ namespace PopcornViewer
         // Handles tasks when form closes
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (ChatThread != null) ChatThread.Abort();
-            if (ChatThread2 != null) ChatThread2.Abort();
+
+            if (ClientSocket != null && ClientSocket.Connected) ClientSocket.Close();
+            if (ServerSocket != null) ServerSocket.Stop();
+
+            foreach(Thread T in ChatClient2Threads)
+            {
+                try { T.Abort(); }
+                catch { }
+            }
+
+            if (clListener != null) clListener.CancelAsync();
             if (bwListener != null) bwListener.CancelAsync();
         }
 

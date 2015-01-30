@@ -202,8 +202,8 @@ namespace PopcornViewer
 
                 Chat(DataFromClient + " has joined", "CONSOLE");
 
-                Thread ChatThread = new Thread(() => Speak(ClientSocket, DataFromClient));
-                ChatThread.Start();
+                Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
+                ChatThread2.Start();
             }
 
             //ClientSocket.Close();
@@ -276,7 +276,11 @@ namespace PopcornViewer
                 this.Invoke(new Action<string, string>(Chat), new object[] { Message, Entity });
                 return;
             }
-            ChatHistory.AppendText("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message + "\n");
+            if (ChatHistory.Text == "")
+                ChatHistory.AppendText("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
+            else ChatHistory.AppendText("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
+            ChatHistory.SelectionStart = ChatHistory.Text.Length;
+            ChatHistory.ScrollToCaret();
         }
 
         #endregion
@@ -732,12 +736,13 @@ namespace PopcornViewer
         // Handles the logic of the chatbox
         private void ChatBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0)
+            if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0 && SelfSocket != null && SelfSocket.Connected)
             {
                 byte[] Chat = Encoding.ASCII.GetBytes(ChatBox.Text + "$");
                 SelfStream.Write(Chat, 0, Chat.Length);
                 SelfStream.Flush();
             }
+            ChatBox.Text = "";
         }
 
         #endregion

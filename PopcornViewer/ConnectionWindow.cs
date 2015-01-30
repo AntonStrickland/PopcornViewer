@@ -89,7 +89,28 @@ namespace PopcornViewer
         {
             if (NicknameBox.Text.Length > 0)
             {
-                
+                // Try to connect to the server
+                Parent.SelfSocket = new TcpClient();
+                Parent.Chat("Connecting to " + NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[0].Text + "...", "CONSOLE");
+                try { Parent.SelfSocket.Connect(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[1].Text, (int)PortBox.Value); }
+                catch (Exception Ex)
+                {
+                    Parent.Chat(Ex.ToString(), "CONSOLE");
+                }
+                if (!Parent.SelfSocket.Connected)
+                {
+                    Parent.Chat("Unable to connect to " + IPAddressBox.Text, "CONSOLE");
+                    this.Close();
+                    return;
+                }
+
+                Parent.SelfStream = Parent.SelfSocket.GetStream();
+                byte[] BytesOut = Encoding.ASCII.GetBytes(NicknameBox.Text + "$");
+                Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
+                Parent.SelfStream.Flush();
+
+                Parent.ChatThread = new Thread(Parent.GetMessage);
+                Parent.ChatThread.Start();
 
                 this.Close();
             }
@@ -105,34 +126,7 @@ namespace PopcornViewer
                 Parent.bwListener = new BackgroundWorker();
                 Parent.bwListener.DoWork += new DoWorkEventHandler(Parent.Listen);
                 Parent.bwListener.RunWorkerAsync();
-
-                // Set up local vars
-                Parent.NicknameLabel.Text = NicknameBox.Text;
-                Parent.SelfSocket = new TcpClient();
-                Parent.SelfStream = default(NetworkStream);
-
-                // Connect to local host
-                bool Flag = true;
-                try { Parent.SelfSocket.Connect("127.0.0.1", Parent.HostPort); }
-                catch (Exception Ex)
-                {
-                    Parent.Chat(Ex.ToString(), "CONSOLE");
-                    Flag = false;
-                }
-                if (Flag)
-                {
-                    Parent.SelfStream = Parent.SelfSocket.GetStream();
-
-                    // Send nickname
-                    byte[] Stream = Encoding.ASCII.GetBytes(Parent.NicknameLabel.Text + "$");
-                    Parent.SelfStream.Write(Stream, 0, Stream.Length);
-                    Parent.SelfStream.Flush();
-
-                    // Start message queue
-                    Parent.ChatThread = new Thread(Parent.GetMessage);
-                    Parent.ChatThread.Start();
-                }
-
+                
                 this.Close();
             }
             else MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -204,7 +204,7 @@ namespace PopcornViewer
 
                 Broadcast("has joined the room", DataFromClient, false);
 
-                Chat(" has joined the room", DataFromClient);
+                Chat("has joined the room", DataFromClient);
 
                 Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
                 ChatClient2Threads.Add(ChatThread2);
@@ -257,9 +257,9 @@ namespace PopcornViewer
                 }
                 catch
                 {
-                    Chat("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " has left the room", "CONSOLE");
+                    Chat("has left the room", Entity);
                     ClientsList.Remove(Entity);
-                    Broadcast("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " has left the room", Entity, false);
+                    Broadcast("has left the room", Entity, false);
                     return;
                 }
                 Thread.Sleep(200);

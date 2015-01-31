@@ -218,7 +218,7 @@
             this.NicknameLabel.ReadOnly = true;
             this.NicknameLabel.Size = new System.Drawing.Size(58, 13);
             this.NicknameLabel.TabIndex = 3;
-            this.NicknameLabel.Text = "Nickname:";
+            this.NicknameLabel.Text = "Guest:";
             this.NicknameLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ChatHistory
@@ -242,7 +242,7 @@
             this.ChatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.ChatBox.Location = new System.Drawing.Point(68, 120);
+            this.ChatBox.Location = new System.Drawing.Point(67, 120);
             this.ChatBox.Name = "ChatBox";
             this.ChatBox.Size = new System.Drawing.Size(429, 20);
             this.ChatBox.TabIndex = 0;

@@ -38,13 +38,13 @@
             this.Port = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.NicknameBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.PortBox = new System.Windows.Forms.NumericUpDown();
             this.IPAddressBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.HostButton = new System.Windows.Forms.Button();
-            this.PortBox = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PortBox)).BeginInit();
@@ -155,6 +155,37 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "User Info";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(232, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Host Port";
+            // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(235, 32);
+            this.PortBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.PortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(48, 20);
+            this.PortBox.TabIndex = 7;
+            this.PortBox.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
             // IPAddressBox
             // 
             this.IPAddressBox.BackColor = System.Drawing.SystemColors.Control;
@@ -202,37 +233,6 @@
             this.HostButton.Text = "Host";
             this.HostButton.UseVisualStyleBackColor = true;
             this.HostButton.Click += new System.EventHandler(this.HostButton_Click);
-            // 
-            // PortBox
-            // 
-            this.PortBox.Location = new System.Drawing.Point(235, 32);
-            this.PortBox.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.PortBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(48, 20);
-            this.PortBox.TabIndex = 7;
-            this.PortBox.Value = new decimal(new int[] {
-            80,
-            0,
-            0,
-            0});
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(232, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Port";
             // 
             // ConnectionWindow
             // 

@@ -89,15 +89,12 @@ namespace PopcornViewer
         {
             if (NicknameBox.Text.Length > 0)
             {
+                Parent.NicknameLabel.Text = NicknameBox.Text;
                 // Try to connect to the server
                 Parent.SelfSocket = new TcpClient();
                 Parent.Chat("Connecting to " + NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[0].Text + "...", "CONSOLE");
                 try { Parent.SelfSocket.Connect(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[1].Text, Convert.ToInt32(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[2].Text)); }
-                catch (Exception Ex)
-                {
-                    Parent.Chat(Ex.ToString(), "CONSOLE");
-                }
-                if (!Parent.SelfSocket.Connected)
+                catch
                 {
                     Parent.Chat("Unable to connect to " + IPAddressBox.Text, "CONSOLE");
                     this.Close();

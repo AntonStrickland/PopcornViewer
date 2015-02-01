@@ -157,6 +157,8 @@ namespace PopcornViewer
                 Started = false;
             }
 
+            Hosting = true;
+
             while (Started)
             {
                 // Listen
@@ -191,6 +193,8 @@ namespace PopcornViewer
                 // Send list of clients to everyone
                 BroadcastClientsList();
             }
+
+            Hosting = false;
 
             try
             {

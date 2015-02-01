@@ -248,6 +248,7 @@
             this.MinimumSize = new System.Drawing.Size(329, 467);
             this.Name = "ConnectionWindow";
             this.Text = "Network List";
+            this.Load += new System.EventHandler(this.ConnectionWindow_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

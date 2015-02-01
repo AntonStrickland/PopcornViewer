@@ -30,11 +30,13 @@ namespace PopcornViewer
             }
         }
 
+        // Closes the window
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Saves the network and closes the window
         private void SaveButton_Click(object sender, EventArgs e)
         {
             // Add the network to the listview

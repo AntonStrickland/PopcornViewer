@@ -38,35 +38,29 @@ namespace PopcornViewer
             IPAddressBox.Text = localIP;
         }
 
+        // Opens up the AddNetwork window to add networks to the list
         private void AddButton_Click(object sender, EventArgs e)
         {
             AddNetwork AddNet = new AddNetwork(this, false);
             AddNet.ShowDialog();
         }
 
+        // Disables/enables buttons based on which network is selected
         private void NetworkList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Disallow single object reference function if none are selected
-            if (NetworkList.SelectedIndices.Count == 1)
-            {
-                EditButton.Enabled = true;
-                RemoveButton.Enabled = true;
-                ConnectButton.Enabled = true;
-            }
-            else
-            {
-                EditButton.Enabled = false;
-                RemoveButton.Enabled = false;
-                ConnectButton.Enabled = false;
-            }
+            EditButton.Enabled = (NetworkList.SelectedIndices.Count == 1);
+            RemoveButton.Enabled = EditButton.Enabled;
+            ConnectButton.Enabled = (EditButton.Enabled && !Parent.Hosting);
         }
 
+        // Brings up the AddNetwork window to change the selected network
         private void EditButton_Click(object sender, EventArgs e)
         {
             AddNetwork AddNet = new AddNetwork(this, true);
             AddNet.ShowDialog();
         }
 
+        // Removes networks from the network box
         private void NetworkList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete)
@@ -78,6 +72,7 @@ namespace PopcornViewer
             }
         }
 
+        // Removes networks from the network box
         private void RemoveButton_Click(object sender, EventArgs e)
         {
             if (NetworkList.SelectedIndices.Count == 1)
@@ -86,37 +81,41 @@ namespace PopcornViewer
             }
         }
 
+        // Begins connection and sends nickname to server
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            if (NicknameBox.Text.Length > 0)
+            if (NicknameBox.Text.Length < 1)
             {
-                Parent.NicknameLabel.Text = NicknameBox.Text;
-                // Try to connect to the server
-                Parent.SelfSocket = new TcpClient();
-                Parent.Chat("Connecting to " + NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[0].Text + "...", "CONSOLE");
-                try { Parent.SelfSocket.Connect(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[1].Text, Convert.ToInt32(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[2].Text)); }
-                catch
-                {
-                    Parent.Chat("Unable to connect to " + IPAddressBox.Text, "CONSOLE");
-                    this.Close();
-                    return;
-                }
-
-                Parent.SelfStream = Parent.SelfSocket.GetStream();
-                byte[] BytesOut = Encoding.UTF8.GetBytes(NicknameBox.Text + "$");
-                Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
-                Parent.SelfStream.Flush();
-
-                Parent.clListener = new BackgroundWorker();
-                Parent.clListener.WorkerSupportsCancellation = true;
-                Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
-                Parent.clListener.RunWorkerAsync();
-
-                this.Close();
+                MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
+            Parent.NicknameLabel.Text = NicknameBox.Text;
+            // Try to connect to the server
+            Parent.SelfSocket = new TcpClient();
+            Parent.Chat("Connecting to " + NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[0].Text + "...", "CONSOLE");
+            try { Parent.SelfSocket.Connect(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[1].Text, Convert.ToInt32(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[2].Text)); }
+            catch
+            {
+                Parent.Chat("Unable to connect to " + IPAddressBox.Text, "CONSOLE");
+                this.Close();
+                return;
+            }
+
+            Parent.SelfStream = Parent.SelfSocket.GetStream();
+            byte[] BytesOut = Encoding.UTF8.GetBytes(NicknameBox.Text + "$");
+            Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
+            Parent.SelfStream.Flush();
+
+            Parent.clListener = new BackgroundWorker();
+            Parent.clListener.WorkerSupportsCancellation = true;
+            Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
+            Parent.clListener.RunWorkerAsync();
+
+            this.Close();
         }
 
+        // Starts host thread and begins connection to loaclhost
         private void HostButton_Click(object sender, EventArgs e)
         {
             if (NicknameBox.Text.Length < 1)
@@ -139,6 +138,7 @@ namespace PopcornViewer
             this.Close();
         }
 
+        // Allows host to connect to his own server
         private void HostConnect()
         {
             Parent.SelfSocket = new TcpClient();
@@ -156,6 +156,12 @@ namespace PopcornViewer
             Parent.clListener.WorkerSupportsCancellation = true;
             Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
             Parent.clListener.RunWorkerAsync();
+        }
+
+        // Disables/enables buttons based on currently connceted status
+        private void ConnectionWindow_Load(object sender, EventArgs e)
+        {
+            HostButton.Enabled = !Parent.Hosting;
         }
     }
 }

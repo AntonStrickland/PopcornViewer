@@ -32,6 +32,7 @@ namespace PopcornViewer
         const int TOLERANCE = 2;
 
         // Socket Objects
+        public bool Hosting = false;
         public int HostPort;
         public static Hashtable ClientsList;
         public BackgroundWorker bwListener;
@@ -46,8 +47,6 @@ namespace PopcornViewer
         public MainForm()
         {
             InitializeComponent();
-
-            ConnectionWindow ConWin = new ConnectionWindow(this);
 
             Playlist.DrawMode = DrawMode.OwnerDrawFixed;
             Playlist.DrawItem += new DrawItemEventHandler(Playlist_DrawItem);
@@ -328,9 +327,11 @@ namespace PopcornViewer
             if (bwListener != null) bwListener.CancelAsync();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        // Loads connection window immediately
+        private void MainForm_Shown(object sender, EventArgs e)
         {
-            Application.Exit();
+            ConnectionWindow ConWin = new ConnectionWindow(this);
+            ConWin.ShowDialog();
         }
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="AddNetwork.Designer.cs">
       <DependentUpon>AddNetwork.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main Form - Flash Functions.cs" />
     <Compile Include="ConnectionWindow.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -207,7 +207,7 @@ namespace PopcornViewer
                 catch 
                 { 
                     Broadcast("Client hash colission! Host terminating session...", "CONSOLE", true);
-                    this.Close();
+                    return;
                 }
 
                 // Display appropriate messages

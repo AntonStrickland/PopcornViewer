@@ -133,7 +133,14 @@ namespace PopcornViewer
             Parent.bwListener.RunWorkerAsync();
 
             Parent.NicknameLabel.Text = NicknameBox.Text;
-            /*/ Try to connect to the server
+            // Try to connect to the server
+            Thread ConnectionThread = new Thread(() => HostConnect());
+            ConnectionThread.Start();
+            this.Close();
+        }
+
+        private void HostConnect()
+        {
             Parent.SelfSocket = new TcpClient();
             Parent.Chat("Connecting to localhost...", "CONSOLE");
             while (!Parent.SelfSocket.Connected && Parent.bwListener.IsBusy)
@@ -148,9 +155,7 @@ namespace PopcornViewer
             Parent.clListener = new BackgroundWorker();
             Parent.clListener.WorkerSupportsCancellation = true;
             Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
-            Parent.clListener.RunWorkerAsync();*/
-
-            this.Close();
+            Parent.clListener.RunWorkerAsync();
         }
     }
 }

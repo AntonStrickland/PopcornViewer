@@ -32,6 +32,7 @@ namespace PopcornViewer
                 if (ip.AddressFamily.ToString() == "InterNetwork")
                 {
                     localIP = ip.ToString();
+                    break;
                 }
             }
             IPAddressBox.Text = localIP;
@@ -102,7 +103,7 @@ namespace PopcornViewer
                 }
 
                 Parent.SelfStream = Parent.SelfSocket.GetStream();
-                byte[] BytesOut = Encoding.ASCII.GetBytes(NicknameBox.Text + "$");
+                byte[] BytesOut = Encoding.UTF8.GetBytes(NicknameBox.Text + "$");
                 Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
                 Parent.SelfStream.Flush();
 
@@ -118,36 +119,38 @@ namespace PopcornViewer
 
         private void HostButton_Click(object sender, EventArgs e)
         {
-            if (NicknameBox.Text.Length > 0)
+            if (NicknameBox.Text.Length < 1)
             {
-                // Initate server on seperate thread
-                Parent.HostPort = (int)PortBox.Value;
-                Parent.bwListener = new BackgroundWorker();
-                Parent.bwListener.WorkerSupportsCancellation = true;
-                Parent.bwListener.DoWork += new DoWorkEventHandler(Parent.Listen);
-                Parent.bwListener.RunWorkerAsync();
-
-                Parent.NicknameLabel.Text = NicknameBox.Text;
-                // Try to connect to the server
-                Parent.SelfSocket = new TcpClient();
-                Parent.Chat("Connecting to localhost...", "CONSOLE");
-                while (!Parent.SelfSocket.Connected && Parent.bwListener.IsBusy)
-                {
-                    Parent.SelfSocket.Connect("localhost", Parent.HostPort);
-                }
-                Parent.SelfStream = Parent.SelfSocket.GetStream();
-                byte[] BytesOut = Encoding.ASCII.GetBytes(NicknameBox.Text + "$");
-                Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
-                Parent.SelfStream.Flush();
-
-                Parent.clListener = new BackgroundWorker();
-                Parent.clListener.WorkerSupportsCancellation = true;
-                Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
-                Parent.clListener.RunWorkerAsync();
-
-                this.Close();
+                MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            // Initate server on seperate thread
+            Parent.HostPort = (int)PortBox.Value;
+            Parent.bwListener = new BackgroundWorker();
+            Parent.bwListener.WorkerSupportsCancellation = true;
+            Parent.bwListener.DoWork += new DoWorkEventHandler(Parent.Listen);
+            Parent.bwListener.RunWorkerAsync();
+
+            Parent.NicknameLabel.Text = NicknameBox.Text;
+            /*/ Try to connect to the server
+            Parent.SelfSocket = new TcpClient();
+            Parent.Chat("Connecting to localhost...", "CONSOLE");
+            while (!Parent.SelfSocket.Connected && Parent.bwListener.IsBusy)
+            {
+                Parent.SelfSocket.Connect("localhost", Parent.HostPort);
+            }
+            Parent.SelfStream = Parent.SelfSocket.GetStream();
+            byte[] BytesOut = Encoding.UTF8.GetBytes(NicknameBox.Text + "$");
+            Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
+            Parent.SelfStream.Flush();
+
+            Parent.clListener = new BackgroundWorker();
+            Parent.clListener.WorkerSupportsCancellation = true;
+            Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
+            Parent.clListener.RunWorkerAsync();*/
+
+            this.Close();
         }
     }
 }

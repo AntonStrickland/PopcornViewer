@@ -199,7 +199,7 @@ namespace PopcornViewer
                 // Get name of new client
                 NetworkStream Stream = ClientSocket.GetStream();
                 Stream.Read(BytesIn, 0, (int)ClientSocket.ReceiveBufferSize);
-                DataFromClient = System.Text.Encoding.ASCII.GetString(BytesIn);
+                DataFromClient = System.Text.Encoding.UTF8.GetString(BytesIn);
                 DataFromClient = DataFromClient.Substring(0, DataFromClient.IndexOf("$"));
 
                 // If somehow they have the same name as someone else
@@ -246,10 +246,10 @@ namespace PopcornViewer
                     switch(Command[0])
                     {
                         case "NEWCLIENTSLIST":
-                            BroadcastBytes = Encoding.ASCII.GetBytes(Message);
+                            BroadcastBytes = Encoding.UTF8.GetBytes(Message);
                             break;
                         default:
-                            BroadcastBytes = Encoding.ASCII.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: An unexpected error occured.");
+                            BroadcastBytes = Encoding.UTF8.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: An unexpected error occured.");
                             break;
                     }
                 }
@@ -257,11 +257,11 @@ namespace PopcornViewer
                 {
                     if (ClientFlag)
                     {
-                        BroadcastBytes = Encoding.ASCII.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
+                        BroadcastBytes = Encoding.UTF8.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
                     }
                     else
                     {
-                        BroadcastBytes = Encoding.ASCII.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " " + Message);
+                        BroadcastBytes = Encoding.UTF8.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " " + Message);
                     }
                 }
 
@@ -293,7 +293,7 @@ namespace PopcornViewer
                 {
                     NetworkStream Stream = ClientSocket.GetStream();
                     Stream.Read(BytesFrom, 0, (int)ClientSocket.ReceiveBufferSize);
-                    DataFromClient = System.Text.Encoding.ASCII.GetString(BytesFrom);
+                    DataFromClient = System.Text.Encoding.UTF8.GetString(BytesFrom);
                     DataFromClient = DataFromClient.Substring(0, DataFromClient.IndexOf("$"));
                     Broadcast(DataFromClient, Entity, true);
                 }
@@ -316,7 +316,7 @@ namespace PopcornViewer
                 byte[] InStream = new byte[65536];
                 try { SelfStream.Read(InStream, 0, SelfSocket.ReceiveBufferSize); }
                 catch { break; }
-                string[] Message = Encoding.ASCII.GetString(InStream).Split(' ');
+                string[] Message = Encoding.UTF8.GetString(InStream).Split(' ');
                 
                 switch(Message[0])
                 {
@@ -376,7 +376,8 @@ namespace PopcornViewer
             if (Msg != "")
             {
                 if (this.InvokeRequired)
-                    this.Invoke(new Action<string>(ClientChat), new object[] { Msg });
+                    try { this.Invoke(new Action<string>(ClientChat), new object[] { Msg }); }
+                    catch { return; }
                 else
                     ChatHistory.AppendText(Msg);
             }
@@ -839,7 +840,7 @@ namespace PopcornViewer
         {
             if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0 && SelfSocket != null && SelfSocket.Connected)
             {
-                byte[] Chat = Encoding.ASCII.GetBytes(ChatBox.Text + "$");
+                byte[] Chat = Encoding.UTF8.GetBytes(ChatBox.Text + "$");
                 SelfStream.Write(Chat, 0, Chat.Length);
                 SelfStream.Flush();
                 ChatBox.Text = "";

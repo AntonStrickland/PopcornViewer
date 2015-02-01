@@ -126,7 +126,25 @@ namespace PopcornViewer
                 Parent.bwListener.WorkerSupportsCancellation = true;
                 Parent.bwListener.DoWork += new DoWorkEventHandler(Parent.Listen);
                 Parent.bwListener.RunWorkerAsync();
-                
+
+                Parent.NicknameLabel.Text = NicknameBox.Text;
+                // Try to connect to the server
+                Parent.SelfSocket = new TcpClient();
+                Parent.Chat("Connecting to localhost...", "CONSOLE");
+                while (!Parent.SelfSocket.Connected && Parent.bwListener.IsBusy)
+                {
+                    Parent.SelfSocket.Connect("localhost", Parent.HostPort);
+                }
+                Parent.SelfStream = Parent.SelfSocket.GetStream();
+                byte[] BytesOut = Encoding.ASCII.GetBytes(NicknameBox.Text + "$");
+                Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
+                Parent.SelfStream.Flush();
+
+                Parent.clListener = new BackgroundWorker();
+                Parent.clListener.WorkerSupportsCancellation = true;
+                Parent.clListener.DoWork += new DoWorkEventHandler(Parent.GetMessage);
+                Parent.clListener.RunWorkerAsync();
+
                 this.Close();
             }
             else MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

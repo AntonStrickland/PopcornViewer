@@ -212,7 +212,6 @@ namespace PopcornViewer
 
                 // Display appropriate messages
                 Broadcast("has joined the room", DataFromClient, false);
-                Chat("has joined the room", DataFromClient);
 
                 // Launch speaker thread
                 Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
@@ -296,13 +295,10 @@ namespace PopcornViewer
                     Stream.Read(BytesFrom, 0, (int)ClientSocket.ReceiveBufferSize);
                     DataFromClient = System.Text.Encoding.ASCII.GetString(BytesFrom);
                     DataFromClient = DataFromClient.Substring(0, DataFromClient.IndexOf("$"));
-                    Chat(DataFromClient, Entity);
-
                     Broadcast(DataFromClient, Entity, true);
                 }
                 catch
                 {
-                    Chat("has left the room", Entity);
                     ClientsList.Remove(Entity);
                     Broadcast("has left the room", Entity, false);
                     BroadcastClientsList();
@@ -325,12 +321,7 @@ namespace PopcornViewer
                 switch(Message[0])
                 {
                     case "NEWCLIENTSLIST":
-                        ChatMembers.Items.Clear();
-                        for (int i = 1; i < Message.Length - 1; i++)
-                        {
-                            ChatMembers.Items.Add(Message[i]);
-                        }
-                        ChatLabel.Text = "Chatting: " + ChatMembers.Items.Count;
+                        ClientListUpdate(Message);
                         break;
                     default:
                         string TotalMessage = "";
@@ -346,6 +337,24 @@ namespace PopcornViewer
                 Thread.Sleep(200);
             }
             Chat("Lost connection from server...", "CONSOLE");
+        }
+
+        private void ClientListUpdate(string[] Message)
+        {
+            if (this.InvokeRequired)
+            {
+                try { this.Invoke(new Action<string[]>(ClientListUpdate), new object[] { Message }); }
+                catch { return; }
+            }
+            else
+            {
+                ChatMembers.Items.Clear();
+                for (int i = 1; i < Message.Length - 1; i++)
+                {
+                    ChatMembers.Items.Add(Message[i]);
+                }
+                ChatLabel.Text = "Chatting: " + ChatMembers.Items.Count;
+            }
         }
 
         // Sends chat to chatbox. Thread safe.
@@ -766,8 +775,10 @@ namespace PopcornViewer
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (AddToPlaylist(Clipboard.GetText())) ;
-            else MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!AddToPlaylist(Clipboard.GetText()))
+            {
+                MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Deals with the playback toolstrip.

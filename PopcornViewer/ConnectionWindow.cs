@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
 
 namespace PopcornViewer
 {
@@ -162,6 +163,33 @@ namespace PopcornViewer
         private void ConnectionWindow_Load(object sender, EventArgs e)
         {
             HostButton.Enabled = !Parent.Hosting;
+        }
+
+        // Save network connection information and user information on closing
+        private void ConnectionWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string PathName = @"networks.conf";
+
+            //write over old file
+            FileStream fs = new FileStream(PathName, FileMode.Create, FileAccess.Write);
+            fs.Close();
+
+            //write connection information to file
+            StreamWriter writeText = new StreamWriter(PathName);
+            foreach(ListViewItem i in NetworkList.Items)
+            {
+                writeText.WriteLine(i.SubItems[0].Text);
+                writeText.WriteLine(i.SubItems[1].Text);
+                writeText.WriteLine(i.SubItems[2].Text);
+            }
+            
+            //write user information to file
+            writeText.WriteLine(NicknameBox.Text);
+            writeText.WriteLine(IPAddressBox.Text);
+            writeText.WriteLine(PortBox.Text);
+
+            writeText.Close();
+     
         }
     }
 }

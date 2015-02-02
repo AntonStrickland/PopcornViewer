@@ -163,6 +163,31 @@ namespace PopcornViewer
         private void ConnectionWindow_Load(object sender, EventArgs e)
         {
             HostButton.Enabled = !Parent.Hosting;
+            string PathName = @"networks.conf";
+            try
+            {
+                using (StreamReader readFile = new StreamReader(PathName))
+                {
+                    //read in user data
+                    String line;
+                    NicknameBox.Text = (line = readFile.ReadLine());
+                    PortBox.Text = (line = readFile.ReadLine());
+
+                    //read in connection information from file
+                    while ((line = readFile.ReadLine()) != null)
+                    {
+                        ListViewItem NewConnection = new ListViewItem(line);
+                        NewConnection.SubItems.Add(line = readFile.ReadLine());
+                        NewConnection.SubItems.Add(line = readFile.ReadLine());
+                        NetworkList.Items.Add(NewConnection);
+                    }
+                }
+            }
+            catch (Exception WriteFromFile)
+            {
+            //    MessageBox.Show(" No settings to load from.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            }
         }
 
         // Save network connection information and user information on closing
@@ -174,8 +199,12 @@ namespace PopcornViewer
             FileStream fs = new FileStream(PathName, FileMode.Create, FileAccess.Write);
             fs.Close();
 
-            //write connection information to file
+            //write user information to file
             StreamWriter writeText = new StreamWriter(PathName);
+            writeText.WriteLine(NicknameBox.Text);
+            writeText.WriteLine(PortBox.Text);
+
+            //write connection information to file
             foreach(ListViewItem i in NetworkList.Items)
             {
                 writeText.WriteLine(i.SubItems[0].Text);
@@ -183,13 +212,9 @@ namespace PopcornViewer
                 writeText.WriteLine(i.SubItems[2].Text);
             }
             
-            //write user information to file
-            writeText.WriteLine(NicknameBox.Text);
-            writeText.WriteLine(IPAddressBox.Text);
-            writeText.WriteLine(PortBox.Text);
-
+            
             writeText.Close();
-     
+            return;
         }
     }
 }

@@ -296,7 +296,7 @@ namespace PopcornViewer
         {
             if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0 && SelfSocket != null && SelfSocket.Connected)
             {
-                byte[] Chat = Encoding.UTF8.GetBytes(ChatBox.Text + "$");
+                byte[] Chat = Encoding.UTF8.GetBytes(Encrypt(ChatBox.Text) + "$");
                 SelfStream.Write(Chat, 0, Chat.Length);
                 SelfStream.Flush();
                 ChatBox.Text = "";
@@ -314,6 +314,11 @@ namespace PopcornViewer
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
 
+            if (Hosting)
+            {
+                Broadcast("Server closing...", "CONSOLE", true);
+            }
+
             if (ClientSocket != null && ClientSocket.Connected) ClientSocket.Close();
             if (ServerSocket != null) ServerSocket.Stop();
 
@@ -325,6 +330,8 @@ namespace PopcornViewer
 
             if (clListener != null) clListener.CancelAsync();
             if (bwListener != null) bwListener.CancelAsync();
+
+            SelfStream.Close();
         }
 
         // Loads connection window immediately
@@ -332,6 +339,12 @@ namespace PopcornViewer
         {
             ConnectionWindow ConWin = new ConnectionWindow(this);
             ConWin.ShowDialog();
+        }
+
+        // Exit toolstrip click
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

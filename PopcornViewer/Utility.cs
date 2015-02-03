@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
-using System.Xml;
 using System.Collections;
-using System.Text.RegularExpressions;
 using Google.YouTube;
 
 namespace PopcornViewer
 {
-    public partial class MainForm : Form
+    public partial class MainForm
     {
         // URL Conversion Tools
         private string ConvertURLToEmbeded(string url)
@@ -171,8 +165,7 @@ namespace PopcornViewer
                 // Get name of new client
                 NetworkStream Stream = ClientSocket.GetStream();
                 Stream.Read(BytesIn, 0, (int)ClientSocket.ReceiveBufferSize);
-                DataFromClient = System.Text.Encoding.UTF8.GetString(BytesIn);
-                DataFromClient = DataFromClient.Substring(0, DataFromClient.IndexOf("$"));
+                DataFromClient = Decrypt(System.Text.Encoding.UTF8.GetString(BytesIn));
 
                 // If somehow they have the same name as someone else
                 try { ClientsList.Add(DataFromClient, ClientSocket); }
@@ -207,41 +200,46 @@ namespace PopcornViewer
 
         public static void Broadcast(string Message, string Entity, bool ClientFlag)
         {
-            foreach (DictionaryEntry Item in ClientsList)
+            try
             {
-                TcpClient BroadcastSocket = (TcpClient)Item.Value;
-                NetworkStream BroadcastStream = BroadcastSocket.GetStream();
-                Byte[] BroadcastBytes;
+                foreach (DictionaryEntry Item in ClientsList)
+                {
+                    TcpClient BroadcastSocket = (TcpClient)Item.Value;
 
-                // Empty entity is information transfer
-                if (Entity == "")
-                {
-                    string[] Command = Message.Split(' ');
-                    switch (Command[0])
+                    NetworkStream BroadcastStream = BroadcastSocket.GetStream();
+                    Byte[] BroadcastBytes;
+
+                    // Empty entity is information transfer
+                    if (Entity == "")
                     {
-                        case "NEWCLIENTSLIST":
-                            BroadcastBytes = Encoding.UTF8.GetBytes(Message);
-                            break;
-                        default:
-                            BroadcastBytes = Encoding.UTF8.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: An unexpected error occured.");
-                            break;
-                    }
-                }
-                else
-                {
-                    if (ClientFlag)
-                    {
-                        BroadcastBytes = Encoding.UTF8.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
+                        string[] Command = Message.Split(' ');
+                        switch (Command[0])
+                        {
+                            case "NEWCLIENTSLIST":
+                                BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt(Message) + "$");
+                                break;
+                            default:
+                                BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: An unexpected error occured.$"));
+                                break;
+                        }
                     }
                     else
                     {
-                        BroadcastBytes = Encoding.UTF8.GetBytes("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " " + Message);
+                        if (ClientFlag)
+                        {
+                            BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message) + "$");
+                        }
+                        else
+                        {
+                            BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + " " + Message) + "$");
+                        }
                     }
-                }
 
-                BroadcastStream.Write(BroadcastBytes, 0, BroadcastBytes.Length);
-                BroadcastStream.Flush();
+                    BroadcastStream.Write(BroadcastBytes, 0, BroadcastBytes.Length);
+                    BroadcastStream.Flush();
+                }
             }
+            catch { }
         }
 
         private void BroadcastClientsList()
@@ -267,8 +265,7 @@ namespace PopcornViewer
                 {
                     NetworkStream Stream = ClientSocket.GetStream();
                     Stream.Read(BytesFrom, 0, (int)ClientSocket.ReceiveBufferSize);
-                    DataFromClient = System.Text.Encoding.UTF8.GetString(BytesFrom);
-                    DataFromClient = DataFromClient.Substring(0, DataFromClient.IndexOf("$"));
+                    DataFromClient = Decrypt(System.Text.Encoding.UTF8.GetString(BytesFrom));
                     Broadcast(DataFromClient, Entity, true);
                 }
                 catch
@@ -288,9 +285,16 @@ namespace PopcornViewer
             {
                 SelfStream = SelfSocket.GetStream();
                 byte[] InStream = new byte[65536];
-                try { SelfStream.Read(InStream, 0, SelfSocket.ReceiveBufferSize); }
+                try 
+                {
+                    if (SelfSocket.Connected)
+                    {
+                        SelfStream.Read(InStream, 0, SelfSocket.ReceiveBufferSize);
+                    }
+                }
                 catch { break; }
-                string[] Message = Encoding.UTF8.GetString(InStream).Split(' ');
+                string Mess = Decrypt(Encoding.UTF8.GetString(InStream));
+                string[] Message = Mess.Split(' ');
 
                 switch (Message[0])
                 {

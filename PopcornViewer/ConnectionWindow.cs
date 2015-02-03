@@ -104,7 +104,7 @@ namespace PopcornViewer
             }
 
             Parent.SelfStream = Parent.SelfSocket.GetStream();
-            byte[] BytesOut = Encoding.UTF8.GetBytes(NicknameBox.Text + "$");
+            byte[] BytesOut = Encoding.UTF8.GetBytes(MainForm.Encrypt(NicknameBox.Text) + "$");
             Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
             Parent.SelfStream.Flush();
 
@@ -149,7 +149,7 @@ namespace PopcornViewer
                 Parent.SelfSocket.Connect("localhost", Parent.HostPort);
             }
             Parent.SelfStream = Parent.SelfSocket.GetStream();
-            byte[] BytesOut = Encoding.UTF8.GetBytes(NicknameBox.Text + "$");
+            byte[] BytesOut = Encoding.UTF8.GetBytes(MainForm.Encrypt(NicknameBox.Text) + "$");
             Parent.SelfStream.Write(BytesOut, 0, BytesOut.Length);
             Parent.SelfStream.Flush();
 
@@ -183,11 +183,7 @@ namespace PopcornViewer
                     }
                 }
             }
-            catch (Exception WriteFromFile)
-            {
-            //    MessageBox.Show(" No settings to load from.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            }
+            catch { }
         }
 
         // Save network connection information and user information on closing

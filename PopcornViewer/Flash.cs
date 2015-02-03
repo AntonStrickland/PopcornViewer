@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Xml;
@@ -16,7 +15,7 @@ using Google.YouTube;
 
 namespace PopcornViewer
 {
-    public partial class MainForm : Form
+    public partial class MainForm
     {
         // Handles the Flash -> C# communication
         private void YoutubeVideo_FlashCall(object sender, AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEvent e)

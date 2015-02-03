@@ -138,6 +138,7 @@
             this.NicknameBox.Size = new System.Drawing.Size(84, 20);
             this.NicknameBox.TabIndex = 1;
             this.NicknameBox.Text = "Guest";
+            this.NicknameBox.TextChanged += new System.EventHandler(this.NicknameBox_TextChanged);
             // 
             // groupBox2
             // 

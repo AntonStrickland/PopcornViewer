@@ -212,5 +212,23 @@ namespace PopcornViewer
             writeText.Close();
             return;
         }
+
+        // Removes all but alphanumerics
+        private void NicknameBox_TextChanged(object sender, EventArgs e)
+        {
+            NicknameBox.Text = NicknameBox.Text.Replace(' ', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('/', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('\\', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace(':', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('*', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('\"', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('\'', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('%', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('<', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('>', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace('?', '\0');
+            NicknameBox.Text = NicknameBox.Text.Replace(';', '\0');
+            NicknameBox.Select(NicknameBox.Text.Length, 0);
+        }
     }
 }

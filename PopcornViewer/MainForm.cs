@@ -331,7 +331,7 @@ namespace PopcornViewer
             if (clListener != null) clListener.CancelAsync();
             if (bwListener != null) bwListener.CancelAsync();
 
-            SelfStream.Close();
+            if (SelfStream != null) SelfStream.Close();
         }
 
         // Loads connection window immediately

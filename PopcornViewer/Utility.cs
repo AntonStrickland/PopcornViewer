@@ -38,6 +38,11 @@ namespace PopcornViewer
                 Video video = RequestFromYoutube(url);
                 Playlist.Items.Add(video.Title);
                 UpdatePlaylistCount();
+                if (Hosting)
+                {
+                    Broadcast("has added " + video.Title + " to the playlist", NicknameLabel.Text, false);
+                    BroadcastPlaylist();
+                }
                 return true;
             }
             else return false;
@@ -183,8 +188,11 @@ namespace PopcornViewer
                 ChatClient2Threads.Add(ChatThread2);
                 ChatThread2.Start();
 
-                // Send list of clients to everyone
+                // Send list of clients & playlist to everyone
+                Thread.Sleep(200);
                 BroadcastClientsList();
+                Thread.Sleep(200);
+                BroadcastPlaylist();
             }
 
             Hosting = false;
@@ -216,10 +224,11 @@ namespace PopcornViewer
                         switch (Command[0])
                         {
                             case "NEWCLIENTSLIST":
+                            case "NEWPLAYLIST":
                                 BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt(Message) + "$");
                                 break;
                             default:
-                                BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: An unexpected error occured.$"));
+                                BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: An unexpected error occured.") + "$");
                                 break;
                         }
                     }
@@ -254,6 +263,18 @@ namespace PopcornViewer
             Broadcast(Clients, "", false);
         }
 
+        private void BroadcastPlaylist()
+        {
+            string Playlist = "NEWPLAYLIST ";
+            foreach (string url in PlaylistURLs)
+            {
+                Playlist += url;
+                Playlist += " ";
+            }
+
+            Broadcast(Playlist, "", false);
+        }
+
         private void Speak(TcpClient ClientSocket, string Entity)
         {
             byte[] BytesFrom = new byte[65536];
@@ -266,7 +287,14 @@ namespace PopcornViewer
                     NetworkStream Stream = ClientSocket.GetStream();
                     Stream.Read(BytesFrom, 0, (int)ClientSocket.ReceiveBufferSize);
                     DataFromClient = Decrypt(System.Text.Encoding.UTF8.GetString(BytesFrom));
-                    Broadcast(DataFromClient, Entity, true);
+                    if (DataFromClient == "")
+                    {
+                        ClientsList.Remove(Entity);
+                        Broadcast("has left the room", Entity, false);
+                        BroadcastClientsList();
+                        return;
+                    }
+                    else Broadcast(DataFromClient, Entity, true);
                 }
                 catch
                 {
@@ -301,6 +329,9 @@ namespace PopcornViewer
                     case "NEWCLIENTSLIST":
                         ClientListUpdate(Message);
                         break;
+                    case "NEWPLAYLIST":
+                        PlaylistUpdate(Message);
+                        break;
                     default:
                         string TotalMessage = "";
                         foreach (string s in Message)
@@ -332,6 +363,27 @@ namespace PopcornViewer
                     ChatMembers.Items.Add(Message[i]);
                 }
                 ChatLabel.Text = "Chatting: " + ChatMembers.Items.Count;
+            }
+        }
+
+        private void PlaylistUpdate(string[] Message)
+        {
+            if (this.InvokeRequired)
+            {
+                try { this.Invoke(new Action<string[]>(PlaylistUpdate), new object[] { Message }); }
+                catch { return; }
+            }
+            else
+            {
+                PlaylistURLs.Clear();
+                Playlist.Items.Clear();
+                for (int i = 1; i < Message.Length - 1; i++)
+                {
+                    PlaylistURLs.Add(Message[i]);
+                    Video video = RequestFromYoutube(ConvertURLToBrowser(Message[i]));
+                    Playlist.Items.Add(video.Title);
+                }
+                PlaylistLabel.Text = "Playlist Count: " + Playlist.Items.Count;
             }
         }
 

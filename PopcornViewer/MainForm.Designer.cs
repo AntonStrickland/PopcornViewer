@@ -51,8 +51,6 @@
             this.GroupFiles = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.networkListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,13 +60,6 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.displayMembersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chatWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repeatOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repeatAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -379,7 +370,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.viewToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -392,8 +382,6 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.networkListToolStripMenuItem,
-            this.toolStripSeparator2,
             this.openToolStripMenuItem,
             this.toolStripSeparator,
             this.saveToolStripMenuItem,
@@ -403,17 +391,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // networkListToolStripMenuItem
-            // 
-            this.networkListToolStripMenuItem.Name = "networkListToolStripMenuItem";
-            this.networkListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.networkListToolStripMenuItem.Text = "Network List";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // openToolStripMenuItem
             // 
@@ -485,57 +462,6 @@
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.pasteToolStripMenuItem.Text = "Add Video to Playlist";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chatToolStripMenuItem,
-            this.mediaToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "View";
-            // 
-            // chatToolStripMenuItem
-            // 
-            this.chatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.displayMembersToolStripMenuItem,
-            this.chatWindowToolStripMenuItem});
-            this.chatToolStripMenuItem.Name = "chatToolStripMenuItem";
-            this.chatToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.chatToolStripMenuItem.Text = "Chat";
-            // 
-            // displayMembersToolStripMenuItem
-            // 
-            this.displayMembersToolStripMenuItem.Name = "displayMembersToolStripMenuItem";
-            this.displayMembersToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.displayMembersToolStripMenuItem.Text = "Members";
-            // 
-            // chatWindowToolStripMenuItem
-            // 
-            this.chatWindowToolStripMenuItem.Name = "chatWindowToolStripMenuItem";
-            this.chatWindowToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.chatWindowToolStripMenuItem.Text = "Chat Window";
-            // 
-            // mediaToolStripMenuItem
-            // 
-            this.mediaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playlistToolStripMenuItem,
-            this.fileTreeToolStripMenuItem});
-            this.mediaToolStripMenuItem.Name = "mediaToolStripMenuItem";
-            this.mediaToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.mediaToolStripMenuItem.Text = "Media";
-            // 
-            // playlistToolStripMenuItem
-            // 
-            this.playlistToolStripMenuItem.Name = "playlistToolStripMenuItem";
-            this.playlistToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            this.playlistToolStripMenuItem.Text = "Playlist";
-            // 
-            // fileTreeToolStripMenuItem
-            // 
-            this.fileTreeToolStripMenuItem.Name = "fileTreeToolStripMenuItem";
-            this.fileTreeToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            this.fileTreeToolStripMenuItem.Text = "File Tree";
             // 
             // toolsToolStripMenuItem
             // 
@@ -750,15 +676,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem popcornHomepageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutPopcornViewerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem networkListToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chatToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem displayMembersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chatWindowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mediaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem playlistToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fileTreeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hostingOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageGroupToolStripMenuItem;

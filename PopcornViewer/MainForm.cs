@@ -60,6 +60,7 @@ namespace PopcornViewer
                 if (Playlist.SelectedIndex >= 0)
                 {
                     DeleteVideo(Playlist.SelectedIndex);
+                    BroadcastPlaylist();
                 }
             }
             else if (e.KeyData.Equals(Keys.Enter))
@@ -110,8 +111,8 @@ namespace PopcornViewer
 
         private void addVideoPlaylistMenuItem_Click(object sender, EventArgs e)
         {
-            if (AddToPlaylist(Clipboard.GetText())) ;
-            else MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!AddToPlaylist(Clipboard.GetText()))
+                MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void playPlaylistMenuItem_Click(object sender, EventArgs e)
@@ -136,6 +137,11 @@ namespace PopcornViewer
                 Video video = RequestFromYoutube(url);
                 Playlist.Items.Add(video.Title);
                 UpdatePlaylistCount();
+
+                if (Hosting)
+                {
+                    Broadcast("has added " + video.Title + " to the playlist", NicknameLabel.Text, false);
+                }
             }
             // Drag and drop to rearrange Playlist
             else if (PlaylistDragging)
@@ -165,6 +171,7 @@ namespace PopcornViewer
 
                 Playlist.Refresh();
             }
+            if (Hosting) BroadcastPlaylist();
         }
 
         private void Playlist_DragEnter(object sender, DragEventArgs e)
@@ -331,7 +338,13 @@ namespace PopcornViewer
             if (clListener != null) clListener.CancelAsync();
             if (bwListener != null) bwListener.CancelAsync();
 
-            if (SelfStream != null) SelfStream.Close();
+            if (SelfStream != null)
+            {
+                byte[] Chat = Encoding.UTF8.GetBytes(Encrypt("") + "$");
+                SelfStream.Write(Chat, 0, Chat.Length);
+                SelfStream.Flush();
+                SelfStream.Close();
+            }
         }
 
         // Loads connection window immediately

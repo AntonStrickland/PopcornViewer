@@ -394,6 +394,7 @@ namespace PopcornViewer
             }
         }
 
+        //Vote Time count down
         void timeX_Tick(object sender, EventArgs e)
         {
             TimeSpan t = TimeSpan.FromSeconds(VoteTime);
@@ -463,6 +464,7 @@ namespace PopcornViewer
             }
         }
 
+        //allows user to vote on a video
         private void voteOnThisToolStripMenuItem_Click(object sender, EventArgs e)
         {
                 

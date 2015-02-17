@@ -13,6 +13,7 @@ using System.Xml;
 using System.Collections;
 using System.Text.RegularExpressions;
 using Google.YouTube;
+using System.Diagnostics;
 
 namespace PopcornViewer
 {
@@ -21,6 +22,20 @@ namespace PopcornViewer
         // Form Variables
         const string DEV_STRING = "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA";
         List<string> PlaylistURLs = new List<string>();
+        
+        //Timer for voting
+        const int SecondsToVote = 20;
+        int VoteTime = SecondsToVote;
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 1000 };
+
+        //Array for voting
+        struct VotingStruct
+        {
+            public string VideoName;
+            public int NumOfVotes;
+        }
+        List<VotingStruct> VotingArray = new List<VotingStruct>();
+        
 
         // Index in PlaylistURLs of currently playing video
         int CurrentlyPlaying = -1;
@@ -89,12 +104,14 @@ namespace PopcornViewer
                 copyPlaylistMenuItem.Enabled = true;
                 deletePlaylistMenuItem.Enabled = true;
                 playPlaylistMenuItem.Enabled = true;
+                voteOnThisToolStripMenuItem.Enabled = false;
             }
             else
             {
                 copyPlaylistMenuItem.Enabled = false;
                 deletePlaylistMenuItem.Enabled = false;
                 playPlaylistMenuItem.Enabled = false;
+                voteOnThisToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -359,5 +376,114 @@ namespace PopcornViewer
         {
             Application.Exit();
         }
+
+        // Starts Voting
+        private void startVoteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (Playlist.Items.Count > 0)
+            {
+                MessageBox.Show("The host has initiated a vote. Please left click a video you want to watch the most from the playlist and then right click it and press vote on this. You have " + SecondsToVote + " seconds to vote", "Voting");
+                startVoteToolStripMenuItem1.Enabled = false;
+                voteOnThisToolStripMenuItem.Enabled = true;
+                timer.Tick += new EventHandler(timeX_Tick);
+                timer.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Please add a video to the playlist", "Error");
+            }
+        }
+
+        void timeX_Tick(object sender, EventArgs e)
+        {
+            TimeSpan t = TimeSpan.FromSeconds(VoteTime);
+            if (VoteTime != -1)
+            {
+                ChatBox.Text = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                t.Hours,
+                t.Minutes,
+                t.Seconds);
+                VoteTime--;
+            }
+
+            else if (VoteTime <= -1)
+            {
+                ChatBox.Text = "The top three are :";
+                for (int i = 0; i < VotingArray.Count;i++)
+                {
+                    Array.Sort<VotingStruct>(VotingArray.ToArray(), (x, y) => x.NumOfVotes.CompareTo(y.NumOfVotes));
+                }
+                if (VotingArray.Count >= 3)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        ChatBox.Text = VotingArray[i].VideoName + "with " + VotingArray[i].NumOfVotes + " Vote(s)";
+
+                    }
+                    Thread.Sleep(3000);
+                    var oldIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
+                    string ind = PlaylistURLs[Playlist.Items.IndexOf(VotingArray[0].VideoName)];
+                    int beforeIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
+                    Playlist.Items.RemoveAt(beforeIndex);
+                    Playlist.Items.Insert(0, VotingArray[0].VideoName);
+                    PlaylistURLs.Remove(ind);
+                    PlaylistURLs.Insert(0, ind);
+                    PlayVideo(0);
+                    VotingArray.Clear();
+                    timer.Enabled = false;
+                    VoteTime = SecondsToVote;
+                    startVoteToolStripMenuItem1.Enabled = true;
+                    voteOnThisToolStripMenuItem.Enabled = false;
+                }
+
+                else if (VotingArray.Count > 0)
+                {
+                    ChatBox.Text = VotingArray[0].VideoName + "with " + VotingArray[0].NumOfVotes + " Vote(s)";
+                    Thread.Sleep(3000);
+                    var oldIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
+                    string ind = PlaylistURLs[Playlist.Items.IndexOf(VotingArray[0].VideoName)];
+                    int beforeIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
+                    Playlist.Items.RemoveAt(beforeIndex);
+                    Playlist.Items.Insert(0, VotingArray[0].VideoName);
+                    PlaylistURLs.Remove(ind);
+                    PlaylistURLs.Insert(0, ind);
+                    PlayVideo(0);
+                    VotingArray.Clear();
+                    timer.Enabled = false;
+                    VoteTime = SecondsToVote;
+                    startVoteToolStripMenuItem1.Enabled = true;
+                    voteOnThisToolStripMenuItem.Enabled = false;
+                }
+
+                else
+                {
+                    ChatBox.Text = "No video was voted on";
+                }
+                
+            }
+        }
+
+        private void voteOnThisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+                
+            var foundVideo = false;
+                for (int i = 0; i < VotingArray.Count; i++)
+                {
+                    if (VotingArray[i].VideoName == Playlist.SelectedItem.ToString() && foundVideo == false)
+                    {
+                        foundVideo = true;
+                        VotingArray[i] = new VotingStruct { VideoName = VotingArray[i].VideoName, NumOfVotes = VotingArray[i].NumOfVotes + 1 };
+                        break;
+                    }
+
+                }
+                if (foundVideo == false)
+                {
+                    VotingArray.Add(new VotingStruct { VideoName = Playlist.SelectedItem.ToString(), NumOfVotes = 1 });
+                }
+            
+            voteOnThisToolStripMenuItem.Enabled = false;
+        }
+
     }
 }

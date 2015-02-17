@@ -36,6 +36,8 @@ namespace PopcornViewer
         }
         List<VotingStruct> VotingArray = new List<VotingStruct>();
         
+        //Number of votes allowed
+        int NumOfVotes = 1;
 
         // Index in PlaylistURLs of currently playing video
         int CurrentlyPlaying = -1;
@@ -397,6 +399,11 @@ namespace PopcornViewer
         //Vote Time count down
         void timeX_Tick(object sender, EventArgs e)
         {
+            if(NumOfVotes > 0)
+            {
+                voteOnThisToolStripMenuItem.Enabled = true;
+            }
+            
             TimeSpan t = TimeSpan.FromSeconds(VoteTime);
             if (VoteTime != -1)
             {
@@ -435,6 +442,7 @@ namespace PopcornViewer
                     VoteTime = SecondsToVote;
                     startVoteToolStripMenuItem1.Enabled = true;
                     voteOnThisToolStripMenuItem.Enabled = false;
+                    NumOfVotes = 1;
                 }
 
                 else if (VotingArray.Count > 0)
@@ -454,11 +462,13 @@ namespace PopcornViewer
                     VoteTime = SecondsToVote;
                     startVoteToolStripMenuItem1.Enabled = true;
                     voteOnThisToolStripMenuItem.Enabled = false;
+                    NumOfVotes = 1;
                 }
 
                 else
                 {
                     ChatBox.Text = "No video was voted on";
+                    timer.Enabled = false;
                 }
                 
             }
@@ -475,13 +485,16 @@ namespace PopcornViewer
                     {
                         foundVideo = true;
                         VotingArray[i] = new VotingStruct { VideoName = VotingArray[i].VideoName, NumOfVotes = VotingArray[i].NumOfVotes + 1 };
+                        NumOfVotes = 0;
                         break;
+                        
                     }
 
                 }
                 if (foundVideo == false)
                 {
                     VotingArray.Add(new VotingStruct { VideoName = Playlist.SelectedItem.ToString(), NumOfVotes = 1 });
+                    NumOfVotes = 0;
                 }
             
             voteOnThisToolStripMenuItem.Enabled = false;

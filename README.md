@@ -18,7 +18,7 @@ What we hope to accomplish is simple: We want to bring friends and families acro
 
 **3.** Choose "PROJECT" from the toolstrip menu and select the option "Add Reference...".
 
-**4.** Browse to your installation location of the Google Data API default being "C:\Program Files (x86)\Google\Google Data API SDK\Redist"
+**4.** Browse to your installation location of the Google Data API default being "C:\Program Files (x86)\Google\Google Data API SDK\Redist".
 
 **5.** Select Google.GData.Client.dll, Google.GData.YouTube.dll, and Google.GData.Extensions.dll.
 

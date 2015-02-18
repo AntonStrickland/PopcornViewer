@@ -1,37 +1,25 @@
+<center>![logo](http://i.imgur.com/NWtak4c.jpg)</center>
+
 # PopcornViewer
-CS4096 Project
 
-Requires google-gdata .NET library and Adobe Flashplayer.
+**Dependencies**
 
-https://developers.google.com/gdata/docs/client-libraries
+Popcorn Viewer requires the [google-gdata .NET library](https://developers.google.com/gdata/docs/client-libraries) and [Adobe Flashplayer](http://get.adobe.com/flashplayer/).
 
-Requirements
-	Necessary ----------------------------------------------------------------------
-?	A user must have a screen name. No duplicate names in a group.
-?	A user must be able to add YouTube videos to the playlist.
-?	A user must be able to add local videos to the playlist.
-?	A user must be able to rearrange the playlist/playback options.
-?	There must be a toolstrip menu to access basic functions and settings.
-?	The application should indicate which video is playing from the playlist.
-?	C# and .NET will be used for the client.
-?	Html 5, CSS and JavaScript will be used for the webpage.
-?	A .conf will be used to hold user settings and networks.
-?	There must be a way to browse for local files to add to the playlist.
-?	Direct download of local file sharing must be implemented.
-?	A File cleanup option to remove temporary saved local files should be added.
-?	There should be a playback option.
-?	Clients should be able to both host or connect to hosts.
-?	This client should work on windows.
-?	There must be a group chat and a list of members.
-?	Encryption for chat and file transfer must be implemented.
+**Our Mission Statement**
 
-	Optional ----------------------------------------------------------------------
-?	The chat should have a spell check feature.
-?	Group black/whitelists.
-?	Member permissions/levels.
-?	Runs on Mac/Linux through Mono or Wine.
-?	Group opt-in bittorrent downloads.
+What we hope to accomplish is simple: We want to bring friends and families across the globe closer together. Watching a movie is commonly considered a family past-time and groups of friends often gather for a weekly movie night. As time passes, people often relocate and have to leave their loved ones behind. This is especially true for military personnel and those who do business in a global setting. With Popcorn Viewer, friends and family will once again be able to share in those magical moments of bonding even if they cannot physically be together.
 
-	Desired ----------------------------------------------------------------------
-?	A web-app to connect to and observe groups (no chat/local files/controls if allowed)
-?	Stand alone server for unix systems.
+**How to Compile in Visual Studio**
+
+**1.** [Download](https://github.com/AntonStrickland/PopcornViewer/archive/master.zip) and unzip the source code or clone the repository.
+
+**2.** Open PopcornViewer.sln in Visual Studio.
+
+**3.** Choose "PROJECT" from the toolstrip menu and select the option "Add Reference...".
+
+**4.** Browse to your installation location of the Google Data API default being "C:\Program Files (x86)\Google\Google Data API SDK\Redist"
+
+**5.** Select Google.GData.Client.dll, Google.GData.YouTube.dll, and Google.GData.Extensions.dll.
+
+At this point you will be able to edit and compile the code as you see fit.

@@ -67,7 +67,7 @@ namespace PopcornViewer
                 {
                     return (response.ResponseUri.ToString().Contains("youtube.com") &&
                             response.ResponseUri.ToString().Contains("watch?v=") &&
-                        // Makes sure playlists are not able to be added since they are not videos
+                            // Makes sure playlists are not able to be added since they are not videos
                             !response.ResponseUri.ToString().Contains("&list"));
                 }
             }
@@ -105,6 +105,7 @@ namespace PopcornViewer
 
         private void DeleteVideo(int Index)
         {
+            string Title = Playlist.Items[Index].ToString();
             PlaylistURLs.RemoveAt(Index);
             Playlist.Items.RemoveAt(Index);
             UpdatePlaylistCount();
@@ -125,6 +126,11 @@ namespace PopcornViewer
             {
                 CurrentlyPlaying--;
                 Playlist.Refresh();
+            }
+            if (Hosting)
+            {
+                Broadcast("has removed " + Title + " from the playlist", NicknameLabel.Text, false);
+                BroadcastPlaylist();
             }
         }
 

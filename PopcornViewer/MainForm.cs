@@ -77,7 +77,6 @@ namespace PopcornViewer
                 if (Playlist.SelectedIndex >= 0)
                 {
                     DeleteVideo(Playlist.SelectedIndex);
-                    BroadcastPlaylist();
                 }
             }
             else if (e.KeyData.Equals(Keys.Enter))

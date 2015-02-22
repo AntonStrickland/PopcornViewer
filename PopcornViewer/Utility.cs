@@ -287,7 +287,6 @@ namespace PopcornViewer
         private void Speak(TcpClient ClientSocket, string Entity)
         {
             byte[] BytesFrom = new byte[65536];
-            string DataFromClient;
 
             while (true)
             {
@@ -295,15 +294,28 @@ namespace PopcornViewer
                 {
                     NetworkStream Stream = ClientSocket.GetStream();
                     Stream.Read(BytesFrom, 0, (int)ClientSocket.ReceiveBufferSize);
-                    DataFromClient = Decrypt(System.Text.Encoding.UTF8.GetString(BytesFrom));
-                    if (DataFromClient == "")
+                    // Splits message on $ 
+                    string[] Message = System.Text.Encoding.UTF8.GetString(BytesFrom).Split('$');
+                    Message[1] = Decrypt(Message[1] + "$");
+                    if (Message[0] == "" || Message[1] == "")
                     {
                         ClientsList.Remove(Entity);
                         Broadcast("has left the room", Entity, false);
                         BroadcastClientsList();
                         return;
                     }
-                    else Broadcast(DataFromClient, Entity, true);
+                    // Client communication handling
+                    else
+                    {
+                        switch (Message[0])
+                        {
+                            case "PLAYLIST":
+                                break;
+                            default:
+                                Broadcast(Message[1], Entity, true);
+                                break;
+                        }
+                    }
                 }
                 catch
                 {

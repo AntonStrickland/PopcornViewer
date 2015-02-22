@@ -321,7 +321,7 @@ namespace PopcornViewer
         {
             if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0 && SelfSocket != null && SelfSocket.Connected)
             {
-                byte[] Chat = Encoding.UTF8.GetBytes(Encrypt(ChatBox.Text) + "$");
+                byte[] Chat = Encoding.UTF8.GetBytes("MESSAGE$" + Encrypt(ChatBox.Text) + "$");
                 SelfStream.Write(Chat, 0, Chat.Length);
                 SelfStream.Flush();
                 ChatBox.Text = "";

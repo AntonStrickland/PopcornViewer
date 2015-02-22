@@ -12,6 +12,7 @@ namespace PopcornViewer
     {
         const string KEY = "tqaofoomeuyrypnrqtnqiiffjppblpkm";
         const string KEYII = "mgnahaftsmeayact";
+
         public static string Encrypt(string PlainText)
         {
             byte[] PlainBytes = Encoding.UTF8.GetBytes(PlainText);

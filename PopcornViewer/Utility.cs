@@ -56,7 +56,6 @@ namespace PopcornViewer
         }
 
         // Ensures that the given URL is actually for a Youtube video.
-
         private bool IsYoutubeURL(string url)
         {
             try
@@ -74,7 +73,6 @@ namespace PopcornViewer
             catch { return false; }
         }
 
-
         // Code for handling Youtube requests from a specific URL. Requires a Youtube link be verrified first.
         private Video RequestFromYoutube(string url)
         {
@@ -87,7 +85,6 @@ namespace PopcornViewer
 
             return req.Retrieve<Video>(videoEntryUrl);
         }
-
 
         // Performs bundled functions to play a video at URL index
         private void PlayVideo(int Index)
@@ -103,6 +100,7 @@ namespace PopcornViewer
             Playlist.Refresh();
         }
 
+        // Called in order to remove a video from the playlist given an index
         private void DeleteVideo(int Index)
         {
             string Title = Playlist.Items[Index].ToString();
@@ -144,7 +142,7 @@ namespace PopcornViewer
             pauseToolStripMenuItem.Checked = false;
         }
 
-        // Server host functions
+        // Listener function. Host listens for incoming TCP connections and begins speak threads.
         public void Listen(object sender, DoWorkEventArgs e)
         {
             Chat("Initiating chat service...", "CONSOLE");
@@ -212,6 +210,7 @@ namespace PopcornViewer
             Chat("Terminating chat service...", "CONSOLE");
         }
 
+        // Host only function. Sends message over TCP to all connected entities.
         public static void Broadcast(string Message, string Entity, bool ClientFlag)
         {
             try
@@ -223,7 +222,7 @@ namespace PopcornViewer
                     NetworkStream BroadcastStream = BroadcastSocket.GetStream();
                     Byte[] BroadcastBytes;
 
-                    // Empty entity is information transfer
+                    // Empty entity is information transfer not to be displayed in chat
                     if (Entity == "")
                     {
                         string[] Command = Message.Split(' ');
@@ -240,6 +239,7 @@ namespace PopcornViewer
                     }
                     else
                     {
+                        // When info sent is a message to be displayed client flag indicates ownership of message
                         if (ClientFlag)
                         {
                             BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message) + "$");
@@ -257,6 +257,7 @@ namespace PopcornViewer
             catch { }
         }
 
+        // Used when clients join/leave. Allows chatting members to recieve list of who they speak to
         private void BroadcastClientsList()
         {
             string Clients = "NEWCLIENTSLIST ";
@@ -269,6 +270,7 @@ namespace PopcornViewer
             Broadcast(Clients, "", false);
         }
 
+        // Keeps playlist up to date in all clients
         private void BroadcastPlaylist()
         {
             string Playlist = "NEWPLAYLIST ";
@@ -281,6 +283,7 @@ namespace PopcornViewer
             Broadcast(Playlist, "", false);
         }
 
+        // One function thread for each TCP connection host keeps track of. Used to recieve and process their messages.
         private void Speak(TcpClient ClientSocket, string Entity)
         {
             byte[] BytesFrom = new byte[65536];
@@ -313,6 +316,7 @@ namespace PopcornViewer
             }
         }
 
+        // Client function. Activates whenever clients are connected. Gets messages from host
         public void GetMessage(object sender, DoWorkEventArgs e)
         {
             while (SelfSocket != null && SelfSocket.Connected)
@@ -330,14 +334,18 @@ namespace PopcornViewer
                 string Mess = Decrypt(Encoding.UTF8.GetString(InStream));
                 string[] Message = Mess.Split(' ');
 
+                // How to deal with message, first word delim by spaces determines message use
                 switch (Message[0])
                 {
+                    // Incoming new list of chatting members
                     case "NEWCLIENTSLIST":
                         ClientListUpdate(Message);
                         break;
+                    // Incoming new playlist information
                     case "NEWPLAYLIST":
                         PlaylistUpdate(Message);
                         break;
+                    // The usual chat message
                     default:
                         string TotalMessage = "";
                         foreach (string s in Message)
@@ -354,6 +362,7 @@ namespace PopcornViewer
             Chat("Lost connection from server...", "CONSOLE");
         }
 
+        // Called from inside non-main thread thus invoke required. Updates the chatting members when new list info is had.
         private void ClientListUpdate(string[] Message)
         {
             if (this.InvokeRequired)
@@ -372,6 +381,7 @@ namespace PopcornViewer
             }
         }
 
+        // Called from inside non-main thread thus invoke required. Updates the playlist when new list info is had.
         private void PlaylistUpdate(string[] Message)
         {
             if (this.InvokeRequired)
@@ -407,6 +417,7 @@ namespace PopcornViewer
             else ChatHistory.AppendText("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
         }
 
+        // Mostly deprecated. Use only for SELF sent messages. Seen by only the client this function is called in.
         private void ClientChat(string Msg)
         {
             if (Msg != "")

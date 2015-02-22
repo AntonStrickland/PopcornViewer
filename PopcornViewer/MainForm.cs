@@ -24,8 +24,8 @@ namespace PopcornViewer
         List<string> PlaylistURLs = new List<string>();
         
         //Timer for voting
-        const int SecondsToVote = 20;
-        int VoteTime = SecondsToVote;
+        const int SECONDSTOVOTE = 20;
+        int VoteTime = SECONDSTOVOTE;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 1000 };
 
         //Array for voting
@@ -383,7 +383,7 @@ namespace PopcornViewer
         {
             if (Playlist.Items.Count > 0)
             {
-                MessageBox.Show("The host has initiated a vote. Please left click a video you want to watch the most from the playlist and then right click it and press vote on this. You have " + SecondsToVote + " seconds to vote", "Voting");
+                MessageBox.Show("The host has initiated a vote. Please left click a video you want to watch the most from the playlist and then right click it and press vote on this. You have " + SECONDSTOVOTE + " seconds to vote", "Voting");
                 startVoteToolStripMenuItem1.Enabled = false;
                 voteOnThisToolStripMenuItem.Enabled = true;
                 timer.Tick += new EventHandler(timeX_Tick);
@@ -438,7 +438,7 @@ namespace PopcornViewer
                     PlayVideo(0);
                     VotingArray.Clear();
                     timer.Enabled = false;
-                    VoteTime = SecondsToVote;
+                    VoteTime = SECONDSTOVOTE;
                     startVoteToolStripMenuItem1.Enabled = true;
                     voteOnThisToolStripMenuItem.Enabled = false;
                     NumOfVotes = 1;
@@ -458,7 +458,7 @@ namespace PopcornViewer
                     PlayVideo(0);
                     VotingArray.Clear();
                     timer.Enabled = false;
-                    VoteTime = SecondsToVote;
+                    VoteTime = SECONDSTOVOTE;
                     startVoteToolStripMenuItem1.Enabled = true;
                     voteOnThisToolStripMenuItem.Enabled = false;
                     NumOfVotes = 1;

@@ -51,38 +51,42 @@ namespace PopcornViewer
 
                         // Ended
                         case 0:
-                            // Repeat All
-                            if (repeatAllToolStripMenuItem.Checked)
+                            // To avoid having clients finish shortly before/after
+                            if (Hosting)
                             {
-                                if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
+                                // Repeat All
+                                if (repeatAllToolStripMenuItem.Checked)
                                 {
-                                    PlayVideo(CurrentlyPlaying + 1);
+                                    if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
+                                    {
+                                        PlayVideo(CurrentlyPlaying + 1, false);
+                                    }
+                                    else PlayVideo(0, false);
                                 }
-                                else PlayVideo(0);
-                            }
 
-                            // Play Next
-                            else if (playNextToolStripMenuItem.Checked)
-                            {
-                                if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
+                                // Play Next
+                                else if (playNextToolStripMenuItem.Checked)
                                 {
-                                    PlayVideo(CurrentlyPlaying + 1);
+                                    if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
+                                    {
+                                        PlayVideo(CurrentlyPlaying + 1, false);
+                                    }
                                 }
-                            }
 
-                            // Repeat One
-                            else if (repeatOneToolStripMenuItem.Checked)
-                            {
-                                PlayVideo(CurrentlyPlaying);
-                            }
+                                // Repeat One
+                                else if (repeatOneToolStripMenuItem.Checked)
+                                {
+                                    PlayVideo(CurrentlyPlaying, false);
+                                }
 
-                            // Shuffle
-                            else if (shuffleToolStripMenuItem.Checked)
-                            {
-                                Random random = new Random();
-                                int nextVideo = random.Next(0, PlaylistURLs.Count);
+                                // Shuffle
+                                else if (shuffleToolStripMenuItem.Checked)
+                                {
+                                    Random random = new Random();
+                                    int nextVideo = random.Next(0, PlaylistURLs.Count);
 
-                                PlayVideo(nextVideo);
+                                    PlayVideo(nextVideo, false);
+                                }
                             }
                             break;
 

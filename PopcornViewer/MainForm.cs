@@ -83,7 +83,7 @@ namespace PopcornViewer
             {
                 if (Playlist.SelectedIndex >= 0)
                 {
-                    PlayVideo(Playlist.SelectedIndex);
+                    PlayVideo(Playlist.SelectedIndex, false);
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace PopcornViewer
         {   
             if (Playlist.SelectedIndex >= 0)
             {
-                PlayVideo(Playlist.SelectedIndex);
+                PlayVideo(Playlist.SelectedIndex, false);
             }
         }
 
@@ -138,7 +138,7 @@ namespace PopcornViewer
             CurrentlyPlaying = Playlist.SelectedIndex;
             if (Playlist.SelectedIndex >= 0)
             {
-                PlayVideo(Playlist.SelectedIndex);
+                PlayVideo(Playlist.SelectedIndex, false);
             }
         }
 
@@ -435,7 +435,7 @@ namespace PopcornViewer
                     Playlist.Items.Insert(0, VotingArray[0].VideoName);
                     PlaylistURLs.Remove(ind);
                     PlaylistURLs.Insert(0, ind);
-                    PlayVideo(0);
+                    PlayVideo(0, false);
                     VotingArray.Clear();
                     timer.Enabled = false;
                     VoteTime = SECONDSTOVOTE;
@@ -455,7 +455,7 @@ namespace PopcornViewer
                     Playlist.Items.Insert(0, VotingArray[0].VideoName);
                     PlaylistURLs.Remove(ind);
                     PlaylistURLs.Insert(0, ind);
-                    PlayVideo(0);
+                    PlayVideo(0, false);
                     VotingArray.Clear();
                     timer.Enabled = false;
                     VoteTime = SECONDSTOVOTE;

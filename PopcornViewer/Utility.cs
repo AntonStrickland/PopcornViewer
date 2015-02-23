@@ -88,11 +88,12 @@ namespace PopcornViewer
         }
 
         // Performs bundled functions to play a video at URL index. Now thread safe!
-        private void PlayVideo(int Index)
+        // RecursiveFlag, when true, stops the broadcast. This should be raised to prevent loops. Keep false if not sure.
+        private void PlayVideo(int Index, bool RecursiveFlag)
         {
             if (this.InvokeRequired)
             {
-                try { this.Invoke(new Action<int>(PlayVideo), new object[] { Index }); }
+                try { this.Invoke(new Action<int, bool>(PlayVideo), new object[] { Index, RecursiveFlag }); }
                 catch { return; }
             }
             else
@@ -107,7 +108,7 @@ namespace PopcornViewer
 
                 Playlist.Refresh();
 
-                if (Hosting) BroadcastCurrentlyPlaying();
+                if (!RecursiveFlag) BroadcastCurrentlyPlaying();
             }
         }
 
@@ -119,29 +120,31 @@ namespace PopcornViewer
             Playlist.Items.RemoveAt(Index);
             UpdatePlaylistCount();
 
-            if (Index == CurrentlyPlaying)
-            {
-                if (PlaylistURLs.Count <= Index && PlaylistURLs.Count != 0)
-                {
-                    PlayVideo(PlaylistURLs.Count - 1);
-                }
-                else if (PlaylistURLs.Count == 0)
-                {
-                    YoutubeVideo.Movie = null;
-                }
-                else PlayVideo(CurrentlyPlaying);
-            }
-            else if (Index < CurrentlyPlaying)
-            {
-                CurrentlyPlaying--;
-                Playlist.Refresh();
-            }
             if (Hosting)
             {
                 Broadcast("has removed " + Title + " from the playlist", NicknameLabel.Text, false);
                 BroadcastPlaylist();
             }
             else BroadcastPlaylist("has removed " + Title + " from the playlist");
+            Thread.Sleep(100);
+
+            if (Index == CurrentlyPlaying)
+            {
+                if (PlaylistURLs.Count <= Index && PlaylistURLs.Count != 0)
+                {
+                    PlayVideo(PlaylistURLs.Count - 1, false);
+                }
+                else if (PlaylistURLs.Count == 0)
+                {
+                    YoutubeVideo.Movie = null;
+                }
+                else PlayVideo(CurrentlyPlaying, false);
+            }
+            else if (Index < CurrentlyPlaying)
+            {
+                CurrentlyPlaying--;
+                Playlist.Refresh();
+            }
         }
 
         // Used to turn off all other checks in the playback toolstrip.
@@ -312,12 +315,20 @@ namespace PopcornViewer
                 SelfStream.Write(Chat, 0, Chat.Length);
                 SelfStream.Flush();
         }
+
+        // Host and Client Function. Sends currently playing info to host/other clients.
         private void BroadcastCurrentlyPlaying()
         {
             string Playing = "CURRENTLYPLAYING ";
             Playing += CurrentlyPlaying.ToString();
 
-            Broadcast(Playing, "", false);
+            if (Hosting) Broadcast(Playing, "", false);
+            else
+            {
+                byte[] Chat = Encoding.UTF8.GetBytes("CURRENTLYPLAYING$" + Encrypt(CurrentlyPlaying.ToString()) + "$");
+                SelfStream.Write(Chat, 0, Chat.Length);
+                SelfStream.Flush();
+            }
         }
 
         // One function thread for each TCP connection host keeps track of. Used to recieve and process their messages.
@@ -355,6 +366,10 @@ namespace PopcornViewer
                                 }
                                 Thread.Sleep(200);
                                 BroadcastPlaylist();
+                                break;
+                            case "CURRENTLYPLAYING":
+                                try { PlayVideo(Convert.ToInt32(Message[1]), false); }
+                                catch { }
                                 break;
                             default:
                                 Broadcast(Message[1], Entity, true);
@@ -406,7 +421,7 @@ namespace PopcornViewer
                     case "CURRENTLYPLAYING":
                         int Play = Convert.ToInt32(Message[1]);
                         if (Play >= 0 && !Hosting && Play < Playlist.Items.Count)
-                            PlayVideo(Play);
+                            PlayVideo(Play, true);
                         break;
                     // The usual chat message
                     default:

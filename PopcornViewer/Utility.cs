@@ -87,18 +87,28 @@ namespace PopcornViewer
             return req.Retrieve<Video>(videoEntryUrl);
         }
 
-        // Performs bundled functions to play a video at URL index
+        // Performs bundled functions to play a video at URL index. Now thread safe!
         private void PlayVideo(int Index)
         {
-            CurrentlyPlaying = Index;
-            if (YoutubeVideo.Movie == null)
+            if (this.InvokeRequired)
             {
-                YoutubeVideo.Movie = PlaylistURLs[Index];
+                try { this.Invoke(new Action<int>(PlayVideo), new object[] { Index }); }
+                catch { return; }
             }
-            YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
-            YoutubeVideo_CallFlash("playVideo()");
+            else
+            {
+                CurrentlyPlaying = Index;
+                if (YoutubeVideo.Movie == null)
+                {
+                    YoutubeVideo.Movie = PlaylistURLs[Index];
+                }
+                YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
+                YoutubeVideo_CallFlash("playVideo()");
 
-            Playlist.Refresh();
+                Playlist.Refresh();
+
+                if (Hosting) BroadcastCurrentlyPlaying();
+            }
         }
 
         // Called in order to remove a video from the playlist given an index
@@ -199,6 +209,8 @@ namespace PopcornViewer
                 BroadcastClientsList();
                 Thread.Sleep(200);
                 BroadcastPlaylist();
+                Thread.Sleep(200);
+                BroadcastCurrentlyPlaying();
             }
 
             Hosting = false;
@@ -230,6 +242,7 @@ namespace PopcornViewer
                         string[] Command = Message.Split(' ');
                         switch (Command[0])
                         {
+                            case "CURRENTLYPLAYING":
                             case "NEWCLIENTSLIST":
                             case "NEWPLAYLIST":
                                 BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt(Message) + "$");
@@ -298,6 +311,13 @@ namespace PopcornViewer
                 byte[] Chat = Encoding.UTF8.GetBytes("PLAYLIST$" + Encrypt(Playlist) + "$" + Encrypt(Message) + "$");
                 SelfStream.Write(Chat, 0, Chat.Length);
                 SelfStream.Flush();
+        }
+        private void BroadcastCurrentlyPlaying()
+        {
+            string Playing = "CURRENTLYPLAYING ";
+            Playing += CurrentlyPlaying.ToString();
+
+            Broadcast(Playing, "", false);
         }
 
         // One function thread for each TCP connection host keeps track of. Used to recieve and process their messages.
@@ -381,6 +401,12 @@ namespace PopcornViewer
                     // Incoming new playlist information
                     case "NEWPLAYLIST":
                         PlaylistUpdate(Message);
+                        break;
+                    // Incoming Currently Playing
+                    case "CURRENTLYPLAYING":
+                        int Play = Convert.ToInt32(Message[1]);
+                        if (Play >= 0 && !Hosting && Play < Playlist.Items.Count)
+                            PlayVideo(Play);
                         break;
                     // The usual chat message
                     default:

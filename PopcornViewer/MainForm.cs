@@ -156,10 +156,8 @@ namespace PopcornViewer
                 Playlist.Items.Add(video.Title);
                 UpdatePlaylistCount();
 
-                if (Hosting)
-                {
-                    Broadcast("has added " + video.Title + " to the playlist", NicknameLabel.Text, false);
-                }
+                if (Hosting) Broadcast("has added " + video.Title + " to the playlist", NicknameLabel.Text, false);
+                else BroadcastPlaylist("has added " + video.Title + " to the playlist");
             }
             // Drag and drop to rearrange Playlist
             else if (PlaylistDragging)
@@ -188,6 +186,8 @@ namespace PopcornViewer
                 }
 
                 Playlist.Refresh();
+
+                if (!Hosting) BroadcastPlaylist("");
             }
             if (Hosting) BroadcastPlaylist();
         }

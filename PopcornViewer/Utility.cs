@@ -43,6 +43,7 @@ namespace PopcornViewer
                     Broadcast("has added " + video.Title + " to the playlist", NicknameLabel.Text, false);
                     BroadcastPlaylist();
                 }
+                else BroadcastPlaylist("has added " + video.Title + " to the playlist");
                 return true;
             }
             else return false;
@@ -130,6 +131,7 @@ namespace PopcornViewer
                 Broadcast("has removed " + Title + " from the playlist", NicknameLabel.Text, false);
                 BroadcastPlaylist();
             }
+            else BroadcastPlaylist("has removed " + Title + " from the playlist");
         }
 
         // Used to turn off all other checks in the playback toolstrip.
@@ -270,7 +272,7 @@ namespace PopcornViewer
             Broadcast(Clients, "", false);
         }
 
-        // Keeps playlist up to date in all clients
+        // Host function. Keeps playlist up to date in all clients.
         private void BroadcastPlaylist()
         {
             string Playlist = "NEWPLAYLIST ";
@@ -281,6 +283,21 @@ namespace PopcornViewer
             }
 
             Broadcast(Playlist, "", false);
+        }
+
+        // Client Function. Sends new playlist info to host
+        private void BroadcastPlaylist(string Message)
+        {
+                string Playlist = "NEWPLAYLIST ";
+                foreach (string url in PlaylistURLs)
+                {
+                    Playlist += url;
+                    Playlist += " ";
+                }
+
+                byte[] Chat = Encoding.UTF8.GetBytes("PLAYLIST$" + Encrypt(Playlist) + "$" + Encrypt(Message) + "$");
+                SelfStream.Write(Chat, 0, Chat.Length);
+                SelfStream.Flush();
         }
 
         // One function thread for each TCP connection host keeps track of. Used to recieve and process their messages.
@@ -310,6 +327,14 @@ namespace PopcornViewer
                         switch (Message[0])
                         {
                             case "PLAYLIST":
+                                Message[2] = Decrypt(Message[2] + "$");
+                                PlaylistUpdate(Message[1].Split(' '));
+                                if (Message[2] != "")
+                                {
+                                    Broadcast(Message[2], Entity, false);
+                                }
+                                Thread.Sleep(200);
+                                BroadcastPlaylist();
                                 break;
                             default:
                                 Broadcast(Message[1], Entity, true);

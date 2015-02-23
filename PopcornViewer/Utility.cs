@@ -245,6 +245,7 @@ namespace PopcornViewer
                         string[] Command = Message.Split(' ');
                         switch (Command[0])
                         {
+                            case "PAUSE":
                             case "CURRENTLYPLAYING":
                             case "NEWCLIENTSLIST":
                             case "NEWPLAYLIST":
@@ -344,8 +345,7 @@ namespace PopcornViewer
                     Stream.Read(BytesFrom, 0, (int)ClientSocket.ReceiveBufferSize);
                     // Splits message on $ 
                     string[] Message = System.Text.Encoding.UTF8.GetString(BytesFrom).Split('$');
-                    Message[1] = Decrypt(Message[1] + "$");
-                    if (Message[0] == "" || Message[1] == "")
+                    if (Message[0] == "")
                     {
                         ClientsList.Remove(Entity);
                         Broadcast("has left the room", Entity, false);
@@ -358,6 +358,7 @@ namespace PopcornViewer
                         switch (Message[0])
                         {
                             case "PLAYLIST":
+                                Message[1] = Decrypt(Message[1] + "$");
                                 Message[2] = Decrypt(Message[2] + "$");
                                 PlaylistUpdate(Message[1].Split(' '));
                                 if (Message[2] != "")
@@ -368,10 +369,16 @@ namespace PopcornViewer
                                 BroadcastPlaylist();
                                 break;
                             case "CURRENTLYPLAYING":
+                                Message[1] = Decrypt(Message[1] + "$");
                                 try { PlayVideo(Convert.ToInt32(Message[1]), false); }
                                 catch { }
                                 break;
+                            case "PAUSE":
+                                Broadcast("PAUSE", "", false);
+                                YoutubeVideo_CallFlash("pauseVideo()");
+                                break;
                             default:
+                                Message[1] = Decrypt(Message[1] + "$");
                                 Broadcast(Message[1], Entity, true);
                                 break;
                         }
@@ -422,6 +429,10 @@ namespace PopcornViewer
                         int Play = Convert.ToInt32(Message[1]);
                         if (Play >= 0 && !Hosting && Play < Playlist.Items.Count)
                             PlayVideo(Play, true);
+                        break;
+                    // Video pause flag sent
+                    case "PAUSE":
+                        YoutubeVideo_CallFlash("pauseVideo()");
                         break;
                     // The usual chat message
                     default:

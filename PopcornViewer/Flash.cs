@@ -96,6 +96,13 @@ namespace PopcornViewer
 
                         // Paused
                         case 2:
+                            if (Hosting) Broadcast("PAUSE", "", false);
+                            else
+                            {
+                                byte[] Chat = Encoding.UTF8.GetBytes("PAUSE$");
+                                SelfStream.Write(Chat, 0, Chat.Length);
+                                SelfStream.Flush();
+                            }
                             break;
 
                         // Buffering

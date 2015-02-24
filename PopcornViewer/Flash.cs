@@ -104,23 +104,64 @@ namespace PopcornViewer
 
                         // Paused
                         case 2:
-                            if (Hosting) Broadcast("PAUSE", "", false);
-                            else
-                            {
-                                byte[] Chat = Encoding.UTF8.GetBytes("PAUSE$");
-                                SelfStream.Write(Chat, 0, Chat.Length);
-                                SelfStream.Flush();
+                            if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
+                            { 
+                                if (Hosting) Broadcast("PAUSE", "", false);
+                                else
+                                {
+                                    byte[] Chat = Encoding.UTF8.GetBytes("PAUSE$");
+                                    SelfStream.Write(Chat, 0, Chat.Length);
+                                    SelfStream.Flush();
+                                }
                             }
                             break;
 
                         // Buffering
                         case 3:
-                            if (Hosting) Broadcast("PAUSE", "", false);
-                            else
+                            if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
                             {
-                                byte[] Chat = Encoding.UTF8.GetBytes("PAUSE$");
-                                SelfStream.Write(Chat, 0, Chat.Length);
-                                SelfStream.Flush();
+                                if (Hosting) Broadcast("PAUSE", "", false);
+                                else
+                                {
+                                    byte[] Chat = Encoding.UTF8.GetBytes("PAUSE$");
+                                    SelfStream.Write(Chat, 0, Chat.Length);
+                                    SelfStream.Flush();
+                                }
+
+                                string sBuffered = YoutubeVideo_CallFlash("getVideoLoadedFraction()");
+                                sBuffered = sBuffered.Remove(0, 7);
+                                sBuffered = sBuffered.Remove(sBuffered.Length - 8);
+                                Double Buffered = Convert.ToDouble(sBuffered);
+                                Double TargetBuffered = Buffered + 0.1f;
+                                if (TargetBuffered > 1.0f) TargetBuffered = 1.0f;
+
+                                string sTarget = YoutubeVideo_CallFlash("getCurrentTime()");
+                                sTarget = sTarget.Remove(0, 8);
+                                sTarget = sTarget.Remove(sTarget.Length - 9);
+                                Double Target = Convert.ToDouble(sTarget) + 10;
+
+                                string sDuration = YoutubeVideo_CallFlash("getDuration()");
+                                sDuration = sDuration.Remove(0, 8);
+                                sDuration = sDuration.Remove(sDuration.Length - 9);
+                                Double Duration = Convert.ToDouble(sDuration);
+                                
+                                // Whichever comes first, 10% of video in front processed or 10 seconds or whole vid
+                                while (Buffered < (Target / Duration) && Buffered < TargetBuffered)
+                                {
+                                    Thread.Sleep(100);
+                                    sBuffered = YoutubeVideo_CallFlash("getVideoLoadedFraction()");
+                                    sBuffered = sBuffered.Remove(0, 7);
+                                    sBuffered = sBuffered.Remove(sBuffered.Length - 8);
+                                    Buffered = Convert.ToDouble(sBuffered);
+                                }
+
+                                if (Hosting) Broadcast("PLAY", "", false);
+                                else
+                                {
+                                    byte[] Chat = Encoding.UTF8.GetBytes("PLAY$");
+                                    SelfStream.Write(Chat, 0, Chat.Length);
+                                    SelfStream.Flush();
+                                }
                             }
                             break;
 

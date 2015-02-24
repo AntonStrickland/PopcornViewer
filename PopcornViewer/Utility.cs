@@ -392,7 +392,6 @@ namespace PopcornViewer
                             case "VOTEDNO":
                                 VoteToSkipNoCounter++;
                                 break;
-
                             default:
                                 Message[1] = Decrypt(Message[1] + "$");
                                 Broadcast(Message[1], Entity, true);
@@ -468,7 +467,7 @@ namespace PopcornViewer
                         SeekImmunity = false;
                         break;
                     case "VOTETOSKIP":
-                        CallTimer("");
+                        CallTimer();
                         break;
                     case "VOTEDYES":
                         VoteToSkipYesCounter++;
@@ -561,11 +560,11 @@ namespace PopcornViewer
             }
         }
         //Calls the timeX_Tick function
-        void CallTimer(string nothing)
+        void CallTimer()
         {
             if (this.InvokeRequired)
             {
-                try { this.Invoke(new Action<string>(CallTimer), new object[] { nothing }); }
+                try { this.Invoke(new Action(CallTimer), new object[] { }); }
                 catch { return; }
             }
             else
@@ -625,25 +624,32 @@ namespace PopcornViewer
                 timer = new System.Windows.Forms.Timer() { Interval = 1000 };
                 VoteTime = SECONDSTOVOTE;
                 startVoteToolStripMenuItem1.Enabled = true;
-                if(VoteToSkipYesCounter > VoteToSkipNoCounter)
+                if (Hosting)
                 {
-                    Chat("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter, "CONSOLE");
-                    Chat("Video Skip Successfull ", "CONSOLE");
-                    VoteToSkipYesCounter = 0;
-                    VoteToSkipNoCounter = 0;
-                    Thread.Sleep(3000);
-                    PlayVideo(CurrentlyPlaying + 1, false);
+                    if (VoteToSkipYesCounter > VoteToSkipNoCounter)
+                    {
+                        Broadcast("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter,"CONSOLE", true);
+                        Broadcast("Video Skip Successfull ", "CONSOLE", true);
+                        VoteToSkipYesCounter = 0;
+                        VoteToSkipNoCounter = 0;
+                        Thread.Sleep(3000);
+                        PlayVideo(CurrentlyPlaying + 1, false);
+                    }
+                    else
+                    {
+                        Broadcast("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter, "CONSOLE", true);
+                        Broadcast("Video Skip Failed ", "CONSOLE", true);
+                        VoteToSkipYesCounter = 0;
+                        VoteToSkipNoCounter = 0;
+                    }
                 }
-                else
-                {
-                    Chat("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter, "CONSOLE");
-                    Chat("Video Skip Failed ", "CONSOLE");
-                    VoteToSkipYesCounter = 0;
-                    VoteToSkipNoCounter = 0;
-                }
+
+               
                 
             }
   
         }
+
+    //end functions
     }
 }

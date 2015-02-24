@@ -77,7 +77,6 @@
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.voteOnThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -307,10 +306,9 @@
             this.playPlaylistMenuItem,
             this.copyPlaylistMenuItem,
             this.deletePlaylistMenuItem,
-            this.addVideoPlaylistMenuItem,
-            this.voteOnThisToolStripMenuItem});
+            this.addVideoPlaylistMenuItem});
             this.PlaylistContextMenu.Name = "PlaylistContextMenu";
-            this.PlaylistContextMenu.Size = new System.Drawing.Size(214, 136);
+            this.PlaylistContextMenu.Size = new System.Drawing.Size(214, 92);
             this.PlaylistContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.PlaylistContextMenu_Opening);
             // 
             // playPlaylistMenuItem
@@ -564,8 +562,8 @@
             // startVoteToolStripMenuItem1
             // 
             this.startVoteToolStripMenuItem1.Name = "startVoteToolStripMenuItem1";
-            this.startVoteToolStripMenuItem1.Size = new System.Drawing.Size(125, 22);
-            this.startVoteToolStripMenuItem1.Text = "Start Vote";
+            this.startVoteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.startVoteToolStripMenuItem1.Text = "Vote To Skip";
             this.startVoteToolStripMenuItem1.Click += new System.EventHandler(this.startVoteToolStripMenuItem1_Click);
             // 
             // helpToolStripMenuItem
@@ -610,13 +608,6 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
-            // 
-            // voteOnThisToolStripMenuItem
-            // 
-            this.voteOnThisToolStripMenuItem.Name = "voteOnThisToolStripMenuItem";
-            this.voteOnThisToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.voteOnThisToolStripMenuItem.Text = "Vote On This";
-            this.voteOnThisToolStripMenuItem.Click += new System.EventHandler(this.voteOnThisToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -712,7 +703,6 @@
         public System.Windows.Forms.TextBox NicknameLabel;
         private System.Windows.Forms.ToolStripMenuItem startVoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startVoteToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem voteOnThisToolStripMenuItem;
 
     }
 }

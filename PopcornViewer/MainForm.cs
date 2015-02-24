@@ -24,18 +24,17 @@ namespace PopcornViewer
         List<string> PlaylistURLs = new List<string>();
         bool SeekImmunity = false;
 
+        //Counters for voting
+        int VoteToSkipYesCounter = 0;
+        int VoteToSkipNoCounter = 0;
+
+        //Voteing message box option yes/no holder
+        DialogResult VoteResult = DialogResult.Ignore;
+
         // Timer for voting
         const int SECONDSTOVOTE = 20;
         int VoteTime = SECONDSTOVOTE;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 1000 };
-
-        // Array for voting
-        struct VotingStruct
-        {
-            public string VideoName;
-            public int NumOfVotes;
-        }
-        List<VotingStruct> VotingArray = new List<VotingStruct>();
         
         // Number of votes allowed
         int NumOfVotes = 1;
@@ -106,14 +105,11 @@ namespace PopcornViewer
                 copyPlaylistMenuItem.Enabled = true;
                 deletePlaylistMenuItem.Enabled = true;
                 playPlaylistMenuItem.Enabled = true;
-                voteOnThisToolStripMenuItem.Enabled = false;
             }
             else
             {
                 copyPlaylistMenuItem.Enabled = false;
                 deletePlaylistMenuItem.Enabled = false;
-                playPlaylistMenuItem.Enabled = false;
-                voteOnThisToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -384,121 +380,23 @@ namespace PopcornViewer
         {
             if (Playlist.Items.Count > 0)
             {
-                MessageBox.Show("The host has initiated a vote. Please left click a video you want to watch the most from the playlist and then right click it and press vote on this. You have " + SECONDSTOVOTE + " seconds to vote", "Voting");
                 startVoteToolStripMenuItem1.Enabled = false;
-                voteOnThisToolStripMenuItem.Enabled = true;
-                timer.Tick += new EventHandler(timeX_Tick);
-                timer.Enabled = true;
+                //timer.Tick += new EventHandler(timeX_Tick);
+               // timer.Enabled = true;
+                //CallTimer("");
+                if (Hosting) Broadcast("VOTETOSKIP", "", false);
+                else
+                {
+                    byte[] Chat = Encoding.UTF8.GetBytes("VOTETOSKIP$");
+                    SelfStream.Write(Chat, 0, Chat.Length);
+                    SelfStream.Flush();
+                }
             }
             else
             {
                 MessageBox.Show("Please add a video to the playlist", "Error");
             }
         }
-
-        //Vote Time count down
-        void timeX_Tick(object sender, EventArgs e)
-        {
-            if(NumOfVotes > 0)
-            {
-                voteOnThisToolStripMenuItem.Enabled = true;
-            }
-            
-            TimeSpan t = TimeSpan.FromSeconds(VoteTime);
-            if (VoteTime != -1)
-            {
-                ChatBox.Text = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                t.Hours,
-                t.Minutes,
-                t.Seconds);
-                VoteTime--;
-            }
-
-            else if (VoteTime <= -1)
-            {
-                ChatBox.Text = "The top three are :";
-                for (int i = 0; i < VotingArray.Count;i++)
-                {
-                    Array.Sort<VotingStruct>(VotingArray.ToArray(), (x, y) => x.NumOfVotes.CompareTo(y.NumOfVotes));
-                }
-                if (VotingArray.Count >= 3)
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        ChatBox.Text = VotingArray[i].VideoName + "with " + VotingArray[i].NumOfVotes + " Vote(s)";
-
-                    }
-                    Thread.Sleep(3000);
-                    var oldIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
-                    string ind = PlaylistURLs[Playlist.Items.IndexOf(VotingArray[0].VideoName)];
-                    int beforeIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
-                    Playlist.Items.RemoveAt(beforeIndex);
-                    Playlist.Items.Insert(0, VotingArray[0].VideoName);
-                    PlaylistURLs.Remove(ind);
-                    PlaylistURLs.Insert(0, ind);
-                    PlayVideo(0, false);
-                    VotingArray.Clear();
-                    timer.Enabled = false;
-                    VoteTime = SECONDSTOVOTE;
-                    startVoteToolStripMenuItem1.Enabled = true;
-                    voteOnThisToolStripMenuItem.Enabled = false;
-                    NumOfVotes = 1;
-                }
-
-                else if (VotingArray.Count > 0)
-                {
-                    ChatBox.Text = VotingArray[0].VideoName + "with " + VotingArray[0].NumOfVotes + " Vote(s)";
-                    Thread.Sleep(3000);
-                    var oldIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
-                    string ind = PlaylistURLs[Playlist.Items.IndexOf(VotingArray[0].VideoName)];
-                    int beforeIndex = Playlist.Items.IndexOf(VotingArray[0].VideoName);
-                    Playlist.Items.RemoveAt(beforeIndex);
-                    Playlist.Items.Insert(0, VotingArray[0].VideoName);
-                    PlaylistURLs.Remove(ind);
-                    PlaylistURLs.Insert(0, ind);
-                    PlayVideo(0, false);
-                    VotingArray.Clear();
-                    timer.Enabled = false;
-                    VoteTime = SECONDSTOVOTE;
-                    startVoteToolStripMenuItem1.Enabled = true;
-                    voteOnThisToolStripMenuItem.Enabled = false;
-                    NumOfVotes = 1;
-                }
-
-                else
-                {
-                    ChatBox.Text = "No video was voted on";
-                    timer.Enabled = false;
-                }
-                
-            }
-        }
-
-        //allows user to vote on a video
-        private void voteOnThisToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-                
-            var foundVideo = false;
-                for (int i = 0; i < VotingArray.Count; i++)
-                {
-                    if (VotingArray[i].VideoName == Playlist.SelectedItem.ToString() && foundVideo == false)
-                    {
-                        foundVideo = true;
-                        VotingArray[i] = new VotingStruct { VideoName = VotingArray[i].VideoName, NumOfVotes = VotingArray[i].NumOfVotes + 1 };
-                        NumOfVotes = 0;
-                        break;
-                        
-                    }
-
-                }
-                if (foundVideo == false)
-                {
-                    VotingArray.Add(new VotingStruct { VideoName = Playlist.SelectedItem.ToString(), NumOfVotes = 1 });
-                    NumOfVotes = 0;
-                }
-            
-            voteOnThisToolStripMenuItem.Enabled = false;
-        }
-
+        
     }
 }

@@ -250,6 +250,9 @@ namespace PopcornViewer
                             case "CURRENTLYPLAYING":
                             case "NEWCLIENTSLIST":
                             case "NEWPLAYLIST":
+                            case "VOTETOSKIP":
+                            case "VOTEDYES":
+                            case "VOTEDNO":
                                 BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt(Message) + "$");
                                 break;
                             default:
@@ -333,7 +336,7 @@ namespace PopcornViewer
             }
         }
 
-        // One function thread for each TCP connection host keeps track of. Used to recieve and process their messages.
+        // One function thread for each TCP connection host keeps track of. Used to recieve and process messages from clients in the host.
         private void Speak(TcpClient ClientSocket, string Entity)
         {
             byte[] BytesFrom = new byte[65536];
@@ -380,6 +383,16 @@ namespace PopcornViewer
                             case "PLAY":
                                 Broadcast("PLAY " + Message[1], "", false);
                                 break;
+                            case "VOTETOSKIP":
+                                Broadcast("VOTETOSKIP", "", false);
+                                break;
+                            case "VOTEDYES":
+                                VoteToSkipYesCounter++;
+                                break;
+                            case "VOTEDNO":
+                                VoteToSkipNoCounter++;
+                                break;
+
                             default:
                                 Message[1] = Decrypt(Message[1] + "$");
                                 Broadcast(Message[1], Entity, true);
@@ -453,6 +466,15 @@ namespace PopcornViewer
                         }
                         YoutubeVideo_CallFlash("playVideo()");
                         SeekImmunity = false;
+                        break;
+                    case "VOTETOSKIP":
+                        CallTimer("");
+                        break;
+                    case "VOTEDYES":
+                        VoteToSkipYesCounter++;
+                        break;
+                    case "VOTEDNO":
+                        VoteToSkipNoCounter++;
                         break;
                     // The usual chat message
                     default:
@@ -537,6 +559,91 @@ namespace PopcornViewer
                 else
                     ChatHistory.AppendText(Msg);
             }
+        }
+        //Calls the timeX_Tick function
+        void CallTimer(string nothing)
+        {
+            if (this.InvokeRequired)
+            {
+                try { this.Invoke(new Action<string>(CallTimer), new object[] { nothing }); }
+                catch { return; }
+            }
+            else
+            {
+                timer.Tick += new EventHandler(timeX_Tick);
+                timer.Enabled = true;
+            }
+        }
+
+        //Vote Time count down
+        void timeX_Tick(object sender, EventArgs e)
+        {
+            if (NumOfVotes > 0)
+            {
+                NumOfVotes = 0;
+                VoteResult = MessageBox.Show("Would you like to skip this video?", "Vote to skip initiated", MessageBoxButtons.YesNo);
+                
+            }
+
+            if (VoteResult == DialogResult.Yes)
+            {
+                if (Hosting) Broadcast("VOTEDYES", "", false);
+                else
+                {
+                    byte[] Chat = Encoding.UTF8.GetBytes("VOTEDYES$");
+                    SelfStream.Write(Chat, 0, Chat.Length);
+                    SelfStream.Flush();
+                }
+                VoteResult = DialogResult.Ignore;
+            }
+            else if (VoteResult == DialogResult.No)
+            {
+                if (Hosting) Broadcast("VOTEDNO", "", false);
+                else
+                {
+                    byte[] Chat = Encoding.UTF8.GetBytes("VOTEDNO$");
+                    SelfStream.Write(Chat, 0, Chat.Length);
+                    SelfStream.Flush();
+                }
+                VoteResult = DialogResult.Ignore;
+            }
+            TimeSpan t = TimeSpan.FromSeconds(VoteTime);
+            if (VoteTime != -1)
+            {
+                startVoteToolStripMenuItem.Text = "Vote(" + string.Format("{0:D2}:{1:D2}:{2:D2}",
+                t.Hours,
+                t.Minutes,
+                t.Seconds) + ")";
+                VoteTime--; 
+            }
+
+            else if (VoteTime <= -1)
+            {
+                startVoteToolStripMenuItem.Text = "Vote";
+                NumOfVotes = 1;
+                timer.Enabled = false;
+                timer = new System.Windows.Forms.Timer() { Interval = 1000 };
+                VoteTime = SECONDSTOVOTE;
+                startVoteToolStripMenuItem1.Enabled = true;
+                if(VoteToSkipYesCounter > VoteToSkipNoCounter)
+                {
+                    Chat("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter, "CONSOLE");
+                    Chat("Video Skip Successfull ", "CONSOLE");
+                    VoteToSkipYesCounter = 0;
+                    VoteToSkipNoCounter = 0;
+                    Thread.Sleep(3000);
+                    PlayVideo(CurrentlyPlaying + 1, false);
+                }
+                else
+                {
+                    Chat("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter, "CONSOLE");
+                    Chat("Video Skip Failed ", "CONSOLE");
+                    VoteToSkipYesCounter = 0;
+                    VoteToSkipNoCounter = 0;
+                }
+                
+            }
+  
         }
     }
 }

@@ -22,7 +22,8 @@ namespace PopcornViewer
         // Form Variables
         const string DEV_STRING = "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA";
         List<string> PlaylistURLs = new List<string>();
-        
+        bool SeekImmunity = false;
+
         // Timer for voting
         const int SECONDSTOVOTE = 20;
         int VoteTime = SECONDSTOVOTE;

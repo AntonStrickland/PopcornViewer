@@ -376,11 +376,9 @@ namespace PopcornViewer
                                 break;
                             case "PAUSE":
                                 Broadcast("PAUSE", "", false);
-                                YoutubeVideo_CallFlash("pauseVideo()");
                                 break;
                             case "PLAY":
-                                Broadcast("PLAY", "", false);
-                                YoutubeVideo_CallFlash("playVideo()");
+                                Broadcast("PLAY " + Message[1], "", false);
                                 break;
                             default:
                                 Message[1] = Decrypt(Message[1] + "$");
@@ -437,13 +435,24 @@ namespace PopcornViewer
                         break;
                     // Video pause flag sent
                     case "PAUSE":
-                        if (YoutubeVideo_CallFlash("getPlayerState") == "<number>1</number>")
+                        if (YoutubeVideo_CallFlash("getPlayerState()") == "<number>1</number>" && !SeekImmunity)
                         {
                             YoutubeVideo_CallFlash("pauseVideo()");
                         }
                         break;
                     case "PLAY":
+                        SeekImmunity = true;
+                        string sCurrentTime = YoutubeVideo_CallFlash("getCurrentTime()");
+                        sCurrentTime = sCurrentTime.Remove(sCurrentTime.Length - 9).Remove(0, 8);
+                        double CurrentTime = Convert.ToDouble(sCurrentTime);
+                        double SynchTime = Convert.ToDouble(Message[1]);
+                        if (Math.Abs(CurrentTime - SynchTime) >= 0.5f)
+                        {
+                            SynchTime += 0.3f;
+                            YoutubeVideo_CallFlash("seekTo(" + SynchTime.ToString() + ", true)");
+                        }
                         YoutubeVideo_CallFlash("playVideo()");
+                        SeekImmunity = false;
                         break;
                     // The usual chat message
                     default:

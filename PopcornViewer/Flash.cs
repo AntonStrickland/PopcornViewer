@@ -93,10 +93,13 @@ namespace PopcornViewer
 
                         // Playing
                         case 1:
-                            if (Hosting) Broadcast("PLAY", "", false);
+                            SeekImmunity = true;
+                            string sTime = YoutubeVideo_CallFlash("getCurrentTime()");
+                            sTime = sTime.Remove(sTime.Length - 9).Remove(0, 8);
+                            if (Hosting) Broadcast("PLAY " + sTime, "", false);
                             else
                             {
-                                byte[] Chat = Encoding.UTF8.GetBytes("PLAY$");
+                                byte[] Chat = Encoding.UTF8.GetBytes("PLAY$" + sTime + "$");
                                 SelfStream.Write(Chat, 0, Chat.Length);
                                 SelfStream.Flush();
                             }
@@ -104,7 +107,11 @@ namespace PopcornViewer
 
                         // Paused
                         case 2:
-                            if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
+                            if (SeekImmunity)
+                            {
+                                YoutubeVideo_CallFlash("playVideo()");
+                            }
+                            else if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
                             {
                                 if (Hosting) Broadcast("PAUSE", "", false);
                                 else
@@ -118,7 +125,11 @@ namespace PopcornViewer
 
                         // Buffering
                         case 3:
-                            if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
+                            if (SeekImmunity)
+                            {
+                                YoutubeVideo_CallFlash("playVideo()");
+                            }
+                            else if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
                             {
                                 if (Hosting) Broadcast("PAUSE", "", false);
                                 else

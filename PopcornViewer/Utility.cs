@@ -195,7 +195,7 @@ namespace PopcornViewer
                 try { ClientsList.Add(DataFromClient, ClientSocket); }
                 catch
                 {
-                    Broadcast("Client hash colission! Host terminating session...", "CONSOLE", true);
+                    Broadcast("Client hash collision! Host terminating session...", "CONSOLE", true);
                     return;
                 }
 

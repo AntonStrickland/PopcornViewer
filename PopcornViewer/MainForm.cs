@@ -23,12 +23,12 @@ namespace PopcornViewer
         const string DEV_STRING = "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA";
         List<string> PlaylistURLs = new List<string>();
         
-        //Timer for voting
+        // Timer for voting
         const int SECONDSTOVOTE = 20;
         int VoteTime = SECONDSTOVOTE;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 1000 };
 
-        //Array for voting
+        // Array for voting
         struct VotingStruct
         {
             public string VideoName;
@@ -36,7 +36,7 @@ namespace PopcornViewer
         }
         List<VotingStruct> VotingArray = new List<VotingStruct>();
         
-        //Number of votes allowed
+        // Number of votes allowed
         int NumOfVotes = 1;
 
         // Index in PlaylistURLs of currently playing video

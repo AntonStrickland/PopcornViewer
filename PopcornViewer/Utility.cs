@@ -437,7 +437,10 @@ namespace PopcornViewer
                         break;
                     // Video pause flag sent
                     case "PAUSE":
-                        YoutubeVideo_CallFlash("pauseVideo()");
+                        if (YoutubeVideo_CallFlash("getPlayerState") == "<number>1</number>")
+                        {
+                            YoutubeVideo_CallFlash("pauseVideo()");
+                        }
                         break;
                     case "PLAY":
                         YoutubeVideo_CallFlash("playVideo()");

@@ -245,6 +245,7 @@ namespace PopcornViewer
                         string[] Command = Message.Split(' ');
                         switch (Command[0])
                         {
+                            case "PLAY":
                             case "PAUSE":
                             case "CURRENTLYPLAYING":
                             case "NEWCLIENTSLIST":
@@ -377,6 +378,10 @@ namespace PopcornViewer
                                 Broadcast("PAUSE", "", false);
                                 YoutubeVideo_CallFlash("pauseVideo()");
                                 break;
+                            case "PLAY":
+                                Broadcast("PLAY", "", false);
+                                YoutubeVideo_CallFlash("playVideo()");
+                                break;
                             default:
                                 Message[1] = Decrypt(Message[1] + "$");
                                 Broadcast(Message[1], Entity, true);
@@ -433,6 +438,9 @@ namespace PopcornViewer
                     // Video pause flag sent
                     case "PAUSE":
                         YoutubeVideo_CallFlash("pauseVideo()");
+                        break;
+                    case "PLAY":
+                        YoutubeVideo_CallFlash("playVideo()");
                         break;
                     // The usual chat message
                     default:

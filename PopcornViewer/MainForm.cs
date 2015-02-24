@@ -143,21 +143,9 @@ namespace PopcornViewer
         private void Playlist_DragDrop(object sender, DragEventArgs e)
         {
             string url = (string)e.Data.GetData(DataFormats.Text, false);
-            // Drag and drop to add Youtube Videos
-            if (IsYoutubeURL(url))
-            {
-                // Not calling the usual add to playlist function to avoid
-                // slow, redundant IsYoutubeURL calls.
-                PlaylistURLs.Add(ConvertURLToEmbeded(url));
-                Video video = RequestFromYoutube(url);
-                Playlist.Items.Add(video.Title);
-                UpdatePlaylistCount();
 
-                if (Hosting) Broadcast("has added " + video.Title + " to the playlist", NicknameLabel.Text, false);
-                else BroadcastPlaylist("has added " + video.Title + " to the playlist");
-            }
             // Drag and drop to rearrange Playlist
-            else if (PlaylistDragging)
+            if (!AddToPlaylist(url) && PlaylistDragging)
             {
                 Point point = Playlist.PointToClient(new Point(e.X, e.Y));
                 int index = Playlist.IndexFromPoint(point);
@@ -183,10 +171,9 @@ namespace PopcornViewer
                 }
 
                 Playlist.Refresh();
-
-                if (!Hosting) BroadcastPlaylist("");
+                if (Hosting) BroadcastPlaylist();
+                else BroadcastPlaylist("");
             }
-            if (Hosting) BroadcastPlaylist();
         }
 
         private void Playlist_DragEnter(object sender, DragEventArgs e)

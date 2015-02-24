@@ -47,6 +47,7 @@ namespace PopcornViewer
                     {
                         // Not Started
                         case -1:
+                            YoutubeVideo_CallFlash("playVideo()");
                             break;
 
                         // Ended

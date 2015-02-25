@@ -238,6 +238,7 @@ namespace PopcornViewer
         // Host only function. Sends message over TCP to all connected entities.
         public static void Broadcast(string Message, string Entity, bool ClientFlag)
         {
+            if (Message == "") return;
             try
             {
                 foreach (DictionaryEntry Item in ClientsList)
@@ -543,9 +544,12 @@ namespace PopcornViewer
                 catch { }
                 return;
             }
-            if (ChatHistory.Text == "")
-                ChatHistory.AppendText("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
-            else ChatHistory.AppendText("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
+            if (Message != "")
+            {
+                if (ChatHistory.Text == "")
+                    ChatHistory.AppendText("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
+                else ChatHistory.AppendText("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] " + Entity + ": " + Message);
+            }
         }
 
         // Mostly deprecated. Use only for SELF sent messages. Seen by only the client this function is called in.

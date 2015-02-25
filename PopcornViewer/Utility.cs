@@ -192,28 +192,36 @@ namespace PopcornViewer
                 DataFromClient = Decrypt(System.Text.Encoding.UTF8.GetString(BytesIn));
 
                 // If somehow they have the same name as someone else
+                bool Connected = true;
                 try { ClientsList.Add(DataFromClient, ClientSocket); }
                 catch
                 {
-                    Broadcast("Client hash collision! Host terminating session...", "CONSOLE", true);
-                    return;
+                    NetworkStream OutStream = ClientSocket.GetStream();
+                    Byte[] BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: Server declined connection: USERNAME COLLISION") + "$");
+                    OutStream.Write(BroadcastBytes, 0, BroadcastBytes.Length);
+                    OutStream.Flush();
+                    Connected = false;
                 }
 
-                // Display appropriate messages
-                Broadcast("has joined the room", DataFromClient, false);
+                if (Connected)
+                {
+                    // Display appropriate messages
+                    Broadcast("has joined the room", DataFromClient, false);
 
-                // Launch speaker thread
-                Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
-                ChatClient2Threads.Add(ChatThread2);
-                ChatThread2.Start();
+                    // Launch speaker thread
+                    Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
+                    ChatClient2Threads.Add(ChatThread2);
+                    ChatThread2.Start();
 
-                // Send list of clients & playlist to everyone
-                Thread.Sleep(200);
-                BroadcastClientsList();
-                Thread.Sleep(200);
-                BroadcastPlaylist();
-                Thread.Sleep(200);
-                BroadcastCurrentlyPlaying();
+                    // Send list of clients & playlist to everyone
+                    Thread.Sleep(200);
+                    BroadcastClientsList();
+                    Thread.Sleep(200);
+                    BroadcastPlaylist();
+                    Thread.Sleep(200);
+                    BroadcastCurrentlyPlaying();
+                }
+                else Connected = true;
             }
 
             Hosting = false;

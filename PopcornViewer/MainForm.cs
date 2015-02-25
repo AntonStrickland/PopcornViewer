@@ -32,8 +32,8 @@ namespace PopcornViewer
         DialogResult VoteResult = DialogResult.Ignore;
 
         // Timer for voting
-        const int SECONDSTOVOTE = 20;
-        int VoteTime = SECONDSTOVOTE;
+        const int SECONDS_TO_VOTE = 20;
+        int VoteTime = SECONDS_TO_VOTE;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 1000 };
         
         // Number of votes allowed
@@ -365,25 +365,20 @@ namespace PopcornViewer
         // Starts Voting
         private void startVoteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (Playlist.Items.Count > 0)
-            {
-                startVoteToolStripMenuItem1.Enabled = false;
-                //timer.Tick += new EventHandler(timeX_Tick);
-               // timer.Enabled = true;
-                //CallTimer("");
-                if (Hosting) Broadcast("VOTETOSKIP", "", false);
-                else
-                {
-                    byte[] Chat = Encoding.UTF8.GetBytes("VOTETOSKIP$");
-                    SelfStream.Write(Chat, 0, Chat.Length);
-                    SelfStream.Flush();
-                }
-            }
+            startVoteToolStripMenuItem1.Enabled = false;
+            if (Hosting) Broadcast("VOTETOSKIP", "", false);
             else
             {
-                MessageBox.Show("Please add a video to the playlist", "Error");
+                byte[] Chat = Encoding.UTF8.GetBytes("VOTETOSKIP$");
+                SelfStream.Write(Chat, 0, Chat.Length);
+                SelfStream.Flush();
             }
         }
-        
+
+        // Makes sure there are enough videos in the playlist to enable vote option
+        private void startVoteToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            startVoteToolStripMenuItem1.Enabled = (Playlist.Items.Count >= 2 && CurrentlyPlaying != -1);
+        }
     }
 }

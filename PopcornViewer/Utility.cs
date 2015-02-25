@@ -251,8 +251,7 @@ namespace PopcornViewer
                             case "NEWCLIENTSLIST":
                             case "NEWPLAYLIST":
                             case "VOTETOSKIP":
-                            case "VOTEDYES":
-                            case "VOTEDNO":
+                            case "VOTE":
                                 BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt(Message) + "$");
                                 break;
                             default:
@@ -379,18 +378,18 @@ namespace PopcornViewer
                                 break;
                             case "PAUSE":
                                 Broadcast("PAUSE", "", false);
+                                YoutubeVideo_CallFlash("pauseVideo()");
                                 break;
                             case "PLAY":
                                 Broadcast("PLAY " + Message[1], "", false);
+                                YoutubeVideo_CallFlash("playVideo()");
                                 break;
                             case "VOTETOSKIP":
                                 Broadcast("VOTETOSKIP", "", false);
+                                CallTimer();
                                 break;
-                            case "VOTEDYES":
+                            case "VOTE":
                                 VoteToSkipYesCounter++;
-                                break;
-                            case "VOTEDNO":
-                                VoteToSkipNoCounter++;
                                 break;
                             default:
                                 Message[1] = Decrypt(Message[1] + "$");
@@ -468,12 +467,6 @@ namespace PopcornViewer
                         break;
                     case "VOTETOSKIP":
                         CallTimer();
-                        break;
-                    case "VOTEDYES":
-                        VoteToSkipYesCounter++;
-                        break;
-                    case "VOTEDNO":
-                        VoteToSkipNoCounter++;
                         break;
                     // The usual chat message
                     default:
@@ -559,7 +552,8 @@ namespace PopcornViewer
                     ChatHistory.AppendText(Msg);
             }
         }
-        //Calls the timeX_Tick function
+
+        // Calls the timeX_Tick function
         void CallTimer()
         {
             if (this.InvokeRequired)
@@ -574,82 +568,60 @@ namespace PopcornViewer
             }
         }
 
-        //Vote Time count down
+        // Vote Time count down
         void timeX_Tick(object sender, EventArgs e)
         {
-            if (NumOfVotes > 0)
-            {
-                NumOfVotes = 0;
-                VoteResult = MessageBox.Show("Would you like to skip this video?", "Vote to skip initiated", MessageBoxButtons.YesNo);
-                
-            }
-
-            if (VoteResult == DialogResult.Yes)
-            {
-                if (Hosting) Broadcast("VOTEDYES", "", false);
-                else
-                {
-                    byte[] Chat = Encoding.UTF8.GetBytes("VOTEDYES$");
-                    SelfStream.Write(Chat, 0, Chat.Length);
-                    SelfStream.Flush();
-                }
-                VoteResult = DialogResult.Ignore;
-            }
-            else if (VoteResult == DialogResult.No)
-            {
-                if (Hosting) Broadcast("VOTEDNO", "", false);
-                else
-                {
-                    byte[] Chat = Encoding.UTF8.GetBytes("VOTEDNO$");
-                    SelfStream.Write(Chat, 0, Chat.Length);
-                    SelfStream.Flush();
-                }
-                VoteResult = DialogResult.Ignore;
-            }
             TimeSpan t = TimeSpan.FromSeconds(VoteTime);
-            if (VoteTime != -1)
+            if (VoteTime > 0)
             {
-                startVoteToolStripMenuItem.Text = "Vote(" + string.Format("{0:D2}:{1:D2}:{2:D2}",
-                t.Hours,
-                t.Minutes,
-                t.Seconds) + ")";
-                VoteTime--; 
-            }
+                if (VoteTime % 5 == 0)
+                {
+                    Chat(string.Format("{0:D2}", t.Seconds) + " seconds left to vote", "CONSOLE");
+                }
+                VoteTime--;
 
-            else if (VoteTime <= -1)
+                if (NumOfVotes > 0)
+                {
+                    NumOfVotes = 0;
+                    VoteResult = MessageBox.Show("Would you like to skip this video?", "Popcorn Viewer Vote", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (VoteResult == DialogResult.Yes)
+                    {
+                        if (Hosting) VoteToSkipYesCounter++;
+                        else
+                        {
+                            byte[] Chat = Encoding.UTF8.GetBytes("VOTE");
+                            SelfStream.Write(Chat, 0, Chat.Length);
+                            SelfStream.Flush();
+                        }
+                    }
+                    VoteResult = DialogResult.Ignore;
+                }
+            }
+            else
             {
-                startVoteToolStripMenuItem.Text = "Vote";
+                Chat(string.Format("{0:D2}", t.Seconds) + " seconds left to vote", "CONSOLE");
                 NumOfVotes = 1;
                 timer.Enabled = false;
                 timer = new System.Windows.Forms.Timer() { Interval = 1000 };
-                VoteTime = SECONDSTOVOTE;
+                VoteTime = SECONDS_TO_VOTE;
                 startVoteToolStripMenuItem1.Enabled = true;
                 if (Hosting)
                 {
-                    if (VoteToSkipYesCounter > VoteToSkipNoCounter)
+                    Broadcast(VoteToSkipYesCounter + "/" + ChatMembers.Items.Count + " members voted to skip the video.", "CONSOLE", true);
+                    if (VoteToSkipYesCounter > (float)ChatMembers.Items.Count / 2)
                     {
-                        Broadcast("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter,"CONSOLE", true);
-                        Broadcast("Video Skip Successfull ", "CONSOLE", true);
-                        VoteToSkipYesCounter = 0;
-                        VoteToSkipNoCounter = 0;
-                        Thread.Sleep(3000);
-                        PlayVideo(CurrentlyPlaying + 1, false);
+                        Broadcast("has voted to skip " + Playlist.Items[CurrentlyPlaying].ToString(), "The party", false);
+                        Thread.Sleep(200);
+                        if (PlaylistURLs.Count - 1 > CurrentlyPlaying)
+                        {
+                            PlayVideo(CurrentlyPlaying + 1, false);
+                        }
+                        else PlayVideo(0, false);
                     }
-                    else
-                    {
-                        Broadcast("# Votes to Skip: " + VoteToSkipYesCounter + ", # Votes to NOT Skip: " + VoteToSkipNoCounter, "CONSOLE", true);
-                        Broadcast("Video Skip Failed ", "CONSOLE", true);
-                        VoteToSkipYesCounter = 0;
-                        VoteToSkipNoCounter = 0;
-                    }
+                    else Broadcast("fails to skip " + Playlist.Items[CurrentlyPlaying].ToString(), "The party", false);
+                    VoteToSkipYesCounter = 0;
                 }
-
-               
-                
             }
-  
         }
-
-    //end functions
     }
 }

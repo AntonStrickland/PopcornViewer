@@ -558,6 +558,7 @@
             this.startVoteToolStripMenuItem.Name = "startVoteToolStripMenuItem";
             this.startVoteToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.startVoteToolStripMenuItem.Text = "Vote";
+            this.startVoteToolStripMenuItem.DropDownOpening += new System.EventHandler(this.startVoteToolStripMenuItem_DropDownOpening);
             // 
             // startVoteToolStripMenuItem1
             // 

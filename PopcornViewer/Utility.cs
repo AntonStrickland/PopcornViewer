@@ -398,7 +398,7 @@ namespace PopcornViewer
                                 CallTimer();
                                 break;
                             case "VOTE":
-                                VoteToSkipYesCounter++;
+                                VoteCounter++;
                                 break;
                             default:
                                 Message[1] = Decrypt(Message[1] + "$");
@@ -598,7 +598,7 @@ namespace PopcornViewer
                     VoteResult = MessageBox.Show("Would you like to skip this video?", "Popcorn Viewer Vote", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (VoteResult == DialogResult.Yes)
                     {
-                        if (Hosting) VoteToSkipYesCounter++;
+                        if (Hosting) VoteCounter++;
                         else
                         {
                             byte[] Chat = Encoding.UTF8.GetBytes("VOTE");
@@ -619,8 +619,8 @@ namespace PopcornViewer
                 startVoteToolStripMenuItem1.Enabled = true;
                 if (Hosting)
                 {
-                    Broadcast(VoteToSkipYesCounter + "/" + ChatMembers.Items.Count + " members voted to skip the video.", "CONSOLE", true);
-                    if (VoteToSkipYesCounter > (float)ChatMembers.Items.Count / 2)
+                    Broadcast(VoteCounter + "/" + ChatMembers.Items.Count + " members voted to skip the video.", "CONSOLE", true);
+                    if (VoteCounter > (float)ChatMembers.Items.Count / 2)
                     {
                         Broadcast("has voted to skip " + Playlist.Items[CurrentlyPlaying].ToString(), "The party", false);
                         Thread.Sleep(200);
@@ -631,7 +631,7 @@ namespace PopcornViewer
                         else PlayVideo(0, false);
                     }
                     else Broadcast("fails to skip " + Playlist.Items[CurrentlyPlaying].ToString(), "The party", false);
-                    VoteToSkipYesCounter = 0;
+                    VoteCounter = 0;
                 }
             }
         }

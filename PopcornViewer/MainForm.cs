@@ -24,11 +24,10 @@ namespace PopcornViewer
         List<string> PlaylistURLs = new List<string>();
         bool SeekImmunity = false;
 
-        //Counters for voting
-        int VoteToSkipYesCounter = 0;
-        int VoteToSkipNoCounter = 0;
+        // Counters for voting
+        int VoteCounter = 0;
 
-        //Voteing message box option yes/no holder
+        // Voting message box option yes/no holder
         DialogResult VoteResult = DialogResult.Ignore;
 
         // Timer for voting
@@ -188,15 +187,11 @@ namespace PopcornViewer
 
         private void Playlist_MouseDown(object sender, MouseEventArgs e)
         {
-            
-            if (Playlist.SelectedIndex >= 0)
+            if (Playlist.SelectedIndex >= 0 && !PlaylistDragging)
             {
-                if (!PlaylistDragging)
-                {
-                    PlaylistDragging = true;
-                    SavedX = e.Location.X;
-                    SavedY = e.Location.Y;
-                }
+                PlaylistDragging = true;
+                SavedX = e.Location.X;
+                SavedY = e.Location.Y;
             }
         }
 

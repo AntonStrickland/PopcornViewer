@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.PortBox = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.IPAddressBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,7 +37,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
-            this.PortBox = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PortBox)).BeginInit();
             this.SuspendLayout();
@@ -59,6 +59,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Network Settings";
             // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(138, 71);
+            this.PortBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.PortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(47, 20);
+            this.PortBox.TabIndex = 6;
+            this.PortBox.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            this.PortBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PortBox_KeyPress);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -74,6 +97,7 @@
             this.IPAddressBox.Name = "IPAddressBox";
             this.IPAddressBox.Size = new System.Drawing.Size(126, 20);
             this.IPAddressBox.TabIndex = 3;
+            this.IPAddressBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IPAddressBox_KeyPress);
             // 
             // label2
             // 
@@ -90,6 +114,7 @@
             this.NameBox.Name = "NameBox";
             this.NameBox.Size = new System.Drawing.Size(178, 20);
             this.NameBox.TabIndex = 1;
+            this.NameBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NameBox_KeyPress);
             // 
             // label1
             // 
@@ -119,28 +144,6 @@
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
-            // 
-            // PortBox
-            // 
-            this.PortBox.Location = new System.Drawing.Point(138, 71);
-            this.PortBox.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.PortBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(47, 20);
-            this.PortBox.TabIndex = 6;
-            this.PortBox.Value = new decimal(new int[] {
-            80,
-            0,
-            0,
-            0});
             // 
             // AddNetwork
             // 

@@ -71,7 +71,7 @@
             this.EditButton.Location = new System.Drawing.Point(103, 282);
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(84, 23);
-            this.EditButton.TabIndex = 3;
+            this.EditButton.TabIndex = 2;
             this.EditButton.Text = "Edit";
             this.EditButton.UseVisualStyleBackColor = true;
             this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
@@ -82,7 +82,7 @@
             this.RemoveButton.Location = new System.Drawing.Point(199, 282);
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(84, 23);
-            this.RemoveButton.TabIndex = 2;
+            this.RemoveButton.TabIndex = 3;
             this.RemoveButton.Text = "Remove";
             this.RemoveButton.UseVisualStyleBackColor = true;
             this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
@@ -136,7 +136,7 @@
             this.NicknameBox.Location = new System.Drawing.Point(6, 32);
             this.NicknameBox.Name = "NicknameBox";
             this.NicknameBox.Size = new System.Drawing.Size(84, 20);
-            this.NicknameBox.TabIndex = 1;
+            this.NicknameBox.TabIndex = 4;
             this.NicknameBox.Text = "Guest";
             this.NicknameBox.TextChanged += new System.EventHandler(this.NicknameBox_TextChanged);
             // 
@@ -180,7 +180,7 @@
             0});
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(48, 20);
-            this.PortBox.TabIndex = 7;
+            this.PortBox.TabIndex = 6;
             this.PortBox.Value = new decimal(new int[] {
             80,
             0,
@@ -194,7 +194,7 @@
             this.IPAddressBox.Name = "IPAddressBox";
             this.IPAddressBox.ReadOnly = true;
             this.IPAddressBox.Size = new System.Drawing.Size(133, 20);
-            this.IPAddressBox.TabIndex = 4;
+            this.IPAddressBox.TabIndex = 5;
             // 
             // label2
             // 
@@ -220,7 +220,7 @@
             this.ConnectButton.Location = new System.Drawing.Point(211, 398);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(90, 23);
-            this.ConnectButton.TabIndex = 3;
+            this.ConnectButton.TabIndex = 8;
             this.ConnectButton.Text = "Connect";
             this.ConnectButton.UseVisualStyleBackColor = true;
             this.ConnectButton.Click += new System.EventHandler(this.ConnectButton_Click);
@@ -230,7 +230,7 @@
             this.HostButton.Location = new System.Drawing.Point(117, 398);
             this.HostButton.Name = "HostButton";
             this.HostButton.Size = new System.Drawing.Size(84, 23);
-            this.HostButton.TabIndex = 4;
+            this.HostButton.TabIndex = 7;
             this.HostButton.Text = "Host";
             this.HostButton.UseVisualStyleBackColor = true;
             this.HostButton.Click += new System.EventHandler(this.HostButton_Click);

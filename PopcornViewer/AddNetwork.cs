@@ -56,5 +56,32 @@ namespace PopcornViewer
 
             this.Close();
         }
+
+        private void IPAddressBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                SaveButton_Click(sender, e);
+                e.Handled = true;
+            }
+        }
+
+        private void NameBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                SaveButton_Click(sender, e);
+                e.Handled = true;
+            }
+        }
+
+        private void PortBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                SaveButton_Click(sender, e);
+                e.Handled = true;
+            }
+        }
     }
 }

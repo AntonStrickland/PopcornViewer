@@ -116,7 +116,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(834, 487);
             this.splitContainer1.SplitterDistance = 668;
-            this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.TabIndex = 8;
             // 
             // splitContainer3
             // 
@@ -146,7 +146,8 @@
             this.YoutubeVideo.Name = "YoutubeVideo";
             this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
             this.YoutubeVideo.Size = new System.Drawing.Size(652, 328);
-            this.YoutubeVideo.TabIndex = 0;
+            this.YoutubeVideo.TabIndex = 1;
+            this.YoutubeVideo.TabStop = false;
             this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
             // 
             // splitContainer4
@@ -167,7 +168,7 @@
             this.splitContainer4.Panel2.Controls.Add(this.ChatBox);
             this.splitContainer4.Size = new System.Drawing.Size(668, 152);
             this.splitContainer4.SplitterDistance = 164;
-            this.splitContainer4.TabIndex = 0;
+            this.splitContainer4.TabIndex = 2;
             // 
             // ChatLabel
             // 
@@ -181,7 +182,7 @@
             this.ChatLabel.Name = "ChatLabel";
             this.ChatLabel.ReadOnly = true;
             this.ChatLabel.Size = new System.Drawing.Size(149, 20);
-            this.ChatLabel.TabIndex = 2;
+            this.ChatLabel.TabIndex = 3;
             this.ChatLabel.Text = "Chatting: 0";
             this.ChatLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ChatLabel.WordWrap = false;
@@ -196,7 +197,7 @@
             this.ChatMembers.Location = new System.Drawing.Point(12, 29);
             this.ChatMembers.Name = "ChatMembers";
             this.ChatMembers.Size = new System.Drawing.Size(149, 111);
-            this.ChatMembers.TabIndex = 0;
+            this.ChatMembers.TabIndex = 4;
             // 
             // NicknameLabel
             // 
@@ -210,7 +211,7 @@
             this.NicknameLabel.Name = "NicknameLabel";
             this.NicknameLabel.ReadOnly = true;
             this.NicknameLabel.Size = new System.Drawing.Size(58, 13);
-            this.NicknameLabel.TabIndex = 3;
+            this.NicknameLabel.TabIndex = 6;
             this.NicknameLabel.Text = "Guest:";
             this.NicknameLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -226,7 +227,7 @@
             this.ChatHistory.Name = "ChatHistory";
             this.ChatHistory.ReadOnly = true;
             this.ChatHistory.Size = new System.Drawing.Size(493, 108);
-            this.ChatHistory.TabIndex = 2;
+            this.ChatHistory.TabIndex = 5;
             this.ChatHistory.Text = "";
             this.ChatHistory.TextChanged += new System.EventHandler(this.ChatHistory_TextChanged);
             // 
@@ -238,7 +239,7 @@
             this.ChatBox.Location = new System.Drawing.Point(67, 120);
             this.ChatBox.Name = "ChatBox";
             this.ChatBox.Size = new System.Drawing.Size(429, 20);
-            this.ChatBox.TabIndex = 0;
+            this.ChatBox.TabIndex = 7;
             this.ChatBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChatBox_KeyDown);
             // 
             // splitContainer2
@@ -259,7 +260,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.GroupFiles);
             this.splitContainer2.Size = new System.Drawing.Size(162, 487);
             this.splitContainer2.SplitterDistance = 333;
-            this.splitContainer2.TabIndex = 0;
+            this.splitContainer2.TabIndex = 11;
             // 
             // PlaylistLabel
             // 
@@ -272,7 +273,7 @@
             this.PlaylistLabel.Name = "PlaylistLabel";
             this.PlaylistLabel.ReadOnly = true;
             this.PlaylistLabel.Size = new System.Drawing.Size(147, 20);
-            this.PlaylistLabel.TabIndex = 0;
+            this.PlaylistLabel.TabIndex = 9;
             this.PlaylistLabel.Text = "Playlist Count: 0";
             this.PlaylistLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.PlaylistLabel.WordWrap = false;
@@ -291,7 +292,7 @@
             this.Playlist.Name = "Playlist";
             this.Playlist.ScrollAlwaysVisible = true;
             this.Playlist.Size = new System.Drawing.Size(147, 301);
-            this.Playlist.TabIndex = 0;
+            this.Playlist.TabIndex = 10;
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
             this.Playlist.DragEnter += new System.Windows.Forms.DragEventHandler(this.Playlist_DragEnter);
             this.Playlist.DragOver += new System.Windows.Forms.DragEventHandler(this.Playlist_DragOver);
@@ -351,7 +352,7 @@
             this.LocalFilesLabel.Name = "LocalFilesLabel";
             this.LocalFilesLabel.ReadOnly = true;
             this.LocalFilesLabel.Size = new System.Drawing.Size(147, 20);
-            this.LocalFilesLabel.TabIndex = 1;
+            this.LocalFilesLabel.TabIndex = 12;
             this.LocalFilesLabel.Text = "Local Files: 0";
             this.LocalFilesLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.LocalFilesLabel.WordWrap = false;
@@ -364,10 +365,11 @@
             this.GroupFiles.Location = new System.Drawing.Point(3, 29);
             this.GroupFiles.Name = "GroupFiles";
             this.GroupFiles.Size = new System.Drawing.Size(147, 109);
-            this.GroupFiles.TabIndex = 0;
+            this.GroupFiles.TabIndex = 13;
             // 
             // menuStrip1
             // 
+            this.menuStrip1.AllowItemReorder = true;
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -380,7 +382,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(834, 24);
-            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
@@ -402,13 +404,13 @@
             this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "&Open";
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(149, 6);
             // 
             // saveToolStripMenuItem
             // 
@@ -416,24 +418,24 @@
             this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

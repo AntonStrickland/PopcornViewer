@@ -289,6 +289,7 @@
             this.Playlist.IntegralHeight = false;
             this.Playlist.Location = new System.Drawing.Point(3, 29);
             this.Playlist.Name = "Playlist";
+            this.Playlist.ScrollAlwaysVisible = true;
             this.Playlist.Size = new System.Drawing.Size(147, 301);
             this.Playlist.TabIndex = 0;
             this.Playlist.DragDrop += new System.Windows.Forms.DragEventHandler(this.Playlist_DragDrop);
@@ -563,7 +564,7 @@
             // startVoteToolStripMenuItem1
             // 
             this.startVoteToolStripMenuItem1.Name = "startVoteToolStripMenuItem1";
-            this.startVoteToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.startVoteToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
             this.startVoteToolStripMenuItem1.Text = "Vote To Skip";
             this.startVoteToolStripMenuItem1.Click += new System.EventHandler(this.startVoteToolStripMenuItem1_Click);
             // 

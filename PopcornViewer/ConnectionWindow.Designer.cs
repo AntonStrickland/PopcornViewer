@@ -134,6 +134,7 @@
             // NicknameBox
             // 
             this.NicknameBox.Location = new System.Drawing.Point(6, 32);
+            this.NicknameBox.MaxLength = 20;
             this.NicknameBox.Name = "NicknameBox";
             this.NicknameBox.Size = new System.Drawing.Size(84, 20);
             this.NicknameBox.TabIndex = 4;

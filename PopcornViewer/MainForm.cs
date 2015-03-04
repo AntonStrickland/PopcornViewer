@@ -375,5 +375,20 @@ namespace PopcornViewer
         {
             startVoteToolStripMenuItem1.Enabled = (Playlist.Items.Count >= 2 && CurrentlyPlaying != -1);
         }
+
+        private void NicknameLabel_TextChanged(object sender, EventArgs e)
+        {
+            NicknameLabel.Width = TextRenderer.MeasureText(NicknameLabel.Text, NicknameLabel.Font).Width;
+            if (NicknameLabel.Width > 65)
+            {
+                ChatBox.Width = ChatBox.Width - (NicknameLabel.Width - 58);
+                ChatBox.Location = new Point(67 + (NicknameLabel.Width - 58), 120);
+            }
+            else
+            {
+                ChatBox.Width = ChatBox.Width + (58 - NicknameLabel.Width);
+                ChatBox.Location = new Point(67 - (58 - NicknameLabel.Width), 120);
+            }
+        }
     }
 }

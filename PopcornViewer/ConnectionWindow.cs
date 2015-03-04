@@ -25,18 +25,16 @@ namespace PopcornViewer
             Parent = MF;
 
             // Display Local IP Address
-            IPHostEntry host;
-            string localIP = "?";
-            host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (IPAddress ip in host.AddressList)
+            System.Net.WebRequest Request = System.Net.WebRequest.Create("http://checkip.dyndns.org");
+            Request.Proxy = null;
+            string Reply;
+            using (var Response = (HttpWebResponse)Request.GetResponse())
             {
-                if (ip.AddressFamily.ToString() == "InterNetwork")
-                {
-                    localIP = ip.ToString();
-                    break;
-                }
+                System.IO.StreamReader sr = new System.IO.StreamReader(Response.GetResponseStream());
+                Reply = sr.ReadToEnd().Trim();
+                Reply = Reply.Split(':')[1].Substring(1).Split('<')[0];
             }
-            IPAddressBox.Text = localIP;
+            IPAddressBox.Text = Reply;
         }
 
         // Opens up the AddNetwork window to add networks to the list

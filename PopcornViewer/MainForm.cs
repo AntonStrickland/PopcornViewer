@@ -12,6 +12,7 @@ using System.Net.Sockets;
 using System.Xml;
 using System.Collections;
 using System.Text.RegularExpressions;
+using System.IO;
 using Google.YouTube;
 using System.Diagnostics;
 
@@ -23,6 +24,9 @@ namespace PopcornViewer
         const string DEV_STRING = "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA";
         List<string> PlaylistURLs = new List<string>();
         bool SeekImmunity = false;
+
+        // Name of the current playlist file
+        string CurrentPlaylistName = "";
 
         // Counters for voting
         int VoteCounter = 0;
@@ -388,6 +392,72 @@ namespace PopcornViewer
             {
                 ChatBox.Width = ChatBox.Width + (58 - NicknameLabel.Width);
                 ChatBox.Location = new Point(67 - (58 - NicknameLabel.Width), 120);
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurrentPlaylistName != "")
+            {
+                using (StreamWriter sw = new StreamWriter(CurrentPlaylistName))
+                {
+                    for (int i = 0; i < PlaylistURLs.Count; i++)
+                        sw.WriteLine(ConvertURLToBrowser(PlaylistURLs[i]));
+                    sw.Close();
+                }
+            }
+        }
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "PopcornViewer files (*.pop)|*.pop|txt files (*.txt)|*.txt";
+            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                CurrentPlaylistName = sfd.FileName;
+                using (StreamWriter sw = new StreamWriter(CurrentPlaylistName))
+                {
+                    for (int i = 0; i < PlaylistURLs.Count; i++)
+                        sw.WriteLine(ConvertURLToBrowser(PlaylistURLs[i]));
+                    sw.Close();
+                }
+            }
+        }
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Create an instance of the open file dialog box.
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "PopcornViewer files (*.pop)|*.pop|txt files (*.txt)|*.txt";
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                CurrentPlaylistName = ofd.FileName;
+                Playlist.Items.Clear();
+                PlaylistURLs.Clear();
+                /*for (int i = 0; i < PlaylistURLs.Count; i++)
+                {
+                DeleteVideo(i);
+                }*/
+                using (StreamReader sr = new StreamReader(ofd.FileName))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string url = sr.ReadLine();
+                        if (IsYoutubeURL(url))
+                        {
+                            PlaylistURLs.Add(ConvertURLToEmbeded(url));
+                            Video video = RequestFromYoutube(url);
+                            Playlist.Items.Add(video.Title);
+                        }
+                        //AddToPlaylist(sr.ReadLine());
+                    }
+                    sr.Close();
+                }
+                UpdatePlaylistCount();
+                if (Hosting)
+                {
+                    Broadcast("has opened a playlist", NicknameLabel.Text, false);
+                    BroadcastPlaylist();
+                }
+                else BroadcastPlaylist("has opened a playlist");
             }
         }
     }

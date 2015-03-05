@@ -400,12 +400,12 @@ namespace PopcornViewer
             if (NicknameLabel.Width > 65)
             {
                 ChatBox.Width = ChatBox.Width - (NicknameLabel.Width - 58);
-                ChatBox.Location = new Point(67 + (NicknameLabel.Width - 58), 120);
+                ChatBox.Location = new Point(67 + (NicknameLabel.Width - 58), ChatBox.Location.Y);
             }
             else
             {
                 ChatBox.Width = ChatBox.Width + (58 - NicknameLabel.Width);
-                ChatBox.Location = new Point(67 - (58 - NicknameLabel.Width), 120);
+                ChatBox.Location = new Point(67 - (58 - NicknameLabel.Width), ChatBox.Location.Y);
             }
         }
 

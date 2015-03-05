@@ -226,24 +226,38 @@ namespace PopcornViewer
         // Controls the edit Toolstrip Menu items' logic
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(ConvertURLToBrowser(PlaylistURLs[Playlist.SelectedIndex]));
+            if (Playlist.SelectedIndex >= 0)
+            {
+                Clipboard.SetText(ConvertURLToBrowser(PlaylistURLs[Playlist.SelectedIndex]));
+            } 
+            else if (ChatBox.SelectedText != "")
+            {
+                Clipboard.SetText(ChatBox.SelectedText);
+            }
+            else if (ChatHistory.SelectedText != "")
+            {
+                Clipboard.SetText(ChatHistory.SelectedText);
+            }
         }
 
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            if (Playlist.SelectedIndex >= 0)
+            /*if (Playlist.SelectedIndex >= 0)
             {
                 copyToolStripMenuItem.Enabled = true;
+            }*/
+            /*else if (ChatBox.Text.)
+            {
+
             }
-            else copyToolStripMenuItem.Enabled = false;
+            else copyToolStripMenuItem.Enabled = false;*/
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!AddToPlaylist(Clipboard.GetText()))
-            {
-                MessageBox.Show("Clipboard contents do not contain a valid Youtube URL!", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ChatBox.Text += Clipboard.GetText();
+            //SelfStream.Write(Chat, 0, Chat.Length);
+            //SelfStream.Flush();
         }
 
         // Deals with the playback toolstrip.
@@ -364,7 +378,7 @@ namespace PopcornViewer
         // Starts Voting
         private void startVoteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            startVoteToolStripMenuItem1.Enabled = false;
+            beginVoteMenuItem.Enabled = false;
             if (Hosting) Broadcast("VOTETOSKIP", "", false);
             else
             {
@@ -377,7 +391,7 @@ namespace PopcornViewer
         // Makes sure there are enough videos in the playlist to enable vote option
         private void startVoteToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            startVoteToolStripMenuItem1.Enabled = (Playlist.Items.Count >= 2 && CurrentlyPlaying != -1);
+            beginVoteMenuItem.Enabled = (Playlist.Items.Count >= 2 && CurrentlyPlaying != -1);
         }
 
         private void NicknameLabel_TextChanged(object sender, EventArgs e)
@@ -432,10 +446,6 @@ namespace PopcornViewer
                 CurrentPlaylistName = ofd.FileName;
                 Playlist.Items.Clear();
                 PlaylistURLs.Clear();
-                /*for (int i = 0; i < PlaylistURLs.Count; i++)
-                {
-                DeleteVideo(i);
-                }*/
                 using (StreamReader sr = new StreamReader(ofd.FileName))
                 {
                     while (!sr.EndOfStream)
@@ -447,7 +457,6 @@ namespace PopcornViewer
                             Video video = RequestFromYoutube(url);
                             Playlist.Items.Add(video.Title);
                         }
-                        //AddToPlaylist(sr.ReadLine());
                     }
                     sr.Close();
                 }
@@ -459,6 +468,25 @@ namespace PopcornViewer
                 }
                 else BroadcastPlaylist("has opened a playlist");
             }
+        }
+
+        private void popcornHomepageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("http://web.mst.edu/~mabwgf/PopcornViewerWebsite/");
+            }
+            catch { }
+        }
+
+        private void aboutPopcornViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(ChatHistory.SelectedText);
         }
     }
 }

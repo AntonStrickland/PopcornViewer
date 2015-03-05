@@ -38,15 +38,15 @@
             this.ChatMembers = new System.Windows.Forms.ListBox();
             this.NicknameLabel = new System.Windows.Forms.TextBox();
             this.ChatHistory = new System.Windows.Forms.RichTextBox();
-            this.ChatBox = new System.Windows.Forms.TextBox();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.PlaylistLabel = new System.Windows.Forms.TextBox();
-            this.Playlist = new System.Windows.Forms.ListBox();
             this.PlaylistContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.playPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deletePlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addVideoPlaylistMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChatBox = new System.Windows.Forms.TextBox();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.PlaylistLabel = new System.Windows.Forms.TextBox();
+            this.Playlist = new System.Windows.Forms.ListBox();
             this.LocalFilesLabel = new System.Windows.Forms.TextBox();
             this.GroupFiles = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -61,7 +61,7 @@
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.beginVoteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.repeatOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repeatAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,12 +73,12 @@
             this.manageGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chatOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startVoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startVoteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.ChatContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -92,15 +92,16 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            this.PlaylistContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.PlaylistContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            this.ChatContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -230,6 +231,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatHistory.BackColor = System.Drawing.SystemColors.Window;
             this.ChatHistory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ChatHistory.ContextMenuStrip = this.ChatContextMenu;
             this.ChatHistory.Cursor = System.Windows.Forms.Cursors.Default;
             this.ChatHistory.Location = new System.Drawing.Point(4, 6);
             this.ChatHistory.Name = "ChatHistory";
@@ -238,6 +240,45 @@
             this.ChatHistory.TabIndex = 5;
             this.ChatHistory.Text = "";
             this.ChatHistory.TextChanged += new System.EventHandler(this.ChatHistory_TextChanged);
+            // 
+            // PlaylistContextMenu
+            // 
+            this.PlaylistContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playPlaylistMenuItem,
+            this.copyPlaylistMenuItem,
+            this.deletePlaylistMenuItem,
+            this.addVideoPlaylistMenuItem});
+            this.PlaylistContextMenu.Name = "PlaylistContextMenu";
+            this.PlaylistContextMenu.Size = new System.Drawing.Size(214, 92);
+            this.PlaylistContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.PlaylistContextMenu_Opening);
+            // 
+            // playPlaylistMenuItem
+            // 
+            this.playPlaylistMenuItem.Name = "playPlaylistMenuItem";
+            this.playPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.playPlaylistMenuItem.Text = "Play";
+            this.playPlaylistMenuItem.Click += new System.EventHandler(this.playPlaylistMenuItem_Click);
+            // 
+            // copyPlaylistMenuItem
+            // 
+            this.copyPlaylistMenuItem.Name = "copyPlaylistMenuItem";
+            this.copyPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.copyPlaylistMenuItem.Text = "Copy";
+            this.copyPlaylistMenuItem.Click += new System.EventHandler(this.copyPlaylistMenuItem_Click);
+            // 
+            // deletePlaylistMenuItem
+            // 
+            this.deletePlaylistMenuItem.Name = "deletePlaylistMenuItem";
+            this.deletePlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.deletePlaylistMenuItem.Text = "Delete";
+            this.deletePlaylistMenuItem.Click += new System.EventHandler(this.deletePlaylistMenuItem_Click);
+            // 
+            // addVideoPlaylistMenuItem
+            // 
+            this.addVideoPlaylistMenuItem.Name = "addVideoPlaylistMenuItem";
+            this.addVideoPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.addVideoPlaylistMenuItem.Text = "Add Video from Clipboard";
+            this.addVideoPlaylistMenuItem.Click += new System.EventHandler(this.addVideoPlaylistMenuItem_Click);
             // 
             // ChatBox
             // 
@@ -312,45 +353,6 @@
             this.Playlist.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseMove);
             this.Playlist.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Playlist_MouseUp);
             // 
-            // PlaylistContextMenu
-            // 
-            this.PlaylistContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playPlaylistMenuItem,
-            this.copyPlaylistMenuItem,
-            this.deletePlaylistMenuItem,
-            this.addVideoPlaylistMenuItem});
-            this.PlaylistContextMenu.Name = "PlaylistContextMenu";
-            this.PlaylistContextMenu.Size = new System.Drawing.Size(214, 92);
-            this.PlaylistContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.PlaylistContextMenu_Opening);
-            // 
-            // playPlaylistMenuItem
-            // 
-            this.playPlaylistMenuItem.Name = "playPlaylistMenuItem";
-            this.playPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.playPlaylistMenuItem.Text = "Play";
-            this.playPlaylistMenuItem.Click += new System.EventHandler(this.playPlaylistMenuItem_Click);
-            // 
-            // copyPlaylistMenuItem
-            // 
-            this.copyPlaylistMenuItem.Name = "copyPlaylistMenuItem";
-            this.copyPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.copyPlaylistMenuItem.Text = "Copy";
-            this.copyPlaylistMenuItem.Click += new System.EventHandler(this.copyPlaylistMenuItem_Click);
-            // 
-            // deletePlaylistMenuItem
-            // 
-            this.deletePlaylistMenuItem.Name = "deletePlaylistMenuItem";
-            this.deletePlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.deletePlaylistMenuItem.Text = "Delete";
-            this.deletePlaylistMenuItem.Click += new System.EventHandler(this.deletePlaylistMenuItem_Click);
-            // 
-            // addVideoPlaylistMenuItem
-            // 
-            this.addVideoPlaylistMenuItem.Name = "addVideoPlaylistMenuItem";
-            this.addVideoPlaylistMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.addVideoPlaylistMenuItem.Text = "Add Video from Clipboard";
-            this.addVideoPlaylistMenuItem.Click += new System.EventHandler(this.addVideoPlaylistMenuItem_Click);
-            // 
             // LocalFilesLabel
             // 
             this.LocalFilesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -387,7 +389,6 @@
             this.editToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.startVoteToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -485,7 +486,7 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
+            this.beginVoteMenuItem,
             this.toolStripSeparator2,
             this.repeatOneToolStripMenuItem,
             this.repeatAllToolStripMenuItem,
@@ -496,11 +497,12 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.toolsToolStripMenuItem.Text = "Playback";
             // 
-            // toolStripMenuItem1
+            // beginVoteMenuItem
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.toolStripMenuItem1.Text = "Begin Skip Vote";
+            this.beginVoteMenuItem.Name = "beginVoteMenuItem";
+            this.beginVoteMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.beginVoteMenuItem.Text = "Begin Skip Vote";
+            this.beginVoteMenuItem.Click += new System.EventHandler(this.startVoteToolStripMenuItem1_Click);
             // 
             // toolStripSeparator2
             // 
@@ -580,22 +582,6 @@
             this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
-            // startVoteToolStripMenuItem
-            // 
-            this.startVoteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startVoteToolStripMenuItem1});
-            this.startVoteToolStripMenuItem.Name = "startVoteToolStripMenuItem";
-            this.startVoteToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.startVoteToolStripMenuItem.Text = "Vote";
-            this.startVoteToolStripMenuItem.DropDownOpening += new System.EventHandler(this.startVoteToolStripMenuItem_DropDownOpening);
-            // 
-            // startVoteToolStripMenuItem1
-            // 
-            this.startVoteToolStripMenuItem1.Name = "startVoteToolStripMenuItem1";
-            this.startVoteToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
-            this.startVoteToolStripMenuItem1.Text = "Vote To Skip";
-            this.startVoteToolStripMenuItem1.Click += new System.EventHandler(this.startVoteToolStripMenuItem1_Click);
-            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -608,14 +594,16 @@
             // popcornHomepageToolStripMenuItem
             // 
             this.popcornHomepageToolStripMenuItem.Name = "popcornHomepageToolStripMenuItem";
-            this.popcornHomepageToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.popcornHomepageToolStripMenuItem.Text = "Popcorn Homepage";
+            this.popcornHomepageToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.popcornHomepageToolStripMenuItem.Text = "Website";
+            this.popcornHomepageToolStripMenuItem.Click += new System.EventHandler(this.popcornHomepageToolStripMenuItem_Click);
             // 
             // aboutPopcornViewerToolStripMenuItem
             // 
             this.aboutPopcornViewerToolStripMenuItem.Name = "aboutPopcornViewerToolStripMenuItem";
-            this.aboutPopcornViewerToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.aboutPopcornViewerToolStripMenuItem.Text = "About Popcorn Viewer";
+            this.aboutPopcornViewerToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutPopcornViewerToolStripMenuItem.Text = "About...";
+            this.aboutPopcornViewerToolStripMenuItem.Click += new System.EventHandler(this.aboutPopcornViewerToolStripMenuItem_Click);
             // 
             // toolStripContainer1
             // 
@@ -638,6 +626,20 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
+            // 
+            // ChatContextMenu
+            // 
+            this.ChatContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem1});
+            this.ChatContextMenu.Name = "ChatContextMenu";
+            this.ChatContextMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // copyToolStripMenuItem1
+            // 
+            this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem1.Text = "Copy";
+            this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // MainForm
             // 
@@ -666,13 +668,13 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
+            this.PlaylistContextMenu.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.PlaylistContextMenu.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -680,6 +682,7 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            this.ChatContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -731,10 +734,10 @@
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ListBox Playlist;
         public System.Windows.Forms.TextBox NicknameLabel;
-        private System.Windows.Forms.ToolStripMenuItem startVoteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem startVoteToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem beginVoteMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ContextMenuStrip ChatContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
 
     }
 }

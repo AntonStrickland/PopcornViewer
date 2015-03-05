@@ -616,7 +616,7 @@ namespace PopcornViewer
                 timer.Enabled = false;
                 timer = new System.Windows.Forms.Timer() { Interval = 1000 };
                 VoteTime = SECONDS_TO_VOTE;
-                startVoteToolStripMenuItem1.Enabled = true;
+                beginVoteMenuItem.Enabled = true;
                 if (Hosting)
                 {
                     Broadcast(VoteCounter + "/" + ChatMembers.Items.Count + " members voted to skip the video.", "CONSOLE", true);

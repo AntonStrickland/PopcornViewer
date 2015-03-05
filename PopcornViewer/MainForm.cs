@@ -316,6 +316,7 @@ namespace PopcornViewer
         // Handles the logic of the chatbox
         private void ChatBox_KeyDown(object sender, KeyEventArgs e)
         {
+            ChatBox.Font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular);
             if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0 && SelfSocket != null && SelfSocket.Connected)
             {
                 byte[] Chat = Encoding.UTF8.GetBytes("MESSAGE$" + Encrypt(ChatBox.Text) + "$");
@@ -328,6 +329,8 @@ namespace PopcornViewer
         // Scroll chat when text changed
         private void ChatHistory_TextChanged(object sender, EventArgs e)
         {
+            ChatHistory.Font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular);
+            ChatHistory.SelectionFont = new Font("Microsoft Sans Serif", 8, FontStyle.Regular);
             ChatHistory.SelectionStart = ChatHistory.Text.Length;
             ChatHistory.ScrollToCaret();
         }

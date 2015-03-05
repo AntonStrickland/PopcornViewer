@@ -88,8 +88,8 @@ namespace PopcornViewer
                 MessageBox.Show("Please enter a Nickname.", "Popcorn Viewer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
-            Parent.NicknameLabel.Text = NicknameBox.Text;
+
+            Parent.NicknameLabel.Text = NicknameBox.Text + ":";
             // Try to connect to the server
             Parent.SelfSocket = new TcpClient();
             Parent.Chat("Connecting to " + NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[0].Text + "...", "CONSOLE");
@@ -130,7 +130,7 @@ namespace PopcornViewer
             Parent.bwListener.DoWork += new DoWorkEventHandler(Parent.Listen);
             Parent.bwListener.RunWorkerAsync();
 
-            Parent.NicknameLabel.Text = NicknameBox.Text;
+            Parent.NicknameLabel.Text = NicknameBox.Text + ":";
             // Try to connect to the server
             Thread ConnectionThread = new Thread(() => HostConnect());
             ConnectionThread.Start();

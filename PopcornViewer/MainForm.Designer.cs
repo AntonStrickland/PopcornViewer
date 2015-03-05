@@ -112,10 +112,12 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.splitContainer3);
+            this.splitContainer1.Panel1MinSize = 400;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Panel2MinSize = 100;
             this.splitContainer1.Size = new System.Drawing.Size(834, 487);
             this.splitContainer1.SplitterDistance = 668;
             this.splitContainer1.TabIndex = 8;
@@ -137,7 +139,7 @@
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
             this.splitContainer3.Panel2MinSize = 75;
             this.splitContainer3.Size = new System.Drawing.Size(668, 487);
-            this.splitContainer3.SplitterDistance = 340;
+            this.splitContainer3.SplitterDistance = 343;
             this.splitContainer3.TabIndex = 0;
             // 
             // YoutubeVideo
@@ -149,7 +151,7 @@
             this.YoutubeVideo.Location = new System.Drawing.Point(12, 4);
             this.YoutubeVideo.Name = "YoutubeVideo";
             this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
-            this.YoutubeVideo.Size = new System.Drawing.Size(652, 337);
+            this.YoutubeVideo.Size = new System.Drawing.Size(652, 340);
             this.YoutubeVideo.TabIndex = 1;
             this.YoutubeVideo.TabStop = false;
             this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
@@ -170,7 +172,7 @@
             this.splitContainer4.Panel2.Controls.Add(this.NicknameLabel);
             this.splitContainer4.Panel2.Controls.Add(this.ChatHistory);
             this.splitContainer4.Panel2.Controls.Add(this.ChatBox);
-            this.splitContainer4.Size = new System.Drawing.Size(668, 143);
+            this.splitContainer4.Size = new System.Drawing.Size(668, 140);
             this.splitContainer4.SplitterDistance = 164;
             this.splitContainer4.TabIndex = 2;
             // 
@@ -200,7 +202,7 @@
             this.ChatMembers.IntegralHeight = false;
             this.ChatMembers.Location = new System.Drawing.Point(12, 29);
             this.ChatMembers.Name = "ChatMembers";
-            this.ChatMembers.Size = new System.Drawing.Size(149, 102);
+            this.ChatMembers.Size = new System.Drawing.Size(149, 99);
             this.ChatMembers.TabIndex = 4;
             // 
             // NicknameLabel
@@ -210,7 +212,7 @@
             this.NicknameLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.NicknameLabel.Cursor = System.Windows.Forms.Cursors.Default;
             this.NicknameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NicknameLabel.Location = new System.Drawing.Point(4, 114);
+            this.NicknameLabel.Location = new System.Drawing.Point(4, 111);
             this.NicknameLabel.MaxLength = 12;
             this.NicknameLabel.Name = "NicknameLabel";
             this.NicknameLabel.ReadOnly = true;
@@ -232,7 +234,7 @@
             this.ChatHistory.Location = new System.Drawing.Point(4, 6);
             this.ChatHistory.Name = "ChatHistory";
             this.ChatHistory.ReadOnly = true;
-            this.ChatHistory.Size = new System.Drawing.Size(493, 99);
+            this.ChatHistory.Size = new System.Drawing.Size(493, 96);
             this.ChatHistory.TabIndex = 5;
             this.ChatHistory.Text = "";
             this.ChatHistory.TextChanged += new System.EventHandler(this.ChatHistory_TextChanged);
@@ -242,7 +244,7 @@
             this.ChatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.ChatBox.Location = new System.Drawing.Point(67, 111);
+            this.ChatBox.Location = new System.Drawing.Point(67, 108);
             this.ChatBox.Name = "ChatBox";
             this.ChatBox.Size = new System.Drawing.Size(429, 20);
             this.ChatBox.TabIndex = 7;
@@ -644,7 +646,7 @@
             this.ClientSize = new System.Drawing.Size(834, 511);
             this.Controls.Add(this.toolStripContainer1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(600, 400);
+            this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "MainForm";
             this.Text = "Popcorn Viewer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);

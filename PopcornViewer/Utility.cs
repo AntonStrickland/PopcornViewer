@@ -573,10 +573,15 @@ namespace PopcornViewer
                 try { this.Invoke(new Action(CallTimer), new object[] { }); }
                 catch { return; }
             }
-            else
+            else if(CurrentlyPlaying > -1)
             {
                 timer.Tick += new EventHandler(timeX_Tick);
                 timer.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("No video is playing");
+                beginVoteMenuItem.Enabled = true;
             }
         }
 
@@ -584,7 +589,7 @@ namespace PopcornViewer
         void timeX_Tick(object sender, EventArgs e)
         {
             TimeSpan t = TimeSpan.FromSeconds(VoteTime);
-            if (VoteTime > 0)
+            if (VoteTime > 0 && CurrentlyPlaying > -1)
             {
                 if (VoteTime % 5 == 0)
                 {
@@ -609,7 +614,7 @@ namespace PopcornViewer
                     VoteResult = DialogResult.Ignore;
                 }
             }
-            else
+            else if(CurrentlyPlaying > -1)
             {
                 Chat(string.Format("{0:D2}", t.Seconds) + " seconds left to vote", "CONSOLE");
                 NumOfVotes = 1;

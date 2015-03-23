@@ -72,6 +72,11 @@ namespace PopcornViewer
                                     {
                                         PlayVideo(CurrentlyPlaying + 1, false);
                                     }
+                                    else
+                                    {
+                                        YoutubeVideo_CallFlash("seekTo(0, 0)");
+                                        YoutubeVideo_CallFlash("pauseVideo()");
+                                    }
                                 }
 
                                 // Repeat One
@@ -88,6 +93,16 @@ namespace PopcornViewer
 
                                     PlayVideo(nextVideo, false);
                                 }
+                                else
+                                {
+                                    YoutubeVideo_CallFlash("seekTo(0, 0)");
+                                    YoutubeVideo_CallFlash("pauseVideo()");
+                                }
+                            }
+                            else
+                            {
+                                YoutubeVideo_CallFlash("seekTo(0, 0)");
+                                YoutubeVideo_CallFlash("pauseVideo()");
                             }
                             break;
 

@@ -189,23 +189,22 @@ namespace PopcornViewer
         {
             string PathName = @"networks.conf";
 
-            //write over old file
+            // Write over old file
             FileStream fs = new FileStream(PathName, FileMode.Create, FileAccess.Write);
             fs.Close();
 
-            //write user information to file
+            // Write user information to file
             StreamWriter writeText = new StreamWriter(PathName);
             writeText.WriteLine(NicknameBox.Text);
             writeText.WriteLine(PortBox.Text);
 
-            //write connection information to file
+            // Write connection information to file
             foreach(ListViewItem i in NetworkList.Items)
             {
                 writeText.WriteLine(i.SubItems[0].Text);
                 writeText.WriteLine(i.SubItems[1].Text);
                 writeText.WriteLine(i.SubItems[2].Text);
             }
-            
             
             writeText.Close();
             return;

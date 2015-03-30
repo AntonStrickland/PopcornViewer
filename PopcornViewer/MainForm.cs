@@ -491,5 +491,11 @@ namespace PopcornViewer
         {
             Clipboard.SetText(ChatHistory.SelectedText);
         }
+
+        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow SetWin = new SettingsWindow(this);
+            SetWin.ShowDialog();
+        }
     }
 }

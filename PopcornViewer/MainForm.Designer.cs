@@ -74,12 +74,12 @@
             this.hostingOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chatOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transferFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.transferFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -123,6 +123,7 @@
             this.splitContainer1.Size = new System.Drawing.Size(834, 487);
             this.splitContainer1.SplitterDistance = 668;
             this.splitContainer1.TabIndex = 8;
+            this.splitContainer1.TabStop = false;
             // 
             // splitContainer3
             // 
@@ -142,7 +143,8 @@
             this.splitContainer3.Panel2MinSize = 75;
             this.splitContainer3.Size = new System.Drawing.Size(668, 487);
             this.splitContainer3.SplitterDistance = 343;
-            this.splitContainer3.TabIndex = 0;
+            this.splitContainer3.TabIndex = 1;
+            this.splitContainer3.TabStop = false;
             // 
             // YoutubeVideo
             // 
@@ -154,7 +156,7 @@
             this.YoutubeVideo.Name = "YoutubeVideo";
             this.YoutubeVideo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("YoutubeVideo.OcxState")));
             this.YoutubeVideo.Size = new System.Drawing.Size(652, 340);
-            this.YoutubeVideo.TabIndex = 1;
+            this.YoutubeVideo.TabIndex = 0;
             this.YoutubeVideo.TabStop = false;
             this.YoutubeVideo.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(this.YoutubeVideo_FlashCall);
             // 
@@ -288,6 +290,7 @@
             this.splitContainer2.Size = new System.Drawing.Size(162, 487);
             this.splitContainer2.SplitterDistance = 340;
             this.splitContainer2.TabIndex = 11;
+            this.splitContainer2.TabStop = false;
             // 
             // PlaylistLabel
             // 
@@ -592,6 +595,13 @@
             this.chatOptionsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.chatOptionsToolStripMenuItem.Text = "Chat Options";
             // 
+            // transferFileToolStripMenuItem
+            // 
+            this.transferFileToolStripMenuItem.Name = "transferFileToolStripMenuItem";
+            this.transferFileToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.transferFileToolStripMenuItem.Text = "Transfer Files";
+            this.transferFileToolStripMenuItem.Click += new System.EventHandler(this.transferFileToolStripMenuItem_Click);
+            // 
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
@@ -642,13 +652,6 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
-            // 
-            // transferFileToolStripMenuItem
-            // 
-            this.transferFileToolStripMenuItem.Name = "transferFileToolStripMenuItem";
-            this.transferFileToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.transferFileToolStripMenuItem.Text = "Transfer Files";
-            this.transferFileToolStripMenuItem.Click += new System.EventHandler(this.transferFileToolStripMenuItem_Click);
             // 
             // MainForm
             // 

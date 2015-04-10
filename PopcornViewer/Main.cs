@@ -405,17 +405,27 @@ public partial class Main : Form
 
     private void PossibleTransferUsers_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (PossibleTransferUsers.SelectedIndex > -1 && Users.Count > 0)
+        try
         {
-            TcpClient theClient = null;
-
-            if (Users.ContainsKey(PossibleTransferUsers.SelectedItem.ToString()))
+            if (PossibleTransferUsers.SelectedIndex > -1 && Users.Count > 0)
             {
-                theClient = (TcpClient)Users[PossibleTransferUsers.SelectedItem.ToString()];
+                TcpClient theClient = null;
+
+                if (Users.ContainsKey(PossibleTransferUsers.SelectedItem.ToString()))
+                {
+                    theClient = (TcpClient)Users[PossibleTransferUsers.SelectedItem.ToString()];
+                }
+
+                string IPaddress = theClient.Client.RemoteEndPoint.ToString();
+                txtCntHost.Text = IPaddress.Substring(0, IPaddress.IndexOf(":"));
+
+
             }
-            
-            string IPaddress = theClient.Client.RemoteEndPoint.ToString();
-            txtCntHost.Text = IPaddress.Substring(0, IPaddress.IndexOf(":"));
+        }
+        catch
+        {
+            MessageBox.Show("Only the host can use this function. Please enter in the IP manually", "ERROR");
+            txtCntHost.Text = "localhost";
         }
     }
 }

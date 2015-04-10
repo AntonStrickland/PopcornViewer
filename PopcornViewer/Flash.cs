@@ -113,9 +113,7 @@ namespace PopcornViewer
                             if (Hosting) Broadcast("PLAY " + sTime, "", false);
                             else
                             {
-                                byte[] Chat = Encoding.UTF8.GetBytes("PLAY$" + sTime + "$");
-                                SelfStream.Write(Chat, 0, Chat.Length);
-                                SelfStream.Flush();
+                                ClientBroadcast("PLAY$" + sTime + "$");
                             }
                             break;
 
@@ -130,9 +128,7 @@ namespace PopcornViewer
                                 if (Hosting) Broadcast("PAUSE", "", false);
                                 else
                                 {
-                                    byte[] Chat = Encoding.UTF8.GetBytes("PAUSE$");
-                                    SelfStream.Write(Chat, 0, Chat.Length);
-                                    SelfStream.Flush();
+                                    ClientBroadcast("PAUSE$");
                                 }
                             }
                             break;
@@ -148,9 +144,7 @@ namespace PopcornViewer
                                 if (Hosting) Broadcast("PAUSE", "", false);
                                 else
                                 {
-                                    byte[] Chat = Encoding.UTF8.GetBytes("PAUSE$");
-                                    SelfStream.Write(Chat, 0, Chat.Length);
-                                    SelfStream.Flush();
+                                    ClientBroadcast("PAUSE$");
                                 }
                             }
                             break;

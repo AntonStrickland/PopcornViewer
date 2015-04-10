@@ -53,6 +53,7 @@ namespace PopcornViewer
         const int TOLERANCE = 2;
 
         // Socket Objects
+        public bool Connected = false;
         public bool Hosting = false;
         public int HostPort;
         public static Hashtable ClientsList;
@@ -257,8 +258,6 @@ namespace PopcornViewer
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChatBox.Text += Clipboard.GetText();
-            //SelfStream.Write(Chat, 0, Chat.Length);
-            //SelfStream.Flush();
         }
 
         // Deals with the playback toolstrip.
@@ -320,9 +319,7 @@ namespace PopcornViewer
             ChatBox.Font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular);
             if (e.KeyData == Keys.Enter && ChatBox.Text.Length > 0 && SelfSocket != null && SelfSocket.Connected)
             {
-                byte[] Chat = Encoding.UTF8.GetBytes("MESSAGE$" + Encrypt(ChatBox.Text) + "$");
-                SelfStream.Write(Chat, 0, Chat.Length);
-                SelfStream.Flush();
+                ClientBroadcast("MESSAGE$" + Encrypt(ChatBox.Text) + "$");
                 ChatBox.Text = "";
             }
         }
@@ -359,9 +356,6 @@ namespace PopcornViewer
 
             if (SelfStream != null)
             {
-                byte[] Chat = Encoding.UTF8.GetBytes(Encrypt("") + "$");
-                SelfStream.Write(Chat, 0, Chat.Length);
-                SelfStream.Flush();
                 SelfStream.Close();
             }
         }
@@ -386,9 +380,7 @@ namespace PopcornViewer
             if (Hosting) Broadcast("VOTETOSKIP", "", false);
             else
             {
-                byte[] Chat = Encoding.UTF8.GetBytes("VOTETOSKIP$");
-                SelfStream.Write(Chat, 0, Chat.Length);
-                SelfStream.Flush();
+                ClientBroadcast("VOTETOSKIP$");
             }
         }
 

@@ -329,9 +329,7 @@ namespace PopcornViewer
                     Playlist += " ";
                 }
 
-                byte[] Chat = Encoding.UTF8.GetBytes("PLAYLIST$" + Encrypt(Playlist) + "$" + Encrypt(Message) + "$");
-                SelfStream.Write(Chat, 0, Chat.Length);
-                SelfStream.Flush();
+                ClientBroadcast("PLAYLIST$" + Encrypt(Playlist) + "$" + Encrypt(Message) + "$");
         }
 
         // Host and Client Function. Sends currently playing info to host/other clients.
@@ -343,9 +341,7 @@ namespace PopcornViewer
             if (Hosting) Broadcast(Playing, "", false);
             else
             {
-                byte[] Chat = Encoding.UTF8.GetBytes("CURRENTLYPLAYING$" + Encrypt(CurrentlyPlaying.ToString()) + "$");
-                SelfStream.Write(Chat, 0, Chat.Length);
-                SelfStream.Flush();
+                ClientBroadcast("CURRENTLYPLAYING$" + Encrypt(CurrentlyPlaying.ToString()) + "$");
             }
         }
 
@@ -497,6 +493,22 @@ namespace PopcornViewer
                 Thread.Sleep(200);
             }
             Chat("Lost connection from server...", "CONSOLE");
+            ChatLabel.Text = "Currently Chatting: 0";
+            ChatMembers.Items.Clear();
+
+            Connected = false;
+        }
+
+        // Helpful function for client speach. Checks for connection before writing.
+        private void ClientBroadcast(string Message)
+        {
+            try
+            {
+                byte[] Chat = Encoding.UTF8.GetBytes(Message);
+                SelfStream.Write(Chat, 0, Chat.Length);
+                SelfStream.Flush();
+            }
+            catch { }
         }
 
         // Called from inside non-main thread thus invoke required. Updates the chatting members when new list info is had.
@@ -611,9 +623,7 @@ namespace PopcornViewer
                         if (Hosting) VoteCounter++;
                         else
                         {
-                            byte[] Chat = Encoding.UTF8.GetBytes("VOTE");
-                            SelfStream.Write(Chat, 0, Chat.Length);
-                            SelfStream.Flush();
+                            ClientBroadcast("VOTE");
                         }
                     }
                     VoteResult = DialogResult.Ignore;

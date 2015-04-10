@@ -79,6 +79,7 @@
             this.popcornHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutPopcornViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.transferFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -566,6 +567,7 @@
             this.hostingOptionsToolStripMenuItem,
             this.manageGroupToolStripMenuItem,
             this.chatOptionsToolStripMenuItem,
+            this.transferFileToolStripMenuItem,
             this.preferencesToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -640,6 +642,13 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
+            // 
+            // transferFileToolStripMenuItem
+            // 
+            this.transferFileToolStripMenuItem.Name = "transferFileToolStripMenuItem";
+            this.transferFileToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.transferFileToolStripMenuItem.Text = "Transfer Files";
+            this.transferFileToolStripMenuItem.Click += new System.EventHandler(this.transferFileToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -738,6 +747,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ContextMenuStrip ChatContextMenu;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem transferFileToolStripMenuItem;
 
     }
 }

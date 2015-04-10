@@ -16,6 +16,7 @@ using System.IO;
 using Google.Apis.YouTube.v3.Data;
 using System.Diagnostics;
 
+
 namespace PopcornViewer
 {
     public partial class MainForm : Form
@@ -491,6 +492,12 @@ namespace PopcornViewer
         {
             SettingsWindow SetWin = new SettingsWindow(this);
             SetWin.ShowDialog();
+        }
+
+        private void transferFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Main TransferFileWin = new Main(ChatMembers, ClientsList);
+            TransferFileWin.ShowDialog();
         }
     }
 }

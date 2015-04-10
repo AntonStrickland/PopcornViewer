@@ -11,7 +11,6 @@ using System.Net.Sockets;
 using System.Xml;
 using System.Collections;
 using System.Text.RegularExpressions;
-using Google.YouTube;
 
 namespace PopcornViewer
 {

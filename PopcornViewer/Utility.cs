@@ -6,7 +6,9 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections;
-using Google.YouTube;
+using Google.Apis.YouTube.v3.Data;
+using Google.Apis.YouTube.v3;
+using Google.Apis.Services;
 
 namespace PopcornViewer
 {
@@ -36,14 +38,14 @@ namespace PopcornViewer
             {
                 PlaylistURLs.Add(ConvertURLToEmbeded(url));
                 Video video = RequestFromYoutube(url);
-                Playlist.Items.Add(video.Title);
+                Playlist.Items.Add(video.Snippet.Title);
                 UpdatePlaylistCount();
                 if (Hosting)
                 {
-                    Broadcast("has added " + video.Title + " to the playlist", NicknameLabel.Text, false);
+                    Broadcast("has added " + video.Snippet.Title + " to the playlist", NicknameLabel.Text, false);
                     BroadcastPlaylist();
                 }
-                else BroadcastPlaylist("has added " + video.Title + " to the playlist");
+                else BroadcastPlaylist("has added " + video.Snippet.Title + " to the playlist");
                 return true;
             }
             else return false;
@@ -77,14 +79,17 @@ namespace PopcornViewer
         // Code for handling Youtube requests from a specific URL. Requires a Youtube link be verrified first.
         private Video RequestFromYoutube(string url)
         {
-            string uri = url.Remove(0, url.IndexOf('=') + 1);
+            string id = url.Remove(0, url.IndexOf('=') + 1);
+            if (id.IndexOf('&') >= 0)
+            {
+                id = id.Remove(id.IndexOf('&'), id.Length - id.IndexOf('&'));
+            }
+            
+            YouTubeService Service = new YouTubeService(new BaseClientService.Initializer(){ ApiKey = DEV_STRING, ApplicationName = "Youtube Synch" });
+            var Request = Service.Videos.List("snippet");
+            Request.Id = id;
 
-            YouTubeRequestSettings settings = new YouTubeRequestSettings("Popcorn Viewer", DEV_STRING);
-            YouTubeRequest req = new YouTubeRequest(settings);
-
-            Uri videoEntryUrl = new Uri("http://gdata.youtube.com/feeds/api/videos/" + uri);
-
-            return req.Retrieve<Video>(videoEntryUrl);
+            return Request.Execute().Items[0];
         }
 
         // Performs bundled functions to play a video at URL index. Now thread safe!
@@ -529,7 +534,7 @@ namespace PopcornViewer
                 {
                     PlaylistURLs.Add(Message[i]);
                     Video video = RequestFromYoutube(ConvertURLToBrowser(Message[i]));
-                    Playlist.Items.Add(video.Title);
+                    Playlist.Items.Add(video.Snippet.Title);
                 }
                 PlaylistLabel.Text = "Playlist Count: " + Playlist.Items.Count;
             }

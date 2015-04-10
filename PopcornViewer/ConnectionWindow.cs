@@ -24,7 +24,7 @@ namespace PopcornViewer
 
             Parent = MF;
 
-            // Display Local IP Address
+            /*/ Display Local IP Address
             System.Net.WebRequest Request = System.Net.WebRequest.Create("http://checkip.dyndns.org");
             Request.Proxy = null;
             string Reply;
@@ -34,7 +34,7 @@ namespace PopcornViewer
                 Reply = sr.ReadToEnd().Trim();
                 Reply = Reply.Split(':')[1].Substring(1).Split('<')[0];
             }
-            IPAddressBox.Text = Reply;
+            IPAddressBox.Text = Reply;*/
         }
 
         // Opens up the AddNetwork window to add networks to the list

@@ -617,7 +617,6 @@
             this.aboutPopcornViewerToolStripMenuItem.Name = "aboutPopcornViewerToolStripMenuItem";
             this.aboutPopcornViewerToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutPopcornViewerToolStripMenuItem.Text = "About...";
-            this.aboutPopcornViewerToolStripMenuItem.Click += new System.EventHandler(this.aboutPopcornViewerToolStripMenuItem_Click);
             // 
             // toolStripContainer1
             // 

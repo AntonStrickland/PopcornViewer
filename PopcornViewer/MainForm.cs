@@ -13,7 +13,7 @@ using System.Xml;
 using System.Collections;
 using System.Text.RegularExpressions;
 using System.IO;
-using Google.YouTube;
+using Google.Apis.YouTube.v3.Data;
 using System.Diagnostics;
 
 namespace PopcornViewer
@@ -21,7 +21,7 @@ namespace PopcornViewer
     public partial class MainForm : Form
     {
         // Form Variables
-        const string DEV_STRING = "AI39si4LgRzD-nVk4ZIHLC5pLti7cBcVLKKhJIS7PCyosewQMlAVgSqtCKMfzTTLwScr4qV6UxeDFo7YsfjBaEdLn3lVJocjbA";
+        const string DEV_STRING = "AIzaSyCYSKxspULk1eESWMu2XZdvb3hH480snng";
         List<string> PlaylistURLs = new List<string>();
         bool SeekImmunity = false;
 
@@ -458,7 +458,7 @@ namespace PopcornViewer
                         {
                             PlaylistURLs.Add(ConvertURLToEmbeded(url));
                             Video video = RequestFromYoutube(url);
-                            Playlist.Items.Add(video.Title);
+                            Playlist.Items.Add(video.Snippet.Title);
                         }
                     }
                     sr.Close();
@@ -480,11 +480,6 @@ namespace PopcornViewer
                 System.Diagnostics.Process.Start("http://web.mst.edu/~mabwgf/PopcornViewerWebsite/");
             }
             catch { }
-        }
-
-        private void aboutPopcornViewerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)

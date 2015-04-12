@@ -73,8 +73,10 @@ namespace PopcornViewer
                                     }
                                     else
                                     {
+                                        Internal_Command = true;
                                         YoutubeVideo_CallFlash("seekTo(0, 0)");
                                         YoutubeVideo_CallFlash("pauseVideo()");
+                                        Internal_Command = false;
                                     }
                                 }
 
@@ -94,57 +96,70 @@ namespace PopcornViewer
                                 }
                                 else
                                 {
+                                    Internal_Command = true;
                                     YoutubeVideo_CallFlash("seekTo(0, 0)");
                                     YoutubeVideo_CallFlash("pauseVideo()");
+                                    Internal_Command = false;
                                 }
                             }
                             else
                             {
-                                YoutubeVideo_CallFlash("seekTo(0, 0)");
-                                YoutubeVideo_CallFlash("pauseVideo()");
+                                    Internal_Command = true;
+                                    YoutubeVideo_CallFlash("seekTo(0, 0)");
+                                    YoutubeVideo_CallFlash("pauseVideo()");
+                                    Internal_Command = false;
                             }
                             break;
-
+                            
                         // Playing
                         case 1:
-                            SeekImmunity = true;
-                            string sTime = YoutubeVideo_CallFlash("getCurrentTime()");
-                            sTime = sTime.Remove(sTime.Length - 9).Remove(0, 8);
-                            if (Hosting) Broadcast("PLAY " + sTime, "", false);
-                            else
+                            if (!Internal_Command)
                             {
-                                ClientBroadcast("PLAY$" + sTime + "$");
+                                Seek_Immunity = true;
+                                string sTime = YoutubeVideo_CallFlash("getCurrentTime()");
+                                sTime = sTime.Remove(sTime.Length - 9).Remove(0, 8);
+                                if (Hosting) Broadcast("PLAY " + sTime, "", false);
+                                else if (!First_Connect)
+                                {
+                                    ClientBroadcast("PLAY$" + sTime + "$");
+                                }
+                                else First_Connect = false;
                             }
+                            First_Connect = false;
                             break;
 
                         // Paused
                         case 2:
-                            if (SeekImmunity)
+                            if (!Internal_Command)
                             {
-                                YoutubeVideo_CallFlash("playVideo()");
-                            }
-                            else if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
-                            {
-                                if (Hosting) Broadcast("PAUSE", "", false);
-                                else
+                                if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
                                 {
-                                    ClientBroadcast("PAUSE$");
+                                    if (Hosting) Broadcast("PAUSE", "", false);
+                                    else
+                                    {
+                                        ClientBroadcast("PAUSE$");
+                                    }
                                 }
                             }
                             break;
 
                         // Buffering
                         case 3:
-                            if (SeekImmunity)
+                            if (!Internal_Command)
                             {
-                                YoutubeVideo_CallFlash("playVideo()");
-                            }
-                            else if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
-                            {
-                                if (Hosting) Broadcast("PAUSE", "", false);
-                                else
+                                if (Seek_Immunity)
                                 {
-                                    ClientBroadcast("PAUSE$");
+                                    Internal_Command = true;
+                                    YoutubeVideo_CallFlash("playVideo()");
+                                    Internal_Command = false;
+                                }
+                                else if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
+                                {
+                                    if (Hosting) Broadcast("PAUSE", "", false);
+                                    else
+                                    {
+                                        ClientBroadcast("PAUSE$");
+                                    }
                                 }
                             }
                             break;

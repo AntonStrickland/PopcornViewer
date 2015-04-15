@@ -88,12 +88,10 @@ namespace PopcornViewer
             try { Parent.SelfSocket.Connect(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[1].Text, Convert.ToInt32(NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[2].Text)); }
             catch
             {
-                Parent.Chat("Unable to connect to " + NetworkList.Items[NetworkList.SelectedIndices[0]].SubItems[0].Text, "CONSOLE");
+                Parent.Chat("Unable to connect to " + IPAddressBox.Text, "CONSOLE");
                 this.Close();
                 return;
             }
-
-            Parent.First_Connect = true;
 
             Parent.SelfStream = Parent.SelfSocket.GetStream();
             byte[] BytesOut = Encoding.UTF8.GetBytes(MainForm.Encrypt(NicknameBox.Text) + "$");

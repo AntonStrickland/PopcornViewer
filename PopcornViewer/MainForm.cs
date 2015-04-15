@@ -24,7 +24,9 @@ namespace PopcornViewer
         // Form Variables
         const string DEV_STRING = "AIzaSyCYSKxspULk1eESWMu2XZdvb3hH480snng";
         List<string> PlaylistURLs = new List<string>();
-        bool SeekImmunity = false;
+        bool Internal_Command = false;
+        bool Seek_Immunity = false;
+        public bool First_Connect = false;
 
         // Name of the current playlist file
         string CurrentPlaylistName = "";

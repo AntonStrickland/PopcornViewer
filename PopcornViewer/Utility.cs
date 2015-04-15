@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Threading;
@@ -54,8 +55,7 @@ namespace PopcornViewer
         // Changes the text on the PlaylistLabel to reflect number of videos added
         private void UpdatePlaylistCount()
         {
-            PlaylistLabel.Text = PlaylistLabel.Text.Substring(0, PlaylistLabel.Text.Length - 1);
-            PlaylistLabel.Text = PlaylistLabel.Text + Playlist.Items.Count;
+            PlaylistLabel.Text = "Playlist Count: " + Playlist.Items.Count;
         }
 
         // Ensures that the given URL is actually for a Youtube video.
@@ -108,8 +108,10 @@ namespace PopcornViewer
                 {
                     YoutubeVideo.Movie = PlaylistURLs[Index];
                 }
+                Internal_Command = true;
                 YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
                 YoutubeVideo_CallFlash("playVideo()");
+                Internal_Command = false;
 
                 Playlist.Refresh();
 
@@ -225,6 +227,8 @@ namespace PopcornViewer
                     BroadcastPlaylist();
                     Thread.Sleep(200);
                     BroadcastCurrentlyPlaying();
+                    Thread.Sleep(200);
+                    Broadcast("PLAY", "", false);
                 }
                 else Connected = true;
             }
@@ -338,6 +342,16 @@ namespace PopcornViewer
             string Playing = "CURRENTLYPLAYING ";
             Playing += CurrentlyPlaying.ToString();
 
+            if (CurrentlyPlaying >= 0)
+            {
+                string sCurrentTime = YoutubeVideo_CallFlash("getCurrentTime()");
+                if (sCurrentTime != "")
+                {
+                    sCurrentTime = sCurrentTime.Remove(sCurrentTime.Length - 9).Remove(0, 8);
+                    Playing += " " + sCurrentTime;
+                }
+            }
+
             if (Hosting) Broadcast(Playing, "", false);
             else
             {
@@ -388,11 +402,23 @@ namespace PopcornViewer
                                 break;
                             case "PAUSE":
                                 Broadcast("PAUSE", "", false);
+                                Internal_Command = true;
                                 YoutubeVideo_CallFlash("pauseVideo()");
+                                Internal_Command = false;
                                 break;
                             case "PLAY":
                                 Broadcast("PLAY " + Message[1], "", false);
+                                Internal_Command = true;
                                 YoutubeVideo_CallFlash("playVideo()");
+                                Internal_Command = false;
+                                break;
+                            case "REFRESH":
+                                string sCurrentTime = YoutubeVideo_CallFlash("getCurrentTime()");
+                                sCurrentTime = sCurrentTime.Remove(sCurrentTime.Length - 9).Remove(0, 8);
+                                Broadcast("PLAY " + sCurrentTime, "", false);
+                                Internal_Command = true;
+                                YoutubeVideo_CallFlash("playVideo()");
+                                Internal_Command = false;
                                 break;
                             case "VOTETOSKIP":
                                 Broadcast("VOTETOSKIP", "", false);
@@ -452,17 +478,29 @@ namespace PopcornViewer
                     case "CURRENTLYPLAYING":
                         int Play = Convert.ToInt32(Message[1]);
                         if (Play >= 0 && !Hosting && Play < Playlist.Items.Count)
+                        {
+                            Internal_Command = true;
                             PlayVideo(Play, true);
+                            if (Message.Length == 3)
+                            {
+                                ClientBroadcast("REFRESH$");
+                            }
+                            Internal_Command = false;
+                        }
                         break;
                     // Video pause flag sent
                     case "PAUSE":
-                        if (YoutubeVideo_CallFlash("getPlayerState()") == "<number>1</number>" && !SeekImmunity)
+                        if (YoutubeVideo_CallFlash("getPlayerState()") == "<number>1</number>" && !Seek_Immunity)
                         {
+                            Internal_Command = true;
                             YoutubeVideo_CallFlash("pauseVideo()");
+                            Internal_Command = false;
                         }
                         break;
                     case "PLAY":
-                        SeekImmunity = true;
+                        if (YoutubeVideo_CallFlash("getCurrentTime()") == "" || Message.Length == 1) break;
+                        Seek_Immunity = true;
+                        Internal_Command = true;
                         string sCurrentTime = YoutubeVideo_CallFlash("getCurrentTime()");
                         sCurrentTime = sCurrentTime.Remove(sCurrentTime.Length - 9).Remove(0, 8);
                         double CurrentTime = Convert.ToDouble(sCurrentTime);
@@ -473,7 +511,8 @@ namespace PopcornViewer
                             YoutubeVideo_CallFlash("seekTo(" + SynchTime.ToString() + ", true)");
                         }
                         YoutubeVideo_CallFlash("playVideo()");
-                        SeekImmunity = false;
+                        Seek_Immunity = false;
+                        Internal_Command = false;
                         break;
                     case "VOTETOSKIP":
                         CallTimer();
@@ -493,8 +532,6 @@ namespace PopcornViewer
                 Thread.Sleep(200);
             }
             Chat("Lost connection from server...", "CONSOLE");
-            ChatLabel.Text = "Currently Chatting: 0";
-            ChatMembers.Items.Clear();
 
             Connected = false;
         }
@@ -540,14 +577,27 @@ namespace PopcornViewer
             }
             else
             {
-                PlaylistURLs.Clear();
-                Playlist.Items.Clear();
+                List<string> NewPlaylistURLs = new List<string>();
+                List<string> NewPlaylistTitles = new List<string>();
+
                 for (int i = 1; i < Message.Length - 1; i++)
                 {
-                    PlaylistURLs.Add(Message[i]);
-                    Video video = RequestFromYoutube(ConvertURLToBrowser(Message[i]));
-                    Playlist.Items.Add(video.Snippet.Title);
+                    NewPlaylistURLs.Add(Message[i]);
+                    if (!PlaylistURLs.Contains(Message[i]))
+                    {
+                        Video video = RequestFromYoutube(ConvertURLToBrowser(Message[i]));
+                        NewPlaylistTitles.Add(video.Snippet.Title);
+                    }
+                    else NewPlaylistTitles.Add(Playlist.Items[PlaylistURLs.IndexOf(Message[i])].ToString());
                 }
+                PlaylistURLs = NewPlaylistURLs;
+
+                Playlist.Items.Clear();
+                foreach (string s in NewPlaylistTitles)
+                {
+                    Playlist.Items.Add(s);
+                }
+
                 PlaylistLabel.Text = "Playlist Count: " + Playlist.Items.Count;
             }
         }

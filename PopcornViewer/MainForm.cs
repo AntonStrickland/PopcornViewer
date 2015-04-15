@@ -343,6 +343,7 @@ namespace PopcornViewer
             {
                 Broadcast("Server closing...", "CONSOLE", true);
             }
+            else ClientBroadcast("");
 
             if (ClientSocket != null && ClientSocket.Connected) ClientSocket.Close();
             if (ServerSocket != null) ServerSocket.Stop();

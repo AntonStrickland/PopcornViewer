@@ -132,7 +132,7 @@ namespace PopcornViewer
                         case 2:
                             if (!Internal_Command)
                             {
-                                if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
+                                if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()") && YoutubeVideo_CallFlash("getCurrentTime()") != "<number>0</number>")
                                 {
                                     if (Hosting) Broadcast("PAUSE", "", false);
                                     else
@@ -153,7 +153,7 @@ namespace PopcornViewer
                                     YoutubeVideo_CallFlash("playVideo()");
                                     Internal_Command = false;
                                 }
-                                else if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()"))
+                                else if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()") && YoutubeVideo_CallFlash("getCurrentTime()") != "<number>0</number>")
                                 {
                                     if (Hosting) Broadcast("PAUSE", "", false);
                                     else

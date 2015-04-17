@@ -132,7 +132,17 @@ namespace PopcornViewer
                         case 2:
                             if (!Internal_Command)
                             {
-                                if (YoutubeVideo_CallFlash("getCurrentTime()") != YoutubeVideo_CallFlash("getDuration()") && YoutubeVideo_CallFlash("getCurrentTime()") != "<number>0</number>")
+                                string CurrentTime = YoutubeVideo_CallFlash("getCurrentTime()");
+                                CurrentTime = CurrentTime.Remove(CurrentTime.Length - 9).Remove(0, 8);
+                                double iCurrentTime = Convert.ToDouble(CurrentTime);
+
+                                string Duration = YoutubeVideo_CallFlash("getDuration()");
+                                Duration = Duration.Remove(Duration.Length - 9).Remove(0, 8);
+                                double iDuration = Convert.ToDouble(Duration);
+
+                                double Difference = iDuration - iCurrentTime;
+
+                                if (iCurrentTime != 0 && Difference >= 1)
                                 {
                                     if (Hosting) Broadcast("PAUSE", "", false);
                                     else

@@ -577,6 +577,15 @@ namespace PopcornViewer
             }
             else
             {
+                string CurrentVideoName = "Nothing";
+                int CurrentVideoIndex = 0;
+                int NewVideoIndex = 0;
+                if (PlaylistURLs.Count > 0 && CurrentlyPlaying > -1)
+                {
+                   CurrentVideoName = PlaylistURLs[CurrentlyPlaying];
+                   CurrentVideoIndex = CurrentlyPlaying;
+                   NewVideoIndex = 0;
+                }
                 List<string> NewPlaylistURLs = new List<string>();
                 List<string> NewPlaylistTitles = new List<string>();
 
@@ -599,6 +608,24 @@ namespace PopcornViewer
                 }
 
                 PlaylistLabel.Text = "Playlist Count: " + Playlist.Items.Count;
+
+                if (PlaylistURLs.Count > 0 && CurrentlyPlaying > -1)
+                {
+                    for (int i = 0; i < PlaylistURLs.Count; i++)
+                    {
+                        if (PlaylistURLs[i] == CurrentVideoName)
+                        {
+                            NewVideoIndex = i;
+                        }
+                    }
+
+                    if (NewVideoIndex < CurrentlyPlaying)
+                    {
+                        CurrentlyPlaying = NewVideoIndex;
+                        Playlist.Refresh();
+                    }
+                }
+
             }
         }
 

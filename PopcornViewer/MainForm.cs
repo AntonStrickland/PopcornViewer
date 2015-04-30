@@ -149,6 +149,16 @@ namespace PopcornViewer
         // Handles logic for drag and drop in the Playlist
         private void Playlist_DragDrop(object sender, DragEventArgs e)
         {
+            string CurrentVideoName = "Nothing";
+            int CurrentVideoIndex = 0;
+            int NewVideoIndex = 0;
+            if (PlaylistURLs.Count > 0 && CurrentlyPlaying > -1)
+            {
+                CurrentVideoName = PlaylistURLs[CurrentlyPlaying];
+                CurrentVideoIndex = CurrentlyPlaying;
+                NewVideoIndex = 0;
+            }
+
             string url = (string)e.Data.GetData(DataFormats.Text, false);
 
             // Drag and drop to rearrange Playlist
@@ -180,6 +190,22 @@ namespace PopcornViewer
                 Playlist.Refresh();
                 if (Hosting) BroadcastPlaylist();
                 else BroadcastPlaylist("");
+            }
+
+            if (PlaylistURLs.Count > 0 && CurrentlyPlaying > -1)
+            {
+                for (int i = 0; i < PlaylistURLs.Count; i++)
+                {
+                    if (PlaylistURLs[i] == CurrentVideoName)
+                    {
+                        NewVideoIndex = i;
+                    }
+                }
+
+
+                CurrentlyPlaying = NewVideoIndex;
+                Playlist.Refresh();
+
             }
         }
 

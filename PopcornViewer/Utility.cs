@@ -619,11 +619,10 @@ namespace PopcornViewer
                         }
                     }
 
-                    if (NewVideoIndex < CurrentlyPlaying)
-                    {
-                        CurrentlyPlaying = NewVideoIndex;
-                        Playlist.Refresh();
-                    }
+                    
+                 CurrentlyPlaying = NewVideoIndex;
+                 Playlist.Refresh();
+                    
                 }
 
             }

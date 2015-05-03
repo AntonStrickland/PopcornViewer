@@ -482,11 +482,6 @@ namespace PopcornViewer
                             Video video = RequestFromYoutube(url);
                             Playlist.Items.Add(video.Snippet.Title);
                         }
-                        else
-                        {
-                            PlaylistURLs.Add("file:///" + url);
-                            Playlist.Items.Add(url);
-                        }
                     }
                     sr.Close();
                 }

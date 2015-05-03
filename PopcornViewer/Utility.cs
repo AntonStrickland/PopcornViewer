@@ -10,6 +10,7 @@ using System.Collections;
 using Google.Apis.YouTube.v3.Data;
 using Google.Apis.YouTube.v3;
 using Google.Apis.Services;
+using System.IO;
 
 namespace PopcornViewer
 {
@@ -190,47 +191,84 @@ namespace PopcornViewer
                 try { ClientSocket = ServerSocket.AcceptTcpClient(); }
                 catch { return; }
 
-                byte[] BytesIn = new byte[65536];
-                string DataFromClient;
 
-                // Get name of new client
-                NetworkStream Stream = ClientSocket.GetStream();
-                Stream.Read(BytesIn, 0, (int)ClientSocket.ReceiveBufferSize);
-                DataFromClient = Decrypt(System.Text.Encoding.UTF8.GetString(BytesIn));
-
-                // If somehow they have the same name as someone else
-                bool Connected = true;
-                try { ClientsList.Add(DataFromClient, ClientSocket); }
-                catch
+                //Open ProgramSettings for IPList Info
+                string PathName = @"ProgramSettings.conf";
+                int ListType;
+                String line;
+                bool allowed = false;
+                try
                 {
-                    NetworkStream OutStream = ClientSocket.GetStream();
-                    Byte[] BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: Server declined connection: USERNAME COLLISION") + "$");
-                    OutStream.Write(BroadcastBytes, 0, BroadcastBytes.Length);
-                    OutStream.Flush();
-                    Connected = false;
-                }
+                    using (StreamReader readFile = new StreamReader(PathName))
+                    {
+                        //read in user data
+                        ListType = Convert.ToInt32(line = readFile.ReadLine());
+                        line = readFile.ReadLine();
+                        allowed = Convert.ToBoolean(1-ListType);
 
-                if (Connected)
+                        //read in connection information from file
+                        while ((line = readFile.ReadLine()) != null)
+                        {
+                            line = readFile.ReadLine();
+                            int b;
+                            string[] connector = ClientSocket.Client.RemoteEndPoint.ToString().Split(':');
+                            if(connector[0] == line )
+                            {
+                                allowed = !allowed;
+                                break;
+                            }
+                        }
+                        readFile.Close();
+                    }
+                    
+                }
+                catch { }
+
+                //if the person is not allowed in, skip.
+                if( allowed)
                 {
-                    // Display appropriate messages
-                    Broadcast("has joined the room", DataFromClient, false);
+                    byte[] BytesIn = new byte[65536];
+                    string DataFromClient;
 
-                    // Launch speaker thread
-                    Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
-                    ChatClient2Threads.Add(ChatThread2);
-                    ChatThread2.Start();
+                    // Get name of new client
+                    NetworkStream Stream = ClientSocket.GetStream();
+                    Stream.Read(BytesIn, 0, (int)ClientSocket.ReceiveBufferSize);
+                    DataFromClient = Decrypt(System.Text.Encoding.UTF8.GetString(BytesIn));
 
-                    // Send list of clients & playlist to everyone
-                    Thread.Sleep(200);
-                    BroadcastClientsList();
-                    Thread.Sleep(200);
-                    BroadcastPlaylist();
-                    Thread.Sleep(200);
-                    BroadcastCurrentlyPlaying();
-                    Thread.Sleep(200);
-                    Broadcast("PLAY", "", false);
+                    // If somehow they have the same name as someone else
+                    bool Connected = true;
+                    try { ClientsList.Add(DataFromClient, ClientSocket); }
+                    catch
+                    {
+                        NetworkStream OutStream = ClientSocket.GetStream();
+                        Byte[] BroadcastBytes = Encoding.UTF8.GetBytes(Encrypt("\n[" + DateTime.Now.ToString("HH:mm:ss") + "] CONSOLE: Server declined connection: USERNAME COLLISION") + "$");
+                        OutStream.Write(BroadcastBytes, 0, BroadcastBytes.Length);
+                        OutStream.Flush();
+                        Connected = false;
+                    }
+
+                    if (Connected)
+                    {
+                        // Display appropriate messages
+                        Broadcast("has joined the room", DataFromClient, false);
+
+                        // Launch speaker thread
+                        Thread ChatThread2 = new Thread(() => Speak(ClientSocket, DataFromClient));
+                        ChatClient2Threads.Add(ChatThread2);
+                        ChatThread2.Start();
+
+                        // Send list of clients & playlist to everyone
+                        Thread.Sleep(200);
+                        BroadcastClientsList();
+                        Thread.Sleep(200);
+                        BroadcastPlaylist();
+                        Thread.Sleep(200);
+                        BroadcastCurrentlyPlaying();
+                        Thread.Sleep(200);
+                        Broadcast("PLAY", "", false);
+                    }
+                    else Connected = true;
                 }
-                else Connected = true;
             }
 
             Hosting = false;

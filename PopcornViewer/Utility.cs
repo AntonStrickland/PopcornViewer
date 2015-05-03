@@ -105,18 +105,34 @@ namespace PopcornViewer
             else
             {
                 CurrentlyPlaying = Index;
-                if (YoutubeVideo.Movie == null)
+
+                if (PlaylistURLs[Index][0] == 'f')
                 {
-                    YoutubeVideo.Movie = PlaylistURLs[Index];
+                    axVLCPlugin21.Visible = true;
+                    axVLCPlugin21.playlist.add(PlaylistURLs[Index], PlaylistURLs[Index], null);
+                    axVLCPlugin21.playlist.play();
+
+                    Playlist.Refresh();
+                    //if (!RecursiveFlag) BroadcastCurrentlyPlaying();
                 }
-                Internal_Command = true;
-                YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
-                YoutubeVideo_CallFlash("playVideo()");
-                Internal_Command = false;
+                else
+                {
+                    axVLCPlugin21.Visible = false;
+                    
+                    if (YoutubeVideo.Movie == null)
+                    {
+                       YoutubeVideo.Movie = PlaylistURLs[Index];
+                    }
 
-                Playlist.Refresh();
+                    Internal_Command = true;
+                    YoutubeVideo_CallFlash("loadVideoByUrl(" + PlaylistURLs[Index] + ")");
+                    YoutubeVideo_CallFlash("playVideo()");
+                    Internal_Command = false;
 
-                if (!RecursiveFlag) BroadcastCurrentlyPlaying();
+                    Playlist.Refresh();
+
+                    if (!RecursiveFlag) BroadcastCurrentlyPlaying();
+                }
             }
         }
 

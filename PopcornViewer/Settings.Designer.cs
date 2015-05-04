@@ -108,6 +108,7 @@
             "Whitelist"});
             this.ListChooser.Location = new System.Drawing.Point(6, 18);
             this.ListChooser.Name = "ListChooser";
+            this.ListChooser.SelectedIndex = 0;
             this.ListChooser.Size = new System.Drawing.Size(121, 21);
             this.ListChooser.TabIndex = 9;
             this.ListChooser.SelectedIndexChanged += new System.EventHandler(this.ListChooser_SelectedIndexChanged);

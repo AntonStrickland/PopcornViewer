@@ -196,34 +196,46 @@ namespace PopcornViewer
                 string PathName = @"ProgramSettings.conf";
                 int ListType;
                 String line;
-                bool allowed = false;
-                try
-                {
-                    using (StreamReader readFile = new StreamReader(PathName))
+                bool allowed = true;
+                string[] connector = ClientSocket.Client.RemoteEndPoint.ToString().Split(':');
+                    if (System.IO.File.Exists(PathName))
                     {
-                        //read in user data
-                        ListType = Convert.ToInt32(line = readFile.ReadLine());
-                        line = readFile.ReadLine();
-                        allowed = Convert.ToBoolean(1-ListType);
-
-                        //read in connection information from file
-                        while ((line = readFile.ReadLine()) != null)
+                        try
                         {
-                            line = readFile.ReadLine();
-                            int b;
-                            string[] connector = ClientSocket.Client.RemoteEndPoint.ToString().Split(':');
-                            if(connector[0] == line )
+                            using (StreamReader readFile = new StreamReader(PathName))
                             {
-                                allowed = !allowed;
-                                break;
+                                //read in user data
+                                ListType = Convert.ToInt32(line = readFile.ReadLine());
+                                line = readFile.ReadLine();
+                                allowed = Convert.ToBoolean(1 - ListType);
+
+                                //read in connection information from file
+                                while ((line = readFile.ReadLine()) != null)
+                                {
+                                    line = readFile.ReadLine();
+
+                                    if (connector[0] == line)
+                                    {
+                                        allowed = !allowed;
+                                        break;
+                                    }
+                                }
+                                readFile.Close();
+                            }
+
+                        }
+                        catch{}
+                    }
+                    else
+                    {
+                        using (System.IO.FileStream fs = System.IO.File.Create(PathName))
+                        {
+                            for (byte i = 0; i < 100; i++)
+                            {
+                                fs.WriteByte(i);
                             }
                         }
-                        readFile.Close();
                     }
-                    
-                }
-                catch { }
-
                 //if the person is not allowed in, skip.
                 if( allowed)
                 {

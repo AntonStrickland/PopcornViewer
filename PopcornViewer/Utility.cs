@@ -38,6 +38,10 @@ namespace PopcornViewer
         {
             if (IsYoutubeURL(url))
             {
+                if (url.Contains("&"))
+                {
+                    url = url.Substring(0, url.IndexOf('&'));
+                }
                 PlaylistURLs.Add(ConvertURLToEmbeded(url));
                 Video video = RequestFromYoutube(url);
                 Playlist.Items.Add(video.Snippet.Title);
@@ -69,9 +73,9 @@ namespace PopcornViewer
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
                     return (response.ResponseUri.ToString().Contains("youtube.com") &&
-                            response.ResponseUri.ToString().Contains("watch?v=") &&
+                            response.ResponseUri.ToString().Contains("watch?v="));// &&
                             // Makes sure playlists are not able to be added since they are not videos
-                            !response.ResponseUri.ToString().Contains("&list"));
+                            //!response.ResponseUri.ToString().Contains("play"));
                 }
             }
             catch { return false; }
